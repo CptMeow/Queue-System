@@ -8,7 +8,6 @@
 </head>
 <body>
 <div id="app">
-  <!-- ตารางแสดงคิวแต่ละห้อง -->
   <div class="queue-table">
     <table>
       <thead>
@@ -21,13 +20,14 @@
       <tbody>
         <tr v-for="room in rooms" :key="room.roomNumber">
           <td>ห้อง {{ room.roomNumber }}</td>
-          <td>{{ room.currentQueue || 'ไม่มีคิว' }}</td>
+          <td>{{ room.currentQueue !== null ? room.currentQueue : 'ไม่มีคิว' }}</td>
           <td>{{ room.calledQueues.join(', ') || 'ยังไม่มีคิว' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
