@@ -3,16 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการคิว</title>
+    <title>หน้าจอแสดงผลคิว</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .section h1, .section h2 {
+            margin: 0;
+        }
+        .section p {
+            margin: 5px 0;
+        }
+        #queueList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .queue-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div class="queue-system">
-        <h1>ระบบจัดการคิวโรงพยาบาล</h1>
-        <ul>
-            <li><a href="queue-display.html">หน้าจอแสดงคิว</a></li>
-            <li><a href="queue-management.html">หน้าบริหารจัดการคิว</a></li>
-        </ul>
+    <div class="container">
+        <!-- ส่วนที่ 1: ข้อความทั่วไป -->
+        <div class="section" id="hospitalInfo">
+            <h1>ชื่อโรงพยาบาล</h1>
+            <p>ยินดีต้อนรับสู่ระบบจัดการคิวของเรา</p>
+        </div>
+
+        <!-- ส่วนที่ 2: รายการคิว -->
+        <div class="section" id="queueList">
+            <!-- คิวจะถูกสร้างและเพิ่มใน JavaScript -->
+        </div>
+
+        <!-- ส่วนที่ 3: ข้อความรายละเอียดติดต่อ -->
+        <div class="section" id="contactInfo">
+            <h2>รายละเอียดติดต่อ</h2>
+            <p>โทร: 123-456-789</p>
+            <p>อีเมล: contact@hospital.com</p>
+            <p>ที่อยู่: 123 ถนนสุขุมวิท กรุงเทพฯ 10110</p>
+        </div>
     </div>
+
+    <script src="queue-display.js"></script>
 </body>
 </html>
