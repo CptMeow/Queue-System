@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const numberOfRooms = 7;
+    const numberOfRooms = 7; // จำนวนห้องที่กำหนดไว้ล่วงหน้า
 
     // ฟังก์ชันเพื่อเพิ่มห้อง
     function addRoom() {
@@ -108,15 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         createQueueItems(); // อัพเดตหน้าจอหลังจากล้างคิว
     }
 
-    // ฟังก์ชันเพิ่มห้องใหม่
-    function addRoom() {
-        let currentRoomCount = numberOfRooms;
-        numberOfRooms = currentRoomCount + 1;
-        console.log("เพิ่มห้องใหม่:", numberOfRooms);
-        addRoom();
-        createQueueItems();
-    }
-
     // ตรวจสอบและติดตั้ง Event Listener
     document.getElementById('callQueueButton').addEventListener('click', function() {
         console.log("กดปุ่มเรียกคิวใหม่");
@@ -126,11 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('clearQueueButton').addEventListener('click', function() {
         console.log("กดปุ่มล้างคิว");
         clearAllQueues();
-    });
-
-    document.getElementById('addRoomButton').addEventListener('click', function() {
-        console.log("กดปุ่มเพิ่มห้องใหม่");
-        addRoom();
     });
 
     // เรียกใช้ฟังก์ชันเพิ่มห้องและสร้างรายการคิว
