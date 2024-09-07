@@ -21,8 +21,10 @@
       <tbody>
         <tr v-for="room in rooms" :key="room.roomNumber">
           <td>ห้อง {{ room.roomNumber }}</td>
-          <td v-if="room.currentQueue">คิว {{ room.currentQueue }}</td>
-          <td v-else>ไม่มีคิว</td>
+          <td>
+            <span v-if="room.currentQueue">คิว {{ room.currentQueue }}</span>
+            <span v-else>ไม่มีคิว</span>
+          </td>
           <td>
             <ul>
               <li v-for="(queue, index) in room.calledQueues.slice(-5)" :key="index">
