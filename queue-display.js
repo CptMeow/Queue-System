@@ -28,29 +28,29 @@ new Vue({
       }
     },
     updateQueueTable() {
-      const queueTable = document.getElementById('queueTable');
-      if (!queueTable) return;
-
-      queueTable.innerHTML = ''; // ล้างตารางก่อนเพิ่มข้อมูลใหม่
-
       // สร้างตารางคิวปัจจุบัน
-      this.currentQueues.forEach(queue => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>ห้อง ${queue.room}</td><td>${queue.queueNumber}</td>`;
-        queueTable.appendChild(row);
-      });
+      const queueTable = document.getElementById('queueTable');
+      if (queueTable) {
+        queueTable.innerHTML = '<tr><th>ห้อง</th><th>หมายเลขคิว</th></tr>'; // ตั้งหัวตาราง
 
-      // แสดงคิวที่เรียกไปแล้ว
+        this.currentQueues.forEach(queue => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${queue.room}</td><td>${queue.queueNumber}</td>`;
+          queueTable.appendChild(row);
+        });
+      }
+
+      // สร้างตารางคิวที่เรียกไปแล้ว
       const calledQueueTable = document.getElementById('calledQueueTable');
-      if (!calledQueueTable) return;
+      if (calledQueueTable) {
+        calledQueueTable.innerHTML = '<tr><th>ห้อง</th><th>หมายเลขคิว</th></tr>'; // ตั้งหัวตาราง
 
-      calledQueueTable.innerHTML = ''; // ล้างตารางก่อนเพิ่มข้อมูลใหม่
-
-      this.calledQueues.forEach(queue => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>ห้อง ${queue.room}</td><td>${queue.queueNumber}</td>`;
-        calledQueueTable.appendChild(row);
-      });
+        this.calledQueues.forEach(queue => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${queue.room}</td><td>${queue.queueNumber}</td>`;
+          calledQueueTable.appendChild(row);
+        });
+      }
     }
   }
 });
