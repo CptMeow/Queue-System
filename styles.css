@@ -1,57 +1,57 @@
-/* styles.css */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #333;
-    margin-bottom: 20px;
+  text-align: center;
+  color: #333;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
+.clock {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.grid-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
 }
 
-button:hover {
-    background-color: #45a049;
+th {
+  background-color: #f4f4f4;
+  color: #333;
 }
 
-.reset-button {
-    background-color: #f44336;
-    margin-top: 20px;
+td ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.reset-button:hover {
-    background-color: #d32f2f;
+td ul li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+td ul li:last-child {
+  border-bottom: none;
 }
