@@ -6,31 +6,36 @@
     <title>หน้าจอแสดงผลคิว</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        html, body {
+            height: 100%;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: Arial, sans-serif;
         }
         .container {
-            width: 100%;
-            max-width: 800px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            box-sizing: border-box;
         }
         .section {
+            width: 100%;
+            max-width: 1000px;
             margin-bottom: 20px;
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            width: 100%;
+            background-color: #fff;
         }
         .section h1, .section h2 {
             margin: 0;
+            color: #333;
         }
         .section p {
             margin: 5px 0;
+            color: #666;
         }
         #queueList {
             display: flex;
@@ -41,6 +46,17 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .queue-item h2 {
+            margin: 0;
+        }
+        .queue-item p {
+            margin: 5px 0;
+        }
+        .full-width {
+            width: 100%;
+            text-align: center;
         }
     </style>
 </head>
@@ -54,6 +70,7 @@
 
         <!-- ส่วนที่ 2: รายการคิว -->
         <div class="section" id="queueList">
+            <h2 class="full-width">รายการคิวปัจจุบัน</h2>
             <!-- คิวจะถูกสร้างและเพิ่มใน JavaScript -->
         </div>
 
