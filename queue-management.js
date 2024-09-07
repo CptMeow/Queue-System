@@ -54,28 +54,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         let currentQueue = loadCurrentQueue();
-        if (currentQueue && currentQueue.room == selectedRoom) {
-            let nextQueueNumber = currentQueue.queue + 1;
-            updateCalledQueue(selectedRoom);
-            saveCurrentQueue(nextQueueNumber, selectedRoom);
+        let nextQueueNumber = currentQueue.queue + 1;
 
-            // เรียกใช้ฟังก์ชันเสียง
-            playQueueAudio(nextQueueNumber, selectedRoom);
+        // อัพเดตคิวที่เรียกในห้องที่เลือก
+        updateCalledQueue(selectedRoom);
+        saveCurrentQueue(nextQueueNumber, selectedRoom);
 
-            // อัพเดตหน้าจอแสดงคิว
-            updateQueueDisplays();
-        } else {
-            // เรียกคิวในห้องที่เลือก
-            let nextQueueNumber = 1; // เริ่มต้นที่ 1 ถ้าคิวเริ่มต้นใหม่
-            updateCalledQueue(selectedRoom);
-            saveCurrentQueue(nextQueueNumber, selectedRoom);
+        // เรียกใช้ฟังก์ชันเสียง
+        playQueueAudio(nextQueueNumber, selectedRoom);
 
-            // เรียกใช้ฟังก์ชันเสียง
-            playQueueAudio(nextQueueNumber, selectedRoom);
-
-            // อัพเดตหน้าจอแสดงคิว
-            updateQueueDisplays();
-        }
+        // อัพเดตหน้าจอแสดงคิว
+        updateQueueDisplays();
     }
 
     function clearAllQueues() {
