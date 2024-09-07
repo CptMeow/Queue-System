@@ -17,8 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function callNextQueue() {
         const roomSelect = document.getElementById('roomSelect');
         const selectedRoom = roomSelect.value;
+
         if (!selectedRoom) {
-            console.log("กรุณาเลือกห้อง");
+            console.error("กรุณาเลือกห้อง");
             return;
         }
 
@@ -27,15 +28,17 @@ document.addEventListener('DOMContentLoaded', function() {
             let nextQueueNumber = currentQueue.queue + 1;
             updateCalledQueue(selectedRoom);
             saveCurrentQueue(nextQueueNumber, selectedRoom);
+
+            // แสดงผลคิวปัจจุบันในตาราง
             const queueSpan = document.getElementById(`currentQueue-${selectedRoom}`);
             if (queueSpan) {
                 queueSpan.innerText = nextQueueNumber;
                 console.log("อัพเดตคิวปัจจุบันใน DOM:", nextQueueNumber);
             } else {
-                console.log(`ไม่พบ <span> สำหรับห้อง ${selectedRoom}`);
+                console.error(`ไม่พบ <span> สำหรับห้อง ${selectedRoom}`);
             }
         } else {
-            console.log("ไม่มีคิวปัจจุบันในการเรียก");
+            console.error("ไม่มีคิวปัจจุบันในการเรียกหรือห้องไม่ถูกต้อง");
         }
     }
 
@@ -62,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("คิวที่บันทึกไว้ใน LocalStorage:", savedQueue);
             return JSON.parse(savedQueue);
         }
-        console.log("ไม่มีคิวใน LocalStorage");
+        console.error("ไม่มีคิวใน LocalStorage");
         return null;
     }
 
@@ -74,6 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function createQueueItems() {
         const roomSelect = document.getElementById('roomSelect');
+        if (!roomSelect) {
+            console.error("ไม่พบ select box สำหรับห้อง");
+            return;
+        }
+
         roomSelect.innerHTML = '';
         for (let i = 1; i <= numberOfRooms; i++) {
             let option = document.createElement('option');
