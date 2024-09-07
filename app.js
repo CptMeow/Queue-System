@@ -33,20 +33,23 @@ new Vue({
     },
     methods: {
         callNextQueue(roomNumber) {
+            // Get the current queue
             let currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
             const queuesKey = `calledQueue-${roomNumber}`;
             let calledQueues = JSON.parse(localStorage.getItem(queuesKey)) || [];
 
-            if (currentQueue.room === roomNumber.toString()) {
-                calledQueues.push(currentQueue.queue);
-            }
-
+            // Calculate the next queue number
             const newQueueNumber = (calledQueues.length > 0 ? Math.max(...calledQueues) : 0) + 1;
+
+            // Update current queue
             currentQueue = { room: roomNumber.toString(), queue: newQueueNumber };
 
+            // Update localStorage
             localStorage.setItem('currentQueue', JSON.stringify(currentQueue));
+            calledQueues.push(newQueueNumber);
             localStorage.setItem(queuesKey, JSON.stringify(calledQueues));
 
+            // Update Vue instance data
             this.currentQueue = currentQueue;
             this.speakQueue(currentQueue);
         },
@@ -71,6 +74,6 @@ new Vue({
         }
     },
     mounted() {
-        // ลบฟังก์ชัน updateQueueTable ออก ถ้าไม่ใช้
+        // Initialize if needed
     }
 });
