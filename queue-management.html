@@ -7,29 +7,46 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <h1>จัดการคิว</h1>
-        <div class="controls">
-            <label for="room-select">เลือกห้อง:</label>
-            <select v-model="selectedRoom" id="room-select">
-                <option v-for="room in rooms" :value="room.roomNumber">{{ room.roomNumber }}</option>
-            </select>
-
-            <button @click="callNextQueue">เรียกคิวถัดไป</button>
-            <button @click="resetQueues">รีเซ็ตคิว</button>
-        </div>
-
-        <div class="grid-container">
-            <div v-for="room in rooms" :key="room.roomNumber" class="room">
-                <h2>ห้อง {{ room.roomNumber }}</h2>
-                <p>คิวปัจจุบัน: {{ room.currentQueue }}</p>
-                <h3>คิวที่เรียกไปแล้ว</h3>
-                <ul>
-                    <li v-for="queue in room.calledQueues" :key="queue">คิว {{ queue }}</li>
-                </ul>
-            </div>
-        </div>
+<div id="app">
+  <!-- ส่วนแสดงหมายเลขคิวถัดไป -->
+  <div style="text-align: center; margin: 20px;">
+    <h1>หมายเลขคิวถัดไป:</h1>
+    <div style="font-size: 48px; font-weight: bold; color: red;">
+      {{ currentQueue }}
     </div>
+  </div>
+
+  <!-- ตัวเลือกห้องและปุ่มเรียกคิว -->
+  <div class="queue-management">
+    <label for="room-select">เลือกห้อง:</label>
+    <select v-model="selectedRoom" id="room-select">
+      <option v-for="room in rooms" :value="room.roomNumber">
+        ห้อง {{ room.roomNumber }}
+      </option>
+    </select>
+    <button @click="callNextQueue">เรียกคิว</button>
+    <button @click="resetQueues">เริ่มต้นคิวใหม่</button>
+  </div>
+  
+  <!-- ตารางแสดงคิวแต่ละห้อง -->
+  <div class="queue-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ห้อง</th>
+          <th>คิวที่เรียกไปแล้ว</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in rooms" :key="room.roomNumber">
+          <td>ห้อง {{ room.roomNumber }}</td>
+          <td>{{ room.calledQueues.join(', ') || 'ยังไม่มีคิว' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="app.js"></script>
