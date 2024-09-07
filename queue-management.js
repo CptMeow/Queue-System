@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const numberOfRooms = 7; // จำนวนห้องที่กำหนดไว้ล่วงหน้า
+    const numberOfRooms = 7;
 
     function addRoomOptions() {
         const roomSelect = document.getElementById('roomSelect');
         if (roomSelect) {
-            roomSelect.innerHTML = ''; // ล้างตัวเลือกห้องก่อนหน้า
+            roomSelect.innerHTML = '';
 
             for (let i = 1; i <= numberOfRooms; i++) {
                 let option = document.createElement('option');
@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
             saveCurrentQueue(nextQueueNumber, selectedRoom);
 
             // เรียกใช้ฟังก์ชันเสียง
-            playAudio(`เสียงเรียกคิว ${nextQueueNumber} ห้อง ${selectedRoom}.mp3`);
+            playQueueAudio(nextQueueNumber, selectedRoom);
 
             // อัพเดตหน้าจอแสดงคิว
-            updateQueueDisplay(selectedRoom, nextQueueNumber);
+            updateQueueDisplays();
         } else {
             console.error("ไม่มีคิวปัจจุบันในการเรียกหรือห้องไม่ถูกต้อง");
         }
@@ -80,25 +80,27 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('currentQueue');
     }
 
-    function playAudio(filename) {
-        const audio = new Audio(`audio/${filename}`);
-        audio.play().catch(error => console.error("ไม่สามารถเล่นเสียงได้:", error));
+    function playQueueAudio(queueNumber, roomNumber) {
+        const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'th-TH'; // ภาษาไทย
+        utterance.pitch = 1; // ความสูงของเสียง
+        utterance.rate = 1; // ความเร็วของเสียง
+
+        speechSynthesis.speak(utterance);
     }
 
-    function updateQueueDisplay(roomNumber, queueNumber) {
-        fetch('queue-display.html')
-            .then(response => response.text())
-            .then(html => {
-                let parser = new DOMParser();
-                let doc = parser.parseFromString(html, 'text/html');
-                let queueSpan = doc.getElementById(`currentQueue-${roomNumber}`);
-                if (queueSpan) {
-                    queueSpan.innerText = queueNumber;
-                } else {
-                    console.error(`ไม่พบ <span> สำหรับห้อง ${roomNumber}`);
-                }
-            })
-            .catch(error => console.error("เกิดข้อผิดพลาดในการดึงหน้าแสดงคิว:", error));
+    function updateQueueDisplays() {
+        const queueDisplays = document.querySelectorAll('[id^="currentQueue-"]');
+        queueDisplays.forEach(span => {
+            const roomNumber = span.id.split('-')[1];
+            let currentQueue = loadCurrentQueue();
+            if (currentQueue && currentQueue.room == roomNumber) {
+                span.textContent = currentQueue.queue;
+            } else {
+                span.textContent = 'ไม่มีคิว';
+            }
+        });
     }
 
     // เริ่มต้นระบบ
@@ -110,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('clearQueueButton').addEventListener('click', function() {
         clearAllQueues();
-        updateQueueDisplay(); // อัพเดตหน้าจอหลังจากล้างคิว
+        updateQueueDisplays(); // อัพเดตหน้าจอหลังจากล้างคิว
     });
 
     addRoomOptions();
