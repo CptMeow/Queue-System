@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             option.textContent = `ห้อง ${i}`;
             roomSelect.appendChild(option);
         }
+        console.log("เพิ่มตัวเลือกห้องใน select box:", numberOfRooms);
     }
 
     // ฟังก์ชันเพื่อสร้างรายการคิวสำหรับแต่ละห้อง
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             queueList.appendChild(queueItem);
         }
+        console.log("สร้างรายการคิวเสร็จสิ้น");
     }
 
     // ฟังก์ชันโหลดคิวปัจจุบันจาก LocalStorage
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveCurrentQueue(queueNumber, roomNumber) {
         const queueData = { queue: queueNumber, room: roomNumber };
         localStorage.setItem('currentQueue', JSON.stringify(queueData));
+        console.log("บันทึกคิวปัจจุบันลง LocalStorage:", queueData);
     }
 
     // ฟังก์ชันอัพเดตคิวที่เรียกไปแล้ว
@@ -93,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ฟังก์ชันเรียกคิวใหม่เมื่อกดปุ่ม
     document.getElementById('callQueueButton').addEventListener('click', function() {
+        console.log("กดปุ่มเรียกคิวใหม่");
         callNextQueue();
     });
 
