@@ -12,18 +12,18 @@
             <h1>ระบบแสดงคิวโรงพยาบาล</h1>
         </header>
         <main>
-            <div class="info-box">
-                <h2>หมายเลขคิวล่าสุด:</h2>
-                <div id="currentQueueDisplay">
-                    <!-- ข้อมูลหมายเลขคิวล่าสุดจะถูกแทรกที่นี่โดย JavaScript -->
-                </div>
-            </div>
-            <div class="info-box">
-                <h2>คิวที่เรียกไปแล้วล่าสุด 5 คิว:</h2>
-                <div id="recentQueuesDisplay">
-                    <!-- ข้อมูลคิวล่าสุด 5 คิวจะถูกแทรกที่นี่โดย JavaScript -->
-                </div>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ห้อง</th>
+                        <th>หมายเลขคิวล่าสุด</th>
+                        <th>คิวที่เรียกไปแล้วล่าสุด 5 คิว</th>
+                    </tr>
+                </thead>
+                <tbody id="queueTableBody">
+                    <!-- ข้อมูลคิวจะถูกแทรกที่นี่โดย JavaScript -->
+                </tbody>
+            </table>
         </main>
     </div>
     <script src="queue-display.js"></script>
