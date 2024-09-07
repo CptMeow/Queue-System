@@ -12,6 +12,14 @@ function saveCurrentQueue(queueNumber) {
     localStorage.setItem('currentQueue', queueNumber);
 }
 
+// ฟังก์ชันอัพเดตคิวที่เรียกไปแล้ว
+function updateCalledQueue(roomNumber) {
+    let calledQueue = localStorage.getItem(`calledQueue-${roomNumber}`) || 0;
+    calledQueue++;
+    localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
+}
+
+
 // ฟังก์ชันล้างคิว
 function clearQueue() {
     currentQueueNumber = 1; // รีเซ็ตคิวกลับไปที่ 1
