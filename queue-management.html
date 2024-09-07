@@ -3,31 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>การจัดการคิว</title>
+    <title>จัดการคิว</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>ระบบจัดการคิวโรงพยาบาล</h1>
-        <div id="queue-management">
-            <!-- ปุ่มเรียกคิวสำหรับห้องต่าง ๆ -->
-            <div id="roomButtons" class="button-container">
-                <!-- ใช้ JavaScript เพื่อสร้างปุ่มเหล่านี้โดยอัตโนมัติ -->
+        <header>
+            <h1>ระบบจัดการคิวโรงพยาบาล</h1>
+        </header>
+        <main>
+            <div id="roomButtons">
+                <!-- ปุ่มเรียกคิวจะถูกแทรกที่นี่โดย JavaScript -->
             </div>
-            <div id="currentQueueDisplay" class="info-box">
-                <h2>หมายเลขคิวปัจจุบัน:</h2>
-                <div id="currentQueueList">
-                    <!-- ข้อมูลหมายเลขคิวปัจจุบันจะถูกแทรกที่นี่โดย JavaScript -->
-                </div>
+            <div id="currentQueueInfo">
+                <!-- ข้อมูลคิวปัจจุบันจะถูกแทรกที่นี่โดย JavaScript -->
             </div>
-            <div id="recentQueuesDisplay" class="info-box">
-                <h2>คิวที่เรียกไปแล้วล่าสุด 5 คิว:</h2>
-                <div id="recentQueuesList">
-                    <!-- ข้อมูลคิวล่าสุด 5 คิวจะถูกแทรกที่นี่โดย JavaScript -->
-                </div>
+            <div id="recentQueueInfo">
+                <!-- ข้อมูลคิวที่เรียกไปแล้วล่าสุด 5 คิวจะถูกแทรกที่นี่โดย JavaScript -->
             </div>
-            <button id="clearQueuesButton" class="action-button">ล้างคิวทั้งหมด</button>
-        </div>
+        </main>
     </div>
     <script src="queue-management.js"></script>
 </body>
