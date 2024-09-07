@@ -16,7 +16,7 @@ function updateCalledQueue(roomNumber) {
         queues = [];
     }
 
-    const currentQueueNumber = (queues.length > 0) ? parseInt(queues[queues.length - 1].split(' ')[1]) + 1 : 1;
+    const currentQueueNumber = queues.length > 0 ? Math.max(...queues.map(q => parseInt(q.split(' ')[1]))) + 1 : 1;
     queues.push(`คิว ${currentQueueNumber}`); // เพิ่มคิวใหม่
 
     if (queues.length > maxRecentQueues) {
@@ -74,7 +74,7 @@ function updateQueueDisplay() {
         const currentQueueNumber = (currentQueue.room === i.toString()) ? currentQueue.queue : 'ไม่มีคิวปัจจุบัน';
 
         const roomDiv = document.createElement('div');
-        roomDiv.textContent = `ห้อง ${i}: ${currentQueueNumber}`;
+        roomDiv.textContent = `ห้อง ${i}: คิวปัจจุบัน ${currentQueueNumber}`;
         currentQueueList.appendChild(roomDiv);
 
         const recentQueues = getRecentQueues(i);
