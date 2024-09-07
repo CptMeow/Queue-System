@@ -1,44 +1,48 @@
+/* styles.css */
+
+/* CSS สำหรับ queue-management.html */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-}
-
-.container {
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-}
-
-.section {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-}
-
-.section h1, .section h2 {
-    margin: 0;
-    color: #333;
-}
-
-.section p {
-    margin: 5px 0;
-    color: #666;
-}
-
-#queueList {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
-.queue-item {
+select, button {
+    margin: 10px;
     padding: 10px;
+    font-size: 16px;
+}
+
+/* CSS สำหรับ queue-display.html */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+}
+
+th, td {
     border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fafafa;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
