@@ -68,11 +68,6 @@ li {
   margin-top: 20px;
 }
 
-.queue-table {
-  margin-top: 40px;
-  width: 100%;
-  max-width: 600px;
-}
 
 .queue-table table {
   width: 100%;
@@ -80,13 +75,23 @@ li {
 }
 
 .queue-table th, .queue-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: center;
+  border: 1px solid #ddd;
+  font-size: 18px;
 }
 
 .queue-table th {
-  background-color: #f2f2f2;
+  background-color: #007bff;
+  color: white;
+}
+
+.queue-table td {
+  font-size: 24px;
+}
+
+.queue-table tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
 button {
