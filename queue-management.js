@@ -32,15 +32,42 @@ function saveCurrentQueue(queueNumber, roomNumber) {
 }
 
 function callNextQueue(roomNumber) {
+    // รับคิวปัจจุบันจาก localStorage
     let currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
-    const queueNumber = (currentQueue.queue || 0) + 1;
+    const queuesKey = `calledQueue-${roomNumber}`;
+    let calledQueues = JSON.parse(localStorage.getItem(queuesKey)) || [];
 
-    saveCurrentQueue(queueNumber, roomNumber);
-    updateCalledQueue(roomNumber);
-    speakQueue(queueNumber, roomNumber); // เรียกใช้ฟังก์ชันพูด
+    if (currentQueue.room === roomNumber.toString()) {
+        // ถ้าคิวปัจจุบันยังคงเป็นห้องเดิม ให้เพิ่มคิวที่เรียกไปแล้ว
+        calledQueues.push(currentQueue.queue);
+    }
 
-    // อัปเดตหน้าจอจัดการคิว
-    updateQueueDisplay();
+    // เพิ่มคิวใหม่
+    const newQueueNumber = (calledQueues.length > 0 ? Math.max(...calledQueues) : 0) + 1;
+    currentQueue = { room: roomNumber.toString(), queue: newQueueNumber };
+
+    // บันทึกคิวปัจจุบันและคิวที่เรียกไปแล้วใน localStorage
+    localStorage.setItem('currentQueue', JSON.stringify(currentQueue));
+    localStorage.setItem(queuesKey, JSON.stringify(calledQueues));
+
+    // อัพเดทข้อมูลในหน้าจอ
+    updateQueueTable();
+}
+
+function updateQueueTable() {
+    // แสดงข้อมูลคิวในหน้าเจ้าหน้าที่
+    const roomElements = document.querySelectorAll('.room-info');
+    roomElements.forEach(roomElement => {
+        const roomNumber = parseInt(roomElement.dataset.room, 10);
+        const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
+        const currentQueueNumber = (currentQueue.room === roomNumber.toString()) ? `คิว ${currentQueue.queue}` : 'ไม่มีคิวปัจจุบัน';
+
+        const queuesString = localStorage.getItem(`calledQueue-${roomNumber}`);
+        const recentQueues = (queuesString ? JSON.parse(queuesString) : []).slice(-5);
+
+        roomElement.querySelector('.current-queue').textContent = currentQueueNumber;
+        roomElement.querySelector('.recent-queues').textContent = recentQueues.join(', ') || 'ไม่มีคิวที่เรียกไปแล้ว';
+    });
 }
 
 function getRecentQueues(roomNumber) {
@@ -85,6 +112,8 @@ function updateQueueDisplay() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    updateQueueTable();
+    
     const roomButtonsContainer = document.getElementById('roomButtons');
 
     // สร้างปุ่มสำหรับแต่ละห้อง
