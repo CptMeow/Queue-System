@@ -4,11 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getRecentQueues(roomNumber) {
         const calledQueueKey = `calledQueue-${roomNumber}`;
-        const queues = localStorage.getItem(calledQueueKey);
-        if (queues) {
-            return JSON.parse(queues).slice(-maxRecentQueues);
+        const queuesString = localStorage.getItem(calledQueueKey);
+
+        let queues = [];
+        if (queuesString) {
+            try {
+                queues = JSON.parse(queuesString);
+                // ตรวจสอบว่า queues เป็นอาเรย์
+                if (!Array.isArray(queues)) {
+                    queues = [];
+                }
+            } catch (e) {
+                console.error('Error parsing queues:', e);
+                queues = [];
+            }
         }
-        return [];
+        return queues.slice(-maxRecentQueues);
     }
 
     function updateQueueTable() {
