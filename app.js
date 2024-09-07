@@ -51,7 +51,7 @@ new Vue({
             this.speakQueue(currentQueue);
         },
         speakQueue(queue) {
-            const queueText = `ห้อง ${queue.room}, คิว ${queue.queue}`;
+            const queueText = `เชิญหมายเลข ${queue.queue} ที่ห้อง ${queue.room}`;
             const utterance = new SpeechSynthesisUtterance(queueText);
             utterance.lang = 'th-TH'; // ภาษาไทย
             utterance.rate = 0.8; // ความเร็วของเสียงพูด
