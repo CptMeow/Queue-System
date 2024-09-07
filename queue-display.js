@@ -1,6 +1,7 @@
 new Vue({
   el: '#app',
   data: {
+    time: this.getCurrentTime(),
     rooms: [
       { roomNumber: 1, currentQueue: null, calledQueues: [] },
       { roomNumber: 2, currentQueue: null, calledQueues: [] },
@@ -12,10 +13,20 @@ new Vue({
     ]
   },
   mounted() {
+    setInterval(() => {
+      this.time = this.getCurrentTime();
+    }, 1000);
     this.loadQueueData();
     window.addEventListener('storage', this.loadQueueData);
   },
   methods: {
+     getCurrentTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    },
     loadQueueData() {
       const storedData = JSON.parse(localStorage.getItem('queueData'));
       if (storedData) {
