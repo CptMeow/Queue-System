@@ -119,4 +119,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ตรวจสอบและติดตั้ง Event Listener
     document.getElementById('callQueueButton').addEventListener('click', function() {
-        console.log("กดปุ่มเรียกค
+        console.log("กดปุ่มเรียกคิวใหม่");
+        callNextQueue();
+    });
+
+    document.getElementById('clearQueueButton').addEventListener('click', function() {
+        console.log("กดปุ่มล้างคิว");
+        clearAllQueues();
+    });
+
+    document.getElementById('addRoomButton').addEventListener('click', function() {
+        console.log("กดปุ่มเพิ่มห้องใหม่");
+        addRoom();
+    });
+
+    // เรียกใช้ฟังก์ชันเพิ่มห้องและสร้างรายการคิว
+    addRoom();
+    createQueueItems();
+});
