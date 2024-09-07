@@ -71,9 +71,6 @@ new Vue({
         }
     },
     mounted() {
-        this.$nextTick(() => {
-            // ปรับปรุงตารางคิวหลังจาก DOM ถูกสร้างแล้ว
-            this.updateQueueTable();
-        });
+        // ลบฟังก์ชัน updateQueueTable ออก ถ้าไม่ใช้
     }
 });
