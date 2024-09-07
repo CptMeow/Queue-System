@@ -1,51 +1,59 @@
-/* styles.css */
-
 body {
     font-family: Arial, sans-serif;
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
     background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
 }
 
 h1 {
     text-align: center;
-    margin: 20px 0;
 }
 
-#app {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.room {
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.controls {
+    margin-top: 20px;
+    text-align: center;
 }
 
 button {
-    font-size: 1.1em;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
     padding: 10px 20px;
-    margin: 5px;
+    margin: 0 10px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+button:hover {
+    background-color: #0056b3;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
+select {
     padding: 10px;
-    text-align: left;
+    margin-right: 10px;
 }
 
-th {
-    background-color: #f4f4f4;
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    background-color: #e9ecef;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
 }
