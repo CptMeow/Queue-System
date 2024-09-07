@@ -3,29 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าจอจัดการคิว</title>
+    <title>จัดการคิว</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script src="app.js" defer></script>
 </head>
 <body>
     <div id="app">
-        <h1>ระบบจัดการคิวโรงพยาบาล</h1>
-        <div id="roomButtons">
-            <button v-for="room in roomQueues" :key="room" @click="callNextQueue(room)">
-                เรียกคิวห้อง {{ room }}
-            </button>
+        <h1>จัดการคิว</h1>
+        <div v-for="room in roomQueues" :key="room">
+            <h2>ห้อง {{ room }}</h2>
+            <p>คิวปัจจุบัน: {{ getCurrentQueueForRoom(room) }}</p>
+            <button @click="callNextQueue(room)">เรียกคิวถัดไป</button>
         </div>
-        <div id="currentQueueInfo">
-            <h2>คิวปัจจุบัน:</h2>
-            <div>ห้อง {{ currentQueue.room }}: {{ getCurrentQueue }}</div>
-        </div>
-        <div id="recentQueueInfo">
-            <h2>คิวที่เรียกไปแล้ว:</h2>
-            <div v-for="room in roomQueues" :key="room">
-                ห้อง {{ room }}: {{ getRecentQueues[room].join(', ') || 'ไม่มีคิวที่เรียกไปแล้ว' }}
-            </div>
-        </div>
+        <button @click="startNewQueue" class="start-new-queue-button">เริ่มต้นคิวใหม่</button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
 </body>
 </html>
