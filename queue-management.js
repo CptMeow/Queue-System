@@ -121,5 +121,5 @@ document.addEventListener('DOMContentLoaded', function() {
         clearAllQueues();
     });
 
-    createQueueItems();
+    addRoom();
 });
