@@ -16,7 +16,7 @@ function updateCalledQueue(roomNumber) {
         queues = [];
     }
 
-    const currentQueueNumber = queues.length + 1;
+    const currentQueueNumber = (queues.length > 0) ? parseInt(queues[queues.length - 1].split(' ')[1]) + 1 : 1;
     queues.push(`คิว ${currentQueueNumber}`); // เพิ่มคิวใหม่
 
     if (queues.length > maxRecentQueues) {
