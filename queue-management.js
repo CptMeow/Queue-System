@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!selectedRoom) {
             return;
         }
+        console.log(1,selectedRoom);
 
         let currentQueue = loadCurrentQueue();
         if (currentQueue && currentQueue.room == selectedRoom) {
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // อัพเดตหน้าจอแสดงคิว
             updateQueueDisplays();
         }
+        console.log(2,currentQueue);
     }
 
     function clearAllQueues() {
@@ -77,15 +79,33 @@ document.addEventListener('DOMContentLoaded', function() {
         updateQueueDisplays();
     }
 
-    function playQueueAudio(queueNumber, roomNumber) {
-        const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'th-TH'; // ภาษาไทย
-        utterance.pitch = 1; // ความสูงของเสียง
-        utterance.rate = 0.4; // ความเร็วของเสียง (ต่ำกว่า 1 ทำให้เสียงช้าลง)
+function playQueueAudio(queueNumber, roomNumber) {
+    const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
+    const utterance = new SpeechSynthesisUtterance(text);
 
-        speechSynthesis.speak(utterance);
+    // กำหนดภาษาที่ใช้
+    utterance.lang = 'th-TH'; // ภาษาไทย
+
+    // กำหนดความสูงของเสียงและความเร็วของเสียง
+    utterance.pitch = 1; // ความสูงของเสียง
+    utterance.rate = 0.6; // ความเร็วของเสียง
+
+    // ค้นหาเสียงที่เป็นผู้หญิง
+    const voices = speechSynthesis.getVoices();
+    const femaleVoice = voices.find(voice => voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('หญิง'));
+    
+    // หากพบเสียงที่เป็นผู้หญิง กำหนดให้กับ utterance
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    } else {
+        // ถ้าไม่พบเสียงที่เป็นผู้หญิง ให้ใช้เสียงที่ตั้งค่าเริ่มต้น
+        console.warn("ไม่พบเสียงผู้หญิงที่กำหนด");
     }
+
+    // เรียกใช้ SpeechSynthesis
+    speechSynthesis.speak(utterance);
+}
+
 
     function updateQueueDisplays() {
         // สร้างเหตุการณ์ใหม่เพื่อกระตุ้นการอัพเดต
