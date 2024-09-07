@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าจอรอคิว</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หน้าจอรอคิว</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="app">
+  <div id="app">
     <div class="clock">{{ time }}</div>
-  <div class="queue-table">
-    <table>
-      <thead>
-        <tr>
-          <th>ห้อง</th>
-          <th>คิวปัจจุบัน</th>
-          <th>คิวที่เรียกไปแล้วล่าสุด 5 คิว</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="room in rooms" :key="room.roomNumber">
-          <td>ห้อง {{ room.roomNumber }}</td>
-          <td>{{ room.currentQueue !== null ? room.currentQueue : 'ไม่มีคิว' }}</td>
-          <td>{{ room.calledQueues.join(', ') || 'ยังไม่มีคิว' }}</td>
-        </tr>
-      </tbody>
+    <h1>คิวปัจจุบัน</h1>
+    <table id="queueTable">
+      <!-- ตารางคิวปัจจุบันจะถูกสร้างขึ้นที่นี่ -->
+    </table>
+    <h1>คิวที่เรียกไปแล้ว</h1>
+    <table id="calledQueueTable">
+      <!-- ตารางคิวที่เรียกไปแล้วจะถูกสร้างขึ้นที่นี่ -->
     </table>
   </div>
-</div>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script src="queue-display.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="queue-display.js"></script>
 </body>
 </html>
