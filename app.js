@@ -4,31 +4,16 @@ new Vue({
         numberOfRooms: 7,
         currentQueue: JSON.parse(localStorage.getItem('currentQueue')) || {},
         roomQueues: Array.from({ length: 7 }, (_, i) => i + 1),
-        queues: {}
     },
     computed: {
-        getCurrentQueue() {
-            return this.currentQueue.room ? `คิว ${this.currentQueue.queue}` : 'ไม่มีคิวปัจจุบัน';
-        },
-        getRecentQueues() {
-            const recentQueues = {};
-            for (let i = 1; i <= this.numberOfRooms; i++) {
-                const queuesString = localStorage.getItem(`calledQueue-${i}`);
-                let queues = [];
-                if (queuesString) {
-                    try {
-                        queues = JSON.parse(queuesString);
-                        if (!Array.isArray(queues)) {
-                            queues = [];
-                        }
-                    } catch (e) {
-                        console.error('Error parsing queues:', e);
-                        queues = [];
-                    }
+        getCurrentQueueForRoom() {
+            return roomNumber => {
+                const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
+                if (currentQueue.room === roomNumber.toString()) {
+                    return `คิว ${currentQueue.queue}`;
                 }
-                recentQueues[i] = queues.slice(-5);
-            }
-            return recentQueues;
+                return 'ไม่มีคิวปัจจุบัน';
+            };
         }
     },
     methods: {
@@ -59,27 +44,6 @@ new Vue({
             }
 
             speechSynthesis.speak(utterance);
-        },
-        getCurrentQueueForRoom(roomNumber) {
-            const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
-            if (currentQueue.room === roomNumber.toString()) {
-                return `คิว ${currentQueue.queue}`;
-            }
-            return 'ไม่มีคิวปัจจุบัน';
-        },
-        startNewQueue() {
-            if (confirm("คุณแน่ใจว่าต้องการเริ่มต้นคิวใหม่? ข้อมูลคิวปัจจุบันทั้งหมดจะถูกล้าง.")) {
-                // Clear current queue and called queues
-                localStorage.removeItem('currentQueue');
-                for (let i = 1; i <= this.numberOfRooms; i++) {
-                    localStorage.removeItem(`calledQueue-${i}`);
-                }
-                // Reset Vue instance data
-                this.currentQueue = {};
-            }
         }
-    },
-    mounted() {
-        // Initialize if needed
     }
 });
