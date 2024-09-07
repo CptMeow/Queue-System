@@ -1,4 +1,3 @@
-// app.js
 new Vue({
     el: '#app',
     data: {
@@ -62,10 +61,18 @@ new Vue({
             }
 
             speechSynthesis.speak(utterance);
+        },
+        getCurrentQueueForRoom(roomNumber) {
+            const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
+            if (currentQueue.room === roomNumber.toString()) {
+                return `คิว ${currentQueue.queue}`;
+            }
+            return 'ไม่มีคิวปัจจุบัน';
         }
     },
     mounted() {
         this.$nextTick(() => {
+            // ปรับปรุงตารางคิวหลังจาก DOM ถูกสร้างแล้ว
             this.updateQueueTable();
         });
     }
