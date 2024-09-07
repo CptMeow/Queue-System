@@ -1,63 +1,49 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const numberOfRooms = 7;
-    const maxRecentQueues = 5;
+// queue-display.js
 
-    function getCurrentQueue(roomNumber) {
+const numberOfRooms = 7;
+const maxRecentQueues = 5;
+
+function updateQueueTable() {
+    const currentQueueDisplay = document.getElementById('currentQueueDisplay');
+    const recentQueuesDisplay = document.getElementById('recentQueuesDisplay');
+
+    currentQueueDisplay.innerHTML = '';
+    recentQueuesDisplay.innerHTML = '';
+
+    for (let i = 1; i <= numberOfRooms; i++) {
         const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
-        if (currentQueue.room === roomNumber.toString()) {
-            return `คิว ${currentQueue.queue}`;
-        }
-        return 'ไม่มีคิวปัจจุบัน';
+        const currentQueueNumber = (currentQueue.room === i.toString()) ? `คิว ${currentQueue.queue}` : 'ไม่มีคิวปัจจุบัน';
+
+        const roomDiv = document.createElement('div');
+        roomDiv.textContent = `ห้อง ${i}: ${currentQueueNumber}`;
+        currentQueueDisplay.appendChild(roomDiv);
+
+        const recentQueues = getRecentQueues(i);
+        const recentQueuesDiv = document.createElement('div');
+        recentQueuesDiv.textContent = `ห้อง ${i}: ${recentQueues.join(', ') || 'ไม่มีคิวที่เรียกไปแล้ว'}`;
+        recentQueuesDisplay.appendChild(recentQueuesDiv);
     }
+}
 
-    function getRecentQueues(roomNumber) {
-        const calledQueueKey = `calledQueue-${roomNumber}`;
-        const queuesString = localStorage.getItem(calledQueueKey);
+function getRecentQueues(roomNumber) {
+    const queuesString = localStorage.getItem(`calledQueue-${roomNumber}`);
+    let queues = [];
 
-        let queues = [];
-        if (queuesString) {
-            try {
-                queues = JSON.parse(queuesString);
-                if (!Array.isArray(queues)) {
-                    queues = [];
-                }
-            } catch (e) {
-                console.error('Error parsing queues:', e);
+    if (queuesString) {
+        try {
+            queues = JSON.parse(queuesString);
+            if (!Array.isArray(queues)) {
                 queues = [];
             }
-        }
-        return queues.slice(-maxRecentQueues);
-    }
-
-    function updateQueueTable() {
-        const tableBody = document.getElementById('queueTableBody');
-        tableBody.innerHTML = '';
-
-        for (let i = 1; i <= numberOfRooms; i++) {
-            const currentQueue = getCurrentQueue(i);
-            const recentQueues = getRecentQueues(i);
-
-            const row = document.createElement('tr');
-            const roomCell = document.createElement('td');
-            const currentQueueCell = document.createElement('td');
-            const queuesCell = document.createElement('td');
-
-            roomCell.textContent = `ห้อง ${i}`;
-            currentQueueCell.textContent = currentQueue;
-            queuesCell.textContent = recentQueues.length > 0 ? recentQueues.join(', ') : 'ไม่มีคิว';
-
-            row.appendChild(roomCell);
-            row.appendChild(currentQueueCell);
-            row.appendChild(queuesCell);
-            tableBody.appendChild(row);
+        } catch (e) {
+            console.error('Error parsing queues:', e);
+            queues = [];
         }
     }
 
-    function loadQueueData() {
-        updateQueueTable();
-    }
+    return queues.slice(-maxRecentQueues);
+}
 
-    loadQueueData();
-
-    setInterval(loadQueueData, 5000);
+document.addEventListener('DOMContentLoaded', function() {
+    updateQueueTable();
 });
