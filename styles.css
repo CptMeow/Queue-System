@@ -1,51 +1,48 @@
 /* styles.css */
-
 body {
     font-family: Arial, sans-serif;
-    font-size: 1.2em;
-    line-height: 1.6;
+    text-align: center;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
 h1 {
-    text-align: center;
-    margin: 20px 0;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-#app {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
     padding: 20px;
+}
+
+.grid-item {
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 button {
-    font-size: 1.1em;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
     padding: 10px 20px;
-    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #f4f4f4;
+button:hover {
+    background-color: #45a049;
 }
