@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const queueList = document.getElementById('queueList');
         const currentQueue = loadCurrentQueue();
 
+        console.log("โหลดคิวปัจจุบัน:", currentQueue);
+
         for (let i = 1; i <= numberOfRooms; i++) {
             let queueItem = document.createElement('div');
             queueItem.className = 'queue-item';
@@ -14,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // จำนวนคิวที่เรียกไปแล้ว
             let calledQueue = localStorage.getItem(`calledQueue-${i}`) || 0;
+            console.log(`คิวที่เรียกไปแล้วในห้อง ${i}:`, calledQueue);
 
             queueItem.innerHTML = `
                 <h2>ห้อง ${i}</h2>
@@ -28,16 +31,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadCurrentQueue() {
         let savedQueue = localStorage.getItem('currentQueue');
         if (savedQueue) {
+            console.log("คิวที่บันทึกไว้ใน LocalStorage:", savedQueue);
             return parseInt(savedQueue, 10);
         }
+        console.log("ไม่มีคิวใน LocalStorage");
         return null;
     }
 
     // ฟังก์ชันอัพเดตคิวที่เรียกไปแล้ว
     function updateCalledQueue(roomNumber) {
         let calledQueue = localStorage.getItem(`calledQueue-${roomNumber}`) || 0;
+        console.log(`อัพเดตคิวที่เรียกไปแล้วในห้อง ${roomNumber}:`, calledQueue);
         calledQueue++;
         localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
+        console.log(`คิวที่เรียกไปแล้วในห้อง ${roomNumber} หลังจากอัพเดต:`, calledQueue);
     }
 
     // เรียกใช้ฟังก์ชันสร้างรายการคิว
@@ -48,15 +55,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentQueue = loadCurrentQueue();
         if (currentQueue) {
             let roomNumber = Math.ceil(currentQueue / 10); // ตัวอย่างการเลือกห้องตามหมายเลขคิว
+            console.log("เรียกคิวสำหรับห้อง:", roomNumber);
+
             updateCalledQueue(roomNumber);
 
             // อัพเดตคิวปัจจุบัน
             localStorage.setItem('currentQueue', currentQueue + 1);
             const newCurrentQueue = currentQueue + 1;
+            console.log("คิวปัจจุบันใหม่:", newCurrentQueue);
+
             const queueSpan = document.getElementById(`currentQueue-${roomNumber}`);
             if (queueSpan) {
                 queueSpan.innerText = newCurrentQueue;
+                console.log("อัพเดตคิวปัจจุบันใน DOM:", newCurrentQueue);
+            } else {
+                console.log(`ไม่พบ <span> สำหรับห้อง ${roomNumber}`);
             }
+        } else {
+            console.log("ไม่มีคิวปัจจุบันในการเรียก");
         }
     }
 
