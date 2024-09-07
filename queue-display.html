@@ -3,83 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าจอแสดงผลคิว</title>
-    <link rel="stylesheet" href="style.css">
+    <title>หน้าจอแสดงคิว</title>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
+        body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
         }
         .container {
-            height: 100%;
+            width: 100%;
+            height: 100vh; /* ใช้ความสูงเต็มหน้าจอ */
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             padding: 20px;
-            box-sizing: border-box;
         }
-        .section {
-            width: 100%;
-            max-width: 1000px;
+        h1 {
             margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fff;
         }
-        .section h1, .section h2 {
-            margin: 0;
-            color: #333;
-        }
-        .section p {
-            margin: 5px 0;
-            color: #666;
-        }
-        #queueList {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .queue-item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fafafa;
-        }
-        .queue-item h2 {
-            margin: 0;
-        }
-        .queue-item p {
-            margin: 5px 0;
-        }
-        .full-width {
+        .info, .queue-table, .contact {
+            margin: 20px 0;
             width: 100%;
+            max-width: 1200px; /* กำหนดความกว้างสูงสุด */
+        }
+        .info p, .contact p {
             text-align: center;
+            font-size: 1.2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ส่วนที่ 1: ข้อความทั่วไป -->
-        <div class="section" id="hospitalInfo">
+        <div class="info">
             <h1>ชื่อโรงพยาบาล</h1>
-            <p>ยินดีต้อนรับสู่ระบบจัดการคิวของเรา</p>
+            <p>ข้อความทั่วไปเกี่ยวกับการรอคิว</p>
         </div>
 
-        <!-- ส่วนที่ 2: รายการคิว -->
-        <div class="section" id="queueList">
-            <h2 class="full-width">รายการคิวปัจจุบัน</h2>
-            <!-- คิวจะถูกสร้างและเพิ่มใน JavaScript -->
+        <!-- ส่วนแสดงตารางคิว -->
+        <div class="queue-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ห้อง</th>
+                        <th>คิวปัจจุบัน</th>
+                        <th>คิวที่เรียกไปแล้ว</th>
+                    </tr>
+                </thead>
+                <tbody id="queueTableBody">
+                    <!-- รายการคิวจะถูกเพิ่มจาก script.js -->
+                </tbody>
+            </table>
         </div>
 
-        <!-- ส่วนที่ 3: ข้อความรายละเอียดติดต่อ -->
-        <div class="section" id="contactInfo">
-            <h2>รายละเอียดติดต่อ</h2>
-            <p>โทร: 123-456-789</p>
-            <p>อีเมล: contact@hospital.com</p>
-            <p>ที่อยู่: 123 ถนนสุขุมวิท กรุงเทพฯ 10110</p>
+        <!-- ส่วนแสดงรายละเอียดติดต่อ -->
+        <div class="contact">
+            <p>รายละเอียดติดต่อโรงพยาบาล</p>
+            <button id="clearQueueButton">ล้างคิวทั้งหมด</button>
         </div>
     </div>
 
