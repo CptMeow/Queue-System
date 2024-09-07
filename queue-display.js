@@ -34,12 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadQueueData() {
-        // Load the queue data and update the display
         updateQueueTable();
     }
 
     loadQueueData();
 
-    // Update the queue display every 5 seconds
     setInterval(loadQueueData, 5000);
 });
