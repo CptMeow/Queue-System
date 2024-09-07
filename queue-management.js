@@ -18,6 +18,21 @@ function callNextQueue(roomNumber) {
     localStorage.setItem(queuesKey, JSON.stringify(calledQueues));
 
     updateQueueTable();
+    speakQueue(currentQueue);
+}
+
+function speakQueue(queue) {
+    const queueText = `ห้อง ${queue.room}, คิว ${queue.queue}`;
+    const utterance = new SpeechSynthesisUtterance(queueText);
+    utterance.lang = 'th-TH'; // ภาษาไทย
+    utterance.rate = 0.8; // ความเร็วของเสียงพูด (0.1 ถึง 2, ค่าเริ่มต้นคือ 1)
+
+    // ตรวจสอบว่ามีเสียงพูดอยู่หรือไม่
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel(); // หยุดเสียงที่กำลังเล่นอยู่
+    }
+
+    speechSynthesis.speak(utterance);
 }
 
 function updateQueueTable() {
