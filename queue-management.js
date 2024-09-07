@@ -3,15 +3,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addRoom() {
         const roomSelect = document.getElementById('roomSelect');
-        roomSelect.innerHTML = ''; // ล้างตัวเลือกห้องก่อนหน้า
+        if (roomSelect) {
+            roomSelect.innerHTML = ''; // ล้างตัวเลือกห้องก่อนหน้า
 
-        for (let i = 1; i <= numberOfRooms; i++) {
-            let option = document.createElement('option');
-            option.value = i;
-            option.textContent = `ห้อง ${i}`;
-            roomSelect.appendChild(option);
+            for (let i = 1; i <= numberOfRooms; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = `ห้อง ${i}`;
+                roomSelect.appendChild(option);
+            }
+            console.log("เพิ่มตัวเลือกห้องใน select box:", numberOfRooms);
+        } else {
+            console.error("ไม่พบ select box สำหรับห้อง");
         }
-        console.log("เพิ่มตัวเลือกห้องใน select box:", numberOfRooms);
+    }
+
+    function initializeQueue() {
+        for (let i = 1; i <= numberOfRooms; i++) {
+            // ตั้งค่าเริ่มต้นสำหรับคิวที่เรียกไปแล้ว
+            if (!localStorage.getItem(`calledQueue-${i}`)) {
+                localStorage.setItem(`calledQueue-${i}`, 0);
+            }
+        }
+        // ตั้งค่าคิวปัจจุบันเริ่มต้น
+        if (!localStorage.getItem('currentQueue')) {
+            localStorage.setItem('currentQueue', JSON.stringify({ queue: 0, room: 1 }));
+        }
     }
 
     function callNextQueue() {
@@ -77,20 +94,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function createQueueItems() {
         const roomSelect = document.getElementById('roomSelect');
-        if (!roomSelect) {
+        if (roomSelect) {
+            roomSelect.innerHTML = '';
+            for (let i = 1; i <= numberOfRooms; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = `ห้อง ${i}`;
+                roomSelect.appendChild(option);
+            }
+            console.log("สร้างรายการห้องเสร็จสิ้น");
+        } else {
             console.error("ไม่พบ select box สำหรับห้อง");
-            return;
         }
-
-        roomSelect.innerHTML = '';
-        for (let i = 1; i <= numberOfRooms; i++) {
-            let option = document.createElement('option');
-            option.value = i;
-            option.textContent = `ห้อง ${i}`;
-            roomSelect.appendChild(option);
-        }
-        console.log("สร้างรายการห้องเสร็จสิ้น");
     }
+
+    // เริ่มต้นระบบ
+    initializeQueue();
 
     document.getElementById('callQueueButton').addEventListener('click', function() {
         console.log("กดปุ่มเรียกคิวใหม่");
