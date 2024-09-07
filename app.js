@@ -1,49 +1,34 @@
 new Vue({
     el: '#app',
     data: {
-        numberOfRooms: 7,
-        currentQueue: JSON.parse(localStorage.getItem('currentQueue')) || {},
-        roomQueues: Array.from({ length: 7 }, (_, i) => i + 1),
-    },
-    computed: {
-        getCurrentQueueForRoom() {
-            return roomNumber => {
-                const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
-                if (currentQueue.room === roomNumber.toString()) {
-                    return `คิว ${currentQueue.queue}`;
-                }
-                return 'ไม่มีคิวปัจจุบัน';
-            };
+        roomQueues: [1, 2, 3, 4, 5, 6, 7], // มีห้อง 7 ห้อง
+        currentQueues: {
+            1: 1,
+            2: 1,
+            3: 1,
+            4: 1,
+            5: 1,
+            6: 1,
+            7: 1,
         }
     },
     methods: {
-        callNextQueue(roomNumber) {
-            let currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
-            const queuesKey = `calledQueue-${roomNumber}`;
-            let calledQueues = JSON.parse(localStorage.getItem(queuesKey)) || [];
-
-            const newQueueNumber = (calledQueues.length > 0 ? Math.max(...calledQueues) : 0) + 1;
-
-            currentQueue = { room: roomNumber.toString(), queue: newQueueNumber };
-
-            localStorage.setItem('currentQueue', JSON.stringify(currentQueue));
-            calledQueues.push(newQueueNumber);
-            localStorage.setItem(queuesKey, JSON.stringify(calledQueues));
-
-            this.currentQueue = currentQueue;
-            this.speakQueue(currentQueue);
+        getCurrentQueueForRoom(room) {
+            return this.currentQueues[room];
         },
-        speakQueue(queue) {
-            const queueText = `เชิญหมายเลข ${queue.queue} ที่ห้อง ${queue.room}`;
-            const utterance = new SpeechSynthesisUtterance(queueText);
-            utterance.lang = 'th-TH'; // ภาษาไทย
-            utterance.rate = 0.5; // ความเร็วของเสียงพูด
-
-            if (speechSynthesis.speaking) {
-                speechSynthesis.cancel();
+        callNextQueue(room) {
+            this.currentQueues[room]++;
+        },
+        confirmResetQueues() {
+            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการเริ่มต้นคิวใหม่? การกระทำนี้ไม่สามารถยกเลิกได้")) {
+                this.resetQueues();
             }
-
-            speechSynthesis.speak(utterance);
+        },
+        resetQueues() {
+            for (let room in this.currentQueues) {
+                this.currentQueues[room] = 1; // เริ่มคิวใหม่ที่ 1 สำหรับแต่ละห้อง
+            }
+            alert("คิวถูกรีเซ็ตเรียบร้อยแล้ว!");
         }
     }
 });
