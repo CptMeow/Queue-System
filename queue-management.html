@@ -3,58 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดการคิว</title>
+    <title>หน้าจัดการคิว</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
         .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
-        h1 {
+        .header, .footer {
             text-align: center;
+            padding: 1em;
+            background-color: #f1f1f1;
         }
-        .controls {
-            margin-bottom: 20px;
-            text-align: center;
+        .main-content {
+            flex: 1;
+            padding: 1em;
+            overflow-y: auto;
         }
-        button {
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            background-color: #007bff;
-            cursor: pointer;
-        }
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
+        select, button {
+            margin: 0.5em;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ระบบจัดการคิว</h1>
-
-        <!-- ส่วนปุ่มควบคุม -->
-        <div class="controls">
+        <div class="header">
+            <h1>ระบบจัดการคิว</h1>
+        </div>
+        <div class="main-content">
+            <select id="roomSelect">
+                <!-- ตัวเลือกห้องจะถูกเพิ่มที่นี่ -->
+            </select>
             <button id="callQueueButton">เรียกคิวถัดไป</button>
             <button id="clearQueueButton">ล้างคิวทั้งหมด</button>
         </div>
-
-        <!-- Select box สำหรับห้อง -->
-        <select id="roomSelect">
-            <!-- ตัวเลือกห้องจะถูกเพิ่มจาก script.js -->
-        </select>
+        <div class="footer">
+            <p>รายละเอียดติดต่อ: [ข้อมูลติดต่อ]</p>
+        </div>
     </div>
-
     <script src="queue-management.js"></script>
 </body>
 </html>
