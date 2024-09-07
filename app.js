@@ -1,7 +1,7 @@
 new Vue({
     el: '#app',
     data: {
-        currentQueue: 1, // คิวรวมเริ่มต้นที่ 1
+        currentQueue: 1, // คิวปัจจุบันที่จะเรียก
         rooms: [
             { roomNumber: 1, calledQueues: [] },
             { roomNumber: 2, calledQueues: [] },
@@ -11,7 +11,7 @@ new Vue({
             { roomNumber: 6, calledQueues: [] },
             { roomNumber: 7, calledQueues: [] }
         ],
-        selectedRoom: 1, // ห้องที่เลือกสำหรับการเรียกคิว
+        selectedRoom: 1 // ห้องที่เลือกเรียกคิว
     },
     mounted() {
         const storedData = JSON.parse(localStorage.getItem('queueData'));
@@ -31,14 +31,17 @@ new Vue({
                     room.calledQueues.shift(); // เก็บแค่ 5 คิวล่าสุด
                 }
 
-                this.currentQueue++;
-                this.saveQueueData(); // บันทึกข้อมูลทุกครั้งที่มีการเรียกคิว
+                this.currentQueue++; // เพิ่มหมายเลขคิวถัดไป
+                this.saveQueueData();
+
+                // Dispatch storage event manually to trigger updates on queue display
+                window.dispatchEvent(new Event('storage'));
             } else {
                 alert('ห้องที่เลือกไม่ถูกต้อง');
             }
         },
         resetQueues() {
-            if (confirm('คุณแน่ใจหรือไม่ว่าต้องการเริ่มต้นคิวใหม่? การกระทำนี้ไม่สามารถยกเลิกได้')) {
+            if (confirm('คุณแน่ใจหรือไม่ว่าต้องการเริ่มต้นคิวใหม่?')) {
                 this.currentQueue = 1;
                 this.rooms.forEach(room => {
                     room.calledQueues = [];
@@ -58,7 +61,7 @@ new Vue({
             const message = `เชิญหมายเลข ${queueNumber} ที่ห้อง ${roomNumber}`;
             const speech = new SpeechSynthesisUtterance(message);
             speech.lang = 'th-TH';
-            speech.rate = 0.8; // ปรับความเร็วเสียงให้อยู่ในระดับที่ช้าลง
+            speech.rate = 0.8; // ปรับความเร็วเสียงให้พูดช้าลง
             window.speechSynthesis.speak(speech);
         }
     }
