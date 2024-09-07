@@ -34,11 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return { queue: 0, room: 1 }; // ค่าพื้นฐานถ้าไม่มีข้อมูล
     }
 
-    function updateCalledQueue(roomNumber) {
-        let calledQueue = parseInt(localStorage.getItem(`calledQueue-${roomNumber}`)) || 0;
-        calledQueue++;
-        localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
+function updateCalledQueue(roomNumber) {
+    let queues = JSON.parse(localStorage.getItem(`calledQueue-${roomNumber}`)) || [];
+    queues.push(`คิว ${queues.length + 1}`); // เพิ่มคิวใหม่
+    if (queues.length > maxRecentQueues) {
+        queues.shift(); // ลบคิวเก่าที่สุดเมื่อถึงจำนวนที่ตั้งไว้
     }
+    localStorage.setItem(`calledQueue-${roomNumber}`, JSON.stringify(queues));
+}
+
 
     function saveCurrentQueue(queueNumber, roomNumber) {
         const queueData = { queue: queueNumber, room: parseInt(roomNumber) };
