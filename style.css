@@ -57,3 +57,49 @@ li {
     padding: 10px;
     border-radius: 5px;
 }
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.queue-management {
+  margin-top: 20px;
+}
+
+.queue-table {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.queue-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.queue-table th, .queue-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.queue-table th {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
