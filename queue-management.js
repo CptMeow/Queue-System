@@ -83,15 +83,16 @@ document.addEventListener('DOMContentLoaded', function() {
         updateQueueDisplays();
     }
 
-    function playQueueAudio(queueNumber, roomNumber) {
-        const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'th-TH'; // ภาษาไทย
-        utterance.pitch = 1; // ความสูงของเสียง
-        utterance.rate = 1; // ความเร็วของเสียง
+function playQueueAudio(queueNumber, roomNumber) {
+    const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'th-TH'; // ภาษาไทย
+    utterance.pitch = 1; // ความสูงของเสียง
+    utterance.rate = 0.8; // ความเร็วของเสียง (ต่ำกว่า 1 ทำให้เสียงช้าลง)
 
-        speechSynthesis.speak(utterance);
-    }
+    speechSynthesis.speak(utterance);
+}
+
 
     function updateQueueDisplays() {
         const event = new Event('storage');
