@@ -16,16 +16,6 @@ function saveCurrentQueue(queueNumber) {
 let currentQueueNumber = loadCurrentQueue();
 document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
 
-// เพิ่มห้องใหม่
-document.getElementById('addRoomBtn').addEventListener('click', function() {
-    let roomSelect = document.getElementById('roomSelect');
-    let newRoomNumber = roomSelect.options.length + 1;
-    let newOption = document.createElement('option');
-    newOption.value = newRoomNumber;
-    newOption.text = `ห้อง ${newRoomNumber}`;
-    roomSelect.appendChild(newOption);
-});
-
 // หน้าสำหรับจัดการคิว
 if (document.getElementById('nextQueueBtn')) {
     document.getElementById('nextQueueBtn').addEventListener('click', function() {
