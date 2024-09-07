@@ -20,14 +20,9 @@
         h1 {
             text-align: center;
         }
-        .queue-list, .controls {
+        .controls {
             margin-bottom: 20px;
-        }
-        .queue-item {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
+            text-align: center;
         }
         button {
             padding: 10px 20px;
@@ -48,9 +43,6 @@
     <div class="container">
         <h1>ระบบจัดการคิว</h1>
 
-        <!-- ส่วนแสดงรายการคิว -->
-        <div id="queueList" class="queue-list"></div>
-
         <!-- ส่วนปุ่มควบคุม -->
         <div class="controls">
             <button id="callQueueButton">เรียกคิวถัดไป</button>
@@ -63,6 +55,6 @@
         </select>
     </div>
 
-    <script src="script.js"></script>
+    <script src="queue-management.js"></script>
 </body>
 </html>
