@@ -1,45 +1,56 @@
 new Vue({
   el: '#app',
   data: {
-    time: '',  // Initialize time as an empty string
-    rooms: [
-      { roomNumber: 1, currentQueue: null, calledQueues: [] },
-      { roomNumber: 2, currentQueue: null, calledQueues: [] },
-      { roomNumber: 3, currentQueue: null, calledQueues: [] },
-      { roomNumber: 4, currentQueue: null, calledQueues: [] },
-      { roomNumber: 5, currentQueue: null, calledQueues: [] },
-      { roomNumber: 6, currentQueue: null, calledQueues: [] },
-      { roomNumber: 7, currentQueue: null, calledQueues: [] }
-    ]
+    currentQueues: [], // คิวปัจจุบันของแต่ละห้อง
+    calledQueues: [], // คิวที่ถูกเรียกไปแล้ว
+    time: ''  // เวลา
   },
   mounted() {
-    this.updateTime(); // Call the method to set initial time
-    setInterval(this.updateTime, 1000); // Update time every second
-    this.loadQueueData();
-    window.addEventListener('storage', this.loadQueueData);
+    this.updateTime(); // ตั้งเวลาเริ่มต้น
+    setInterval(this.updateTime, 1000); // อัปเดตเวลาใหม่ทุกวินาที
+    this.loadQueueData(); // โหลดข้อมูลคิว
   },
   methods: {
     updateTime() {
-      this.time = this.getCurrentTime();
-    },
-     getCurrentTime() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
-      return `${hours}:${minutes}:${seconds}`;
+      this.time = `${hours}:${minutes}:${seconds}`;
     },
     loadQueueData() {
-      const storedData = JSON.parse(localStorage.getItem('queueData'));
-      if (storedData) {
-        this.rooms.forEach(room => {
-          const roomData = storedData.rooms.find(r => r.roomNumber === room.roomNumber);
-          if (roomData) {
-            room.currentQueue = roomData.currentQueue;
-            room.calledQueues = roomData.calledQueues;
-          }
-        });
+      const storedQueueData = localStorage.getItem('queueData');
+      if (storedQueueData) {
+        const queueData = JSON.parse(storedQueueData);
+        this.currentQueues = queueData.currentQueues || [];
+        this.calledQueues = queueData.calledQueues || [];
+        this.updateQueueTable();
       }
+    },
+    updateQueueTable() {
+      const queueTable = document.getElementById('queueTable');
+      if (!queueTable) return;
+
+      queueTable.innerHTML = ''; // ล้างตารางก่อนเพิ่มข้อมูลใหม่
+
+      // สร้างตารางคิวปัจจุบัน
+      this.currentQueues.forEach(queue => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>ห้อง ${queue.room}</td><td>${queue.queueNumber}</td>`;
+        queueTable.appendChild(row);
+      });
+
+      // แสดงคิวที่เรียกไปแล้ว
+      const calledQueueTable = document.getElementById('calledQueueTable');
+      if (!calledQueueTable) return;
+
+      calledQueueTable.innerHTML = ''; // ล้างตารางก่อนเพิ่มข้อมูลใหม่
+
+      this.calledQueues.forEach(queue => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>ห้อง ${queue.room}</td><td>${queue.queueNumber}</td>`;
+        calledQueueTable.appendChild(row);
+      });
     }
   }
 });
