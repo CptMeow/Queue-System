@@ -4,24 +4,23 @@ const numberOfRooms = 7;
 const maxRecentQueues = 5;
 
 function updateQueueTable() {
-    const currentQueueDisplay = document.getElementById('currentQueueDisplay');
-    const recentQueuesDisplay = document.getElementById('recentQueuesDisplay');
-
-    currentQueueDisplay.innerHTML = '';
-    recentQueuesDisplay.innerHTML = '';
+    const queueTableBody = document.getElementById('queueTableBody');
+    queueTableBody.innerHTML = '';
 
     for (let i = 1; i <= numberOfRooms; i++) {
         const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
         const currentQueueNumber = (currentQueue.room === i.toString()) ? `คิว ${currentQueue.queue}` : 'ไม่มีคิวปัจจุบัน';
 
-        const roomDiv = document.createElement('div');
-        roomDiv.textContent = `ห้อง ${i}: ${currentQueueNumber}`;
-        currentQueueDisplay.appendChild(roomDiv);
-
         const recentQueues = getRecentQueues(i);
-        const recentQueuesDiv = document.createElement('div');
-        recentQueuesDiv.textContent = `ห้อง ${i}: ${recentQueues.join(', ') || 'ไม่มีคิวที่เรียกไปแล้ว'}`;
-        recentQueuesDisplay.appendChild(recentQueuesDiv);
+        const recentQueuesText = recentQueues.length > 0 ? recentQueues.join(', ') : 'ไม่มีคิวที่เรียกไปแล้ว';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>ห้อง ${i}</td>
+            <td>${currentQueueNumber}</td>
+            <td>${recentQueuesText}</td>
+        `;
+        queueTableBody.appendChild(row);
     }
 }
 
