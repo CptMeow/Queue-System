@@ -1,7 +1,7 @@
 new Vue({
   el: '#app',
   data: {
-    time: this.getCurrentTime(),
+    time: ''  // Initialize time as an empty string
     rooms: [
       { roomNumber: 1, currentQueue: null, calledQueues: [] },
       { roomNumber: 2, currentQueue: null, calledQueues: [] },
@@ -13,13 +13,15 @@ new Vue({
     ]
   },
   mounted() {
-    setInterval(() => {
-      this.time = this.getCurrentTime();
-    }, 1000);
+    this.updateTime(); // Call the method to set initial time
+    setInterval(this.updateTime, 1000); // Update time every second
     this.loadQueueData();
     window.addEventListener('storage', this.loadQueueData);
   },
   methods: {
+    updateTime() {
+      this.time = this.getCurrentTime();
+    },
      getCurrentTime() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
