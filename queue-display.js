@@ -44,4 +44,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // สร้างรายการห้องเมื่อโหลดหน้า
     createQueueItems();
+    updateQueueDisplays(); // เพิ่มการเรียกใช้เพื่อให้แน่ใจว่าหน้าจอได้รับการอัพเดต
 });
