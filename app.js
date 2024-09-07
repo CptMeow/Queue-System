@@ -73,10 +73,10 @@ new Vue({
             localStorage.setItem('queueData', JSON.stringify(data));
         },
         speakQueue(queueNumber, roomNumber) {
-            const message = `ขอเชิญหมายเลข ${queueNumber} ที่ห้องตรวจหมายเลข ${roomNumber}`;
+            const message = `ขอเชิญหมายเลข    ${queueNumber} ที่   ห้องตรวจ    ${roomNumber}`;
             const speech = new SpeechSynthesisUtterance(message);
             speech.lang = 'th-TH';
-            speech.rate = 0.6; // ปรับความเร็วเสียงให้พูดช้าลง
+            speech.rate = 0.7; // ปรับความเร็วเสียงให้พูดช้าลง
             window.speechSynthesis.speak(speech);
         }
     }
