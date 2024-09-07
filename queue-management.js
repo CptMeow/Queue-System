@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         let currentQueue = loadCurrentQueue();
-        if (currentQueue && currentQueue.room === parseInt(selectedRoom)) {
+        if (currentQueue && currentQueue.room == selectedRoom) {
             let nextQueueNumber = currentQueue.queue + 1;
             updateCalledQueue(selectedRoom);
             saveCurrentQueue(nextQueueNumber, selectedRoom);
