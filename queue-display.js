@@ -16,21 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 let queueCell = document.createElement('td');
                 let queueSpan = document.createElement('span');
                 queueSpan.id = `currentQueue-${i}`;
+                queueSpan.textContent = 'ไม่มีคิว'; // ค่าเริ่มต้น
                 queueCell.appendChild(queueSpan);
                 row.appendChild(queueCell);
 
                 tableBody.appendChild(row);
-
-                let currentQueue = loadCurrentQueue();
-                if (currentQueue && currentQueue.room === i) {
-                    queueSpan.textContent = currentQueue.queue;
-                } else {
-                    queueSpan.textContent = 'ไม่มีคิว';
-                }
             }
         } else {
             console.error("ไม่พบ tbody สำหรับตารางคิว");
         }
+        updateQueueDisplays();
     }
 
     function loadCurrentQueue() {
@@ -42,7 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 
+    function updateQueueDisplays() {
+        for (let i = 1; i <= numberOfRooms; i++) {
+            let queueSpan = document.getElementById(`currentQueue-${i}`);
+            if (queueSpan) {
+                let calledQueue = localStorage.getItem(`calledQueue-${i}`);
+                queueSpan.textContent = calledQueue ? calledQueue : 'ไม่มีคิว';
+            } else {
+                console.error(`ไม่พบ <span> สำหรับห้อง ${i}`);
+            }
+        }
+    }
+
     // สร้างรายการห้องเมื่อโหลดหน้า
     createQueueItems();
-    updateQueueDisplays(); // เพิ่มการเรียกใช้เพื่อให้แน่ใจว่าหน้าจอได้รับการอัพเดต
 });
