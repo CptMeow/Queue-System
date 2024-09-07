@@ -1,64 +1,47 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const numberOfRooms = 7; // จำนวนห้องที่กำหนดไว้ล่วงหน้า
+    const numberOfRooms = 7;
 
-    function createQueueTable() {
-        const queueTableBody = document.getElementById('queueTableBody');
-        if (!queueTableBody) {
-            console.error("ไม่พบ <tbody> สำหรับตารางคิว");
-            return;
+    function createQueueItems() {
+        const tableBody = document.getElementById('queueTableBody');
+        if (tableBody) {
+            tableBody.innerHTML = '';
+
+            for (let i = 1; i <= numberOfRooms; i++) {
+                let row = document.createElement('tr');
+
+                let roomCell = document.createElement('td');
+                roomCell.textContent = `ห้อง ${i}`;
+                row.appendChild(roomCell);
+
+                let queueCell = document.createElement('td');
+                let queueSpan = document.createElement('span');
+                queueSpan.id = `currentQueue-${i}`;
+                queueCell.appendChild(queueSpan);
+                row.appendChild(queueCell);
+
+                tableBody.appendChild(row);
+
+                let currentQueue = loadCurrentQueue();
+                if (currentQueue && currentQueue.room === i) {
+                    queueSpan.textContent = currentQueue.queue;
+                } else {
+                    queueSpan.textContent = 'ไม่มีคิว';
+                }
+            }
+        } else {
+            console.error("ไม่พบ tbody สำหรับตารางคิว");
         }
-
-        const currentQueue = loadCurrentQueue();
-        console.log("โหลดคิวปัจจุบัน:", currentQueue);
-
-        queueTableBody.innerHTML = ''; // ล้างตารางก่อนหน้า
-
-        for (let i = 1; i <= numberOfRooms; i++) {
-            let row = document.createElement('tr');
-
-            // จำนวนคิวที่เรียกไปแล้ว
-            let calledQueue = localStorage.getItem(`calledQueue-${i}`) || 0;
-            console.log(`คิวที่เรียกไปแล้วในห้อง ${i}:`, calledQueue);
-
-            row.innerHTML = `
-                <td>ห้อง ${i}</td>
-                <td>${currentQueue && currentQueue.room === i ? `<span id="currentQueue-${i}">${currentQueue.queue}</span>` : 'ไม่มี'}</td>
-                <td>${calledQueue}</td>
-            `;
-            queueTableBody.appendChild(row);
-        }
-        console.log("สร้างตารางคิวเสร็จสิ้น");
     }
 
     function loadCurrentQueue() {
         let savedQueue = localStorage.getItem('currentQueue');
         if (savedQueue) {
-            console.log("คิวที่บันทึกไว้ใน LocalStorage:", savedQueue);
             return JSON.parse(savedQueue);
         }
-        console.log("ไม่มีคิวใน LocalStorage");
+        console.error("ไม่มีคิวใน LocalStorage");
         return null;
     }
 
-    function clearAllQueues() {
-        for (let i = 1; i <= numberOfRooms; i++) {
-            localStorage.removeItem(`calledQueue-${i}`);
-        }
-        localStorage.removeItem('currentQueue');
-        console.log("ล้างคิวทั้งหมด");
-        createQueueTable(); // อัพเดตหน้าจอหลังจากล้างคิว
-    }
-
-    // ตรวจสอบและติดตั้ง Event Listener
-    const clearQueueButton = document.getElementById('clearQueueButton');
-    if (clearQueueButton) {
-        clearQueueButton.addEventListener('click', function() {
-            console.log("กดปุ่มล้างคิว");
-            clearAllQueues();
-        });
-    } else {
-        console.error("ไม่พบปุ่มล้างคิว");
-    }
-
-    createQueueTable();
+    // สร้างรายการห้องเมื่อโหลดหน้า
+    createQueueItems();
 });
