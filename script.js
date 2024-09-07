@@ -16,6 +16,16 @@ function saveCurrentQueue(queueNumber) {
 let currentQueueNumber = loadCurrentQueue();
 document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
 
+// เพิ่มห้องใหม่
+document.getElementById('addRoomBtn').addEventListener('click', function() {
+    let roomSelect = document.getElementById('roomSelect');
+    let newRoomNumber = roomSelect.options.length + 1;
+    let newOption = document.createElement('option');
+    newOption.value = newRoomNumber;
+    newOption.text = `ห้อง ${newRoomNumber}`;
+    roomSelect.appendChild(newOption);
+});
+
 // หน้าสำหรับจัดการคิว
 if (document.getElementById('nextQueueBtn')) {
     document.getElementById('nextQueueBtn').addEventListener('click', function() {
@@ -27,15 +37,20 @@ if (document.getElementById('nextQueueBtn')) {
         saveCurrentQueue(currentQueueNumber);
 
         // เรียกฟังก์ชันออกเสียง
-        announceQueue(queueStr);
+        let selectedRoom = document.getElementById('roomSelect').value;
+        announceQueue(queueStr, selectedRoom);
     });
 }
 
-// ฟังก์ชันสำหรับออกเสียงคิว
-function announceQueue(queueNumber) {
+// ฟังก์ชันสำหรับออกเสียงคิว (ปรับปรุงเสียง)
+function announceQueue(queueNumber, roomNumber) {
     let msg = new SpeechSynthesisUtterance();
     msg.lang = 'th-TH'; // กำหนดให้เป็นภาษาไทย
-    msg.text = 'ขอเชิญหมายเลข ' + queueNumber + ' ที่ช่องบริการ';
+    msg.text = `ขอเชิญหมายเลข ${queueNumber} ที่ห้อง ${roomNumber}`;
+
+    // ปรับปรุงการออกเสียง (ความเร็วและระดับเสียง)
+    msg.rate = 0.9;  // ลดความเร็วการออกเสียง
+    msg.pitch = 1;   // ระดับเสียงปกติ
 
     // ออกเสียง
     window.speechSynthesis.speak(msg);
