@@ -1,32 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const numberOfRooms = 7;
+    const numberOfRooms = 7; // จำนวนห้องที่กำหนดไว้ล่วงหน้า
 
-    // ฟังก์ชันเพื่อสร้างรายการคิวสำหรับแต่ละห้อง
-    function createQueueItems() {
-        const queueList = document.getElementById('queueList');
+    function createQueueTable() {
+        const queueTableBody = document.getElementById('queueTableBody');
         const currentQueue = loadCurrentQueue();
 
         console.log("โหลดคิวปัจจุบัน:", currentQueue);
 
+        queueTableBody.innerHTML = ''; // ล้างตารางก่อนหน้า
+
         for (let i = 1; i <= numberOfRooms; i++) {
-            let queueItem = document.createElement('div');
-            queueItem.className = 'queue-item';
-            queueItem.id = `room-${i}`;
+            let row = document.createElement('tr');
 
             // จำนวนคิวที่เรียกไปแล้ว
             let calledQueue = localStorage.getItem(`calledQueue-${i}`) || 0;
             console.log(`คิวที่เรียกไปแล้วในห้อง ${i}:`, calledQueue);
 
-            queueItem.innerHTML = `
-                <h2>ห้อง ${i}</h2>
-                <p>คิวปัจจุบัน: ${currentQueue && currentQueue.room === i ? `<span id="currentQueue-${i}">${currentQueue.queue}</span>` : 'ไม่มี'}</p>
-                <p>คิวที่เรียกไปแล้ว: ${calledQueue}</p>
+            row.innerHTML = `
+                <td>ห้อง ${i}</td>
+                <td>${currentQueue && currentQueue.room === i ? `<span id="currentQueue-${i}">${currentQueue.queue}</span>` : 'ไม่มี'}</td>
+                <td>${calledQueue}</td>
             `;
-            queueList.appendChild(queueItem);
+            queueTableBody.appendChild(row);
         }
+        console.log("สร้างตารางคิวเสร็จสิ้น");
     }
 
-    // ฟังก์ชันโหลดคิวปัจจุบันจาก LocalStorage
     function loadCurrentQueue() {
         let savedQueue = localStorage.getItem('currentQueue');
         if (savedQueue) {
@@ -37,52 +36,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 
-    // ฟังก์ชันบันทึกคิวปัจจุบันลง LocalStorage
-    function saveCurrentQueue(queueNumber, roomNumber) {
-        const queueData = { queue: queueNumber, room: roomNumber };
-        localStorage.setItem('currentQueue', JSON.stringify(queueData));
-    }
-
-    // ฟังก์ชันอัพเดตคิวที่เรียกไปแล้ว
-    function updateCalledQueue(roomNumber) {
-        let calledQueue = localStorage.getItem(`calledQueue-${roomNumber}`) || 0;
-        console.log(`อัพเดตคิวที่เรียกไปแล้วในห้อง ${roomNumber}:`, calledQueue);
-        calledQueue++;
-        localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
-        console.log(`คิวที่เรียกไปแล้วในห้อง ${roomNumber} หลังจากอัพเดต:`, calledQueue);
-    }
-
-    // ฟังก์ชันเพื่อเรียกคิวใหม่
-    function callNextQueue() {
-        const currentQueue = loadCurrentQueue();
-        if (currentQueue) {
-            let nextQueueNumber = currentQueue.queue + 1;
-            let nextRoomNumber = Math.ceil(nextQueueNumber / 10); // ตัวอย่างการเลือกห้องตามหมายเลขคิว
-
-            console.log("เรียกคิวสำหรับห้อง:", nextRoomNumber);
-
-            updateCalledQueue(nextRoomNumber);
-
-            // อัพเดตคิวปัจจุบัน
-            saveCurrentQueue(nextQueueNumber, nextRoomNumber);
-            const newCurrentQueue = nextQueueNumber;
-            console.log("คิวปัจจุบันใหม่:", newCurrentQueue);
-
-            const queueSpan = document.getElementById(`currentQueue-${nextRoomNumber}`);
-            if (queueSpan) {
-                queueSpan.innerText = newCurrentQueue;
-                console.log("อัพเดตคิวปัจจุบันใน DOM:", newCurrentQueue);
-            } else {
-                console.log(`ไม่พบ <span> สำหรับห้อง ${nextRoomNumber}`);
-            }
-        } else {
-            console.log("ไม่มีคิวปัจจุบันในการเรียก");
+    function clearAllQueues() {
+        for (let i = 1; i <= numberOfRooms; i++) {
+            localStorage.removeItem(`calledQueue-${i}`);
         }
+        localStorage.removeItem('currentQueue');
+        console.log("ล้างคิวทั้งหมด");
+        createQueueTable(); // อัพเดตหน้าจอหลังจากล้างคิว
     }
 
-    // เรียกใช้ฟังก์ชันสร้างรายการคิว
-    createQueueItems();
+    document.getElementById('clearQueueButton').addEventListener('click', function() {
+        console.log("กดปุ่มล้างคิว");
+        clearAllQueues();
+    });
 
-    // ตัวอย่างการเรียกคิวใหม่
-    // callNextQueue();
+    createQueueTable();
 });
