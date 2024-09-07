@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าจอแสดงคิว</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script src="app.js" defer></script>
+    <title>หน้าจอรอคิว</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <h1>ระบบแสดงคิวโรงพยาบาล</h1>
-        <table id="queueTable">
-            <thead>
-                <tr>
-                    <th>ห้อง</th>
-                    <th>คิวปัจจุบัน</th>
-                    <th>คิวที่เรียกไปแล้ว</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="room in roomQueues" :key="room">
-                    <td>ห้อง {{ room }}</td>
-                    <td>{{ getCurrentQueueForRoom(room) }}</td>
-                    <td>{{ getRecentQueues[room].join(', ') || 'ไม่มีคิวที่เรียกไปแล้ว' }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <h1>โรงพยาบาล ABC</h1>
+        <div class="grid-container">
+            <div v-for="room in rooms" :key="room.roomNumber" class="room">
+                <h2>ห้อง {{ room.roomNumber }}</h2>
+                <p>คิวปัจจุบัน: {{ room.currentQueue }}</p>
+                <h3>คิวที่เรียกไปแล้ว</h3>
+                <ul>
+                    <li v-for="queue in room.calledQueues" :key="queue">คิว {{ queue }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>กรุณาติดต่อเคาน์เตอร์เมื่อถึงคิวของท่าน</p>
     </div>
-    <script src="app.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="queue-display.js"></script>
 </body>
 </html>
