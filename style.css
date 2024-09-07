@@ -13,37 +13,27 @@ body {
 }
 
 .container {
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
 }
 
-h1 {
+header {
     text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
     font-size: 2.5em;
     color: #0044cc;
-    margin-bottom: 20px;
 }
 
-.button-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.button-container button {
-    font-size: 1.2em;
-    padding: 15px 30px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.button-container button:hover {
-    background-color: #0056b3;
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .info-box {
@@ -52,28 +42,23 @@ h1 {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 20px;
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
 }
 
 .info-box h2 {
-    font-size: 1.5em;
+    font-size: 1.8em;
     color: #333;
 }
 
 .info-box div {
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 
-.action-button {
-    font-size: 1.2em;
-    padding: 15px 30px;
-    border: none;
+#currentQueueDisplay, #recentQueuesDisplay {
+    padding: 15px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #dc3545;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.action-button:hover {
-    background-color: #c82333;
+    background-color: #fafafa;
+    text-align: center;
 }
