@@ -25,6 +25,8 @@ new Vue({
         this.currentQueues = queueData.currentQueues || [];
         this.calledQueues = queueData.calledQueues || [];
         this.updateQueueTable();
+      } else {
+        console.error('ไม่พบข้อมูลคิวใน localStorage');
       }
     },
     updateQueueTable() {
@@ -38,6 +40,8 @@ new Vue({
           row.innerHTML = `<td>${queue.room}</td><td>${queue.queueNumber}</td>`;
           queueTable.appendChild(row);
         });
+      } else {
+        console.error('ไม่พบตารางคิวปัจจุบัน');
       }
 
       // สร้างตารางคิวที่เรียกไปแล้ว
@@ -50,6 +54,8 @@ new Vue({
           row.innerHTML = `<td>${queue.room}</td><td>${queue.queueNumber}</td>`;
           calledQueueTable.appendChild(row);
         });
+      } else {
+        console.error('ไม่พบตารางคิวที่เรียกไปแล้ว');
       }
     }
   }
