@@ -28,15 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateQueueDisplays();
     }
 
-    function loadCurrentQueue() {
-        let savedQueue = localStorage.getItem('currentQueue');
-        if (savedQueue) {
-            return JSON.parse(savedQueue);
-        }
-        console.error("ไม่มีคิวใน LocalStorage");
-        return null;
-    }
-
     function updateQueueDisplays() {
         for (let i = 1; i <= numberOfRooms; i++) {
             let queueSpan = document.getElementById(`currentQueue-${i}`);
@@ -48,6 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // ตรวจสอบการเปลี่ยนแปลงใน localStorage
+    window.addEventListener('storage', function(event) {
+        if (event.key && event.key.startsWith('calledQueue-')) {
+            updateQueueDisplays();
+        }
+    });
 
     // สร้างรายการห้องเมื่อโหลดหน้า
     createQueueItems();
