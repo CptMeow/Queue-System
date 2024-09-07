@@ -10,5 +10,17 @@ new Vue({
             { roomNumber: 6, currentQueue: 1, calledQueues: [] },
             { roomNumber: 7, currentQueue: 1, calledQueues: [] }
         ]
+    },
+    mounted() {
+        this.updateQueueData(); // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้าเว็บ
+        setInterval(this.updateQueueData, 5000); // อัปเดตข้อมูลทุก 5 วินาที
+    },
+    methods: {
+        updateQueueData() {
+            const storedRooms = JSON.parse(localStorage.getItem('rooms'));
+            if (storedRooms) {
+                this.rooms = storedRooms;
+            }
+        }
     }
 });
