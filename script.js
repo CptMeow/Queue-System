@@ -1,109 +1,102 @@
-// ฟังก์ชันโหลดคิวปัจจุบันจาก LocalStorage
-function loadCurrentQueue() {
-    let savedQueue = localStorage.getItem('currentQueue');
-    if (savedQueue) {
-        return parseInt(savedQueue, 10);
-    }
-    return 1;
-}
-
-// ฟังก์ชันบันทึกคิวปัจจุบันลง LocalStorage
-function saveCurrentQueue(queueNumber) {
-    localStorage.setItem('currentQueue', queueNumber);
-}
-
-// ฟังก์ชันอัพเดตคิวที่เรียกไปแล้ว
-function updateCalledQueue(roomNumber) {
-    let calledQueue = localStorage.getItem(`calledQueue-${roomNumber}`) || 0;
-    calledQueue++;
-    localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
-}
-
-
-// ฟังก์ชันล้างคิว
-function clearQueue() {
-    currentQueueNumber = 1; // รีเซ็ตคิวกลับไปที่ 1
-    document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
-    saveCurrentQueue(currentQueueNumber);
-}
-
-// ฟังก์ชันสร้างปุ่มเรียกคิวสำหรับแต่ละห้อง
-function createQueueButtons() {
-    const buttonsContainer = document.getElementById('buttonsContainer');
-    const roomSelect = document.getElementById('roomSelect');
-
-    for (let i = 1; i <= 7; i++) {
-        let button = document.createElement('button');
-        button.textContent = `เรียกคิวสำหรับห้อง ${i}`;
-        button.dataset.room = i;
-        button.addEventListener('click', function() {
-            let queueStr = currentQueueNumber.toString().padStart(3, '0');
-            document.getElementById('currentQueue').innerText = queueStr;
-
-            // บันทึกคิวปัจจุบันลงใน LocalStorage
-            saveCurrentQueue(currentQueueNumber);
-
-            // เรียกฟังก์ชันออกเสียง
-            announceQueue(queueStr, button.dataset.room);
-            
-            // เพิ่มคิว
-            currentQueueNumber++;
-        });
-        buttonsContainer.appendChild(button);
-    }
-}
-
-// ฟังก์ชันสำหรับออกเสียงคิว
-function announceQueue(queueNumber, roomNumber) {
-    if (!('speechSynthesis' in window)) {
-        console.error("Web Speech API ไม่สามารถใช้งานได้ในเบราว์เซอร์นี้");
-        return;
-    }
-    
-    let msg = new SpeechSynthesisUtterance();
-    msg.lang = 'th-TH'; // กำหนดให้เป็นภาษาไทย
-
-    // ตั้งข้อความที่ต้องการออกเสียง
-    msg.text = `ขอเชิญหมายเลข ${queueNumber} ที่ห้อง ${roomNumber}`;
-
-    // ปรับปรุงการออกเสียง (ความเร็วและระดับเสียง)
-    msg.rate = 0.9;  // ลดความเร็วการออกเสียง
-    msg.pitch = 1;   // ระดับเสียงปกติ
-
-    // ตรวจสอบและเลือกเสียงภาษาไทย
-    const voices = window.speechSynthesis.getVoices();
-    let thaiVoice = voices.find(voice => voice.lang === 'th-TH');
-    if (thaiVoice) {
-        msg.voice = thaiVoice;
-    }
-
-    // ออกเสียง
-    window.speechSynthesis.speak(msg);
-}
-
-// ฟังก์ชันโหลดเสียงภาษาไทยให้พร้อมใช้งาน
-window.speechSynthesis.onvoiceschanged = () => {
-    const voices = window.speechSynthesis.getVoices();
-    let thaiVoice = voices.find(voice => voice.lang === 'th-TH');
-    if (thaiVoice) {
-        console.log("พบเสียงภาษาไทย:", thaiVoice.name);
-    } else {
-        console.log("ไม่พบเสียงภาษาไทยในระบบนี้");
-    }
-};
-
-// เริ่มต้นเมื่อ DOM โหลดเสร็จ
 document.addEventListener('DOMContentLoaded', function() {
-    currentQueueNumber = loadCurrentQueue();
-    document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
+    const numberOfRooms = 7;
 
-    createQueueButtons();
-
-    // ปุ่มล้างคิว
-    const clearQueueBtn = document.getElementById('clearQueueBtn');
-    if (clearQueueBtn) {
-        clearQueueBtn.addEventListener('click', function() {
-            clearQueue();
-        });
+    // ฟังก์ชันเพื่อเพิ่มห้อง
+    function addRoom() {
+        const roomSelect = document.getElementById('roomSelect');
+        for (let i = 1; i <= numberOfRooms; i++) {
+            let option = document.createElement('option');
+            option.value = i;
+            option.textContent = `ห้อง ${i}`;
+            roomSelect.appendChild(option);
+        }
     }
+
+    // ฟังก์ชันเพื่อสร้างรายการคิวสำหรับแต่ละห้อง
+    function createQueueItems() {
+        const queueList = document.getElementById('queueList');
+        const currentQueue = loadCurrentQueue();
+
+        console.log("โหลดคิวปัจจุบัน:", currentQueue);
+
+        for (let i = 1; i <= numberOfRooms; i++) {
+            let queueItem = document.createElement('div');
+            queueItem.className = 'queue-item';
+            queueItem.id = `room-${i}`;
+
+            // จำนวนคิวที่เรียกไปแล้ว
+            let calledQueue = localStorage.getItem(`calledQueue-${i}`) || 0;
+            console.log(`คิวที่เรียกไปแล้วในห้อง ${i}:`, calledQueue);
+
+            queueItem.innerHTML = `
+                <h2>ห้อง ${i}</h2>
+                <p>คิวปัจจุบัน: ${currentQueue && currentQueue.room === i ? `<span id="currentQueue-${i}">${currentQueue.queue}</span>` : 'ไม่มี'}</p>
+                <p>คิวที่เรียกไปแล้ว: ${calledQueue}</p>
+            `;
+            queueList.appendChild(queueItem);
+        }
+    }
+
+    // ฟังก์ชันโหลดคิวปัจจุบันจาก LocalStorage
+    function loadCurrentQueue() {
+        let savedQueue = localStorage.getItem('currentQueue');
+        if (savedQueue) {
+            console.log("คิวที่บันทึกไว้ใน LocalStorage:", savedQueue);
+            return JSON.parse(savedQueue);
+        }
+        console.log("ไม่มีคิวใน LocalStorage");
+        return null;
+    }
+
+    // ฟังก์ชันบันทึกคิวปัจจุบันลง LocalStorage
+    function saveCurrentQueue(queueNumber, roomNumber) {
+        const queueData = { queue: queueNumber, room: roomNumber };
+        localStorage.setItem('currentQueue', JSON.stringify(queueData));
+    }
+
+    // ฟังก์ชันอัพเดตคิวที่เรียกไปแล้ว
+    function updateCalledQueue(roomNumber) {
+        let calledQueue = localStorage.getItem(`calledQueue-${roomNumber}`) || 0;
+        console.log(`อัพเดตคิวที่เรียกไปแล้วในห้อง ${roomNumber}:`, calledQueue);
+        calledQueue++;
+        localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
+        console.log(`คิวที่เรียกไปแล้วในห้อง ${roomNumber} หลังจากอัพเดต:`, calledQueue);
+    }
+
+    // ฟังก์ชันเพื่อเรียกคิวใหม่
+    function callNextQueue() {
+        const currentQueue = loadCurrentQueue();
+        if (currentQueue) {
+            let nextQueueNumber = currentQueue.queue + 1;
+            let nextRoomNumber = Math.ceil(nextQueueNumber / 10); // ตัวอย่างการเลือกห้องตามหมายเลขคิว
+
+            console.log("เรียกคิวสำหรับห้อง:", nextRoomNumber);
+
+            updateCalledQueue(nextRoomNumber);
+
+            // อัพเดตคิวปัจจุบัน
+            saveCurrentQueue(nextQueueNumber, nextRoomNumber);
+            const newCurrentQueue = nextQueueNumber;
+            console.log("คิวปัจจุบันใหม่:", newCurrentQueue);
+
+            const queueSpan = document.getElementById(`currentQueue-${nextRoomNumber}`);
+            if (queueSpan) {
+                queueSpan.innerText = newCurrentQueue;
+                console.log("อัพเดตคิวปัจจุบันใน DOM:", newCurrentQueue);
+            } else {
+                console.log(`ไม่พบ <span> สำหรับห้อง ${nextRoomNumber}`);
+            }
+        } else {
+            console.log("ไม่มีคิวปัจจุบันในการเรียก");
+        }
+    }
+
+    // ฟังก์ชันเรียกคิวใหม่เมื่อกดปุ่ม
+    document.getElementById('callQueueButton').addEventListener('click', function() {
+        callNextQueue();
+    });
+
+    // เรียกใช้ฟังก์ชันเพิ่มห้องและสร้างรายการคิว
+    addRoom();
+    createQueueItems();
 });
