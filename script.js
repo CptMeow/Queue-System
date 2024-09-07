@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const numberOfRooms = 7;
 
+    // ตรวจสอบว่าปุ่มมีอยู่หรือไม่
+    const callQueueButton = document.getElementById('callQueueButton');
+    if (!callQueueButton) {
+        console.error("ไม่พบปุ่มเรียกคิวที่มี id 'callQueueButton'");
+        return;
+    }
+
     // ฟังก์ชันเพื่อเพิ่มห้อง
     function addRoom() {
         const roomSelect = document.getElementById('roomSelect');
@@ -95,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ฟังก์ชันเรียกคิวใหม่เมื่อกดปุ่ม
-    document.getElementById('callQueueButton').addEventListener('click', function() {
+    callQueueButton.addEventListener('click', function() {
         console.log("กดปุ่มเรียกคิวใหม่");
         callNextQueue();
     });
