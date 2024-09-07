@@ -9,6 +9,7 @@
 <body>
     <div id="app">
         <h1>จัดการคิว</h1>
+        
         <div class="grid-container">
             <div v-for="room in roomQueues" :key="room" class="grid-item">
                 <h2>ห้อง {{ room }}</h2>
@@ -16,7 +17,10 @@
                 <button @click="callNextQueue(room)">เรียกคิวถัดไป</button>
             </div>
         </div>
+        
+        <button @click="confirmResetQueues" class="reset-button">เริ่มต้นคิวใหม่</button>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="app.js"></script>
 </body>
