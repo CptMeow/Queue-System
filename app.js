@@ -59,7 +59,7 @@ new Vue({
                 this.currentQueue = 1;
                 this.rooms.forEach(room => {
                     room.calledQueues = [];
-                    room.currentQueue = [];
+                    room.currentQueue = null;
                 });
                 this.saveQueueData();
                 alert('คิวถูกรีเซ็ตเรียบร้อยแล้ว!');
