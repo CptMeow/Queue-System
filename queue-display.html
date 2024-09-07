@@ -9,13 +9,30 @@
 <body>
   <div id="app">
     <h1>หน้าจอรอคิว</h1>
-    <div v-for="room in rooms" :key="room.roomNumber">
-      <h2>ห้อง {{ room.roomNumber }}</h2>
-      <ul>
-        <li v-for="(queue, index) in room.calledQueues" :key="index">คิว {{ queue }}</li>
-      </ul>
-    </div>
     <div class="clock">{{ new Date().toLocaleTimeString() }}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>ห้อง</th>
+          <th>คิวปัจจุบัน</th>
+          <th>คิวที่เรียกไปแล้ว</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in rooms" :key="room.roomNumber">
+          <td>ห้อง {{ room.roomNumber }}</td>
+          <td v-if="room.currentQueue">คิว {{ room.currentQueue }}</td>
+          <td v-else>ไม่มีคิว</td>
+          <td>
+            <ul>
+              <li v-for="(queue, index) in room.calledQueues.slice(-5)" :key="index">
+                คิว {{ queue }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <script src="queue-display.js"></script>
