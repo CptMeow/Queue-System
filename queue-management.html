@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Queue Management</title>
-    <link rel="stylesheet" href="style.css">
+    <title>จัดการคิว</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .queue-list, .controls {
+            margin-bottom: 20px;
+        }
+        .queue-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
-    <h1>ระบบจัดการคิว</h1>
-    
-    <!-- ส่วนแสดงรายการคิว -->
-    <div id="queueList"></div>
+    <div class="container">
+        <h1>ระบบจัดการคิว</h1>
 
-    <!-- ส่วนสำหรับปุ่มเรียกคิว -->
-    <button id="callQueueButton">เรียกคิว</button>
+        <!-- ส่วนแสดงรายการคิว -->
+        <div id="queueList" class="queue-list"></div>
 
-    <!-- Select box สำหรับห้อง -->
-    <select id="roomSelect"></select>
+        <!-- ส่วนปุ่มควบคุม -->
+        <div class="controls">
+            <button id="callQueueButton">เรียกคิวถัดไป</button>
+            <button id="clearQueueButton">ล้างคิวทั้งหมด</button>
+            <button id="addRoomButton">เพิ่มห้องใหม่</button>
+        </div>
 
-    <!-- รวมสคริปต์ -->
+        <!-- Select box สำหรับห้อง -->
+        <select id="roomSelect">
+            <!-- ตัวเลือกห้องจะถูกเพิ่มจาก script.js -->
+        </select>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
