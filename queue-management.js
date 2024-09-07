@@ -1,6 +1,14 @@
 const numberOfRooms = 7;
 const maxRecentQueues = 5;
 
+function speakQueue(queueNumber, roomNumber) {
+    const utterance = new SpeechSynthesisUtterance();
+    utterance.text = `ห้อง ${roomNumber} คิวที่ ${queueNumber}`;
+    utterance.lang = 'th-TH'; // ใช้ภาษาไทย
+    utterance.rate = 0.8; // ปรับความเร็วของเสียงพูดให้ช้าลง
+    window.speechSynthesis.speak(utterance);
+}
+
 function updateCalledQueue(roomNumber) {
     let queues = JSON.parse(localStorage.getItem(`calledQueue-${roomNumber}`)) || [];
 
@@ -29,6 +37,7 @@ function callNextQueue(roomNumber) {
 
     saveCurrentQueue(queueNumber, roomNumber);
     updateCalledQueue(roomNumber);
+    speakQueue(queueNumber, roomNumber); // เรียกใช้ฟังก์ชันพูด
 
     // อัปเดตหน้าจอจัดการคิว
     updateQueueDisplay();
