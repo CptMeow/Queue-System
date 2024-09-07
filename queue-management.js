@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 option.textContent = `ห้อง ${i}`;
                 roomSelect.appendChild(option);
             }
-        } else {
-            console.error("ไม่พบ select box สำหรับห้อง");
         }
     }
 
@@ -33,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedQueue) {
             return JSON.parse(savedQueue);
         }
-        console.error("ไม่มีคิวใน LocalStorage");
         return null;
     }
 
@@ -53,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedRoom = roomSelect ? roomSelect.value : null;
 
         if (!selectedRoom) {
-            console.error("กรุณาเลือกห้อง");
             return;
         }
 
@@ -68,8 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // อัพเดตหน้าจอแสดงคิว
             updateQueueDisplays();
-        } else {
-            console.error("ไม่มีคิวปัจจุบันในการเรียกหรือห้องไม่ถูกต้อง");
         }
     }
 
@@ -83,33 +77,4 @@ document.addEventListener('DOMContentLoaded', function() {
         updateQueueDisplays();
     }
 
-    function playQueueAudio(queueNumber, roomNumber) {
-        const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'th-TH'; // ภาษาไทย
-        utterance.pitch = 1; // ความสูงของเสียง
-        utterance.rate = 0.8; // ความเร็วของเสียง (ต่ำกว่า 1 ทำให้เสียงช้าลง)
-
-        speechSynthesis.speak(utterance);
-    }
-
-    function updateQueueDisplays() {
-        // สร้างเหตุการณ์ใหม่เพื่อกระตุ้นการอัพเดต
-        const event = new Event('storage');
-        event.key = `calledQueue-${document.getElementById('roomSelect').value}`;
-        window.dispatchEvent(event);
-    }
-
-    // เริ่มต้นระบบ
-    initializeQueue();
-
-    document.getElementById('callQueueButton').addEventListener('click', function() {
-        callNextQueue();
-    });
-
-    document.getElementById('clearQueueButton').addEventListener('click', function() {
-        clearAllQueues();
-    });
-
-    addRoomOptions();
-});
+    function playQueueAudio(queueNumber
