@@ -1,7 +1,7 @@
 new Vue({
   el: '#app',
   data: {
-    time: ''  // Initialize time as an empty string
+    time: '',  // Initialize time as an empty string
     rooms: [
       { roomNumber: 1, currentQueue: null, calledQueues: [] },
       { roomNumber: 2, currentQueue: null, calledQueues: [] },
