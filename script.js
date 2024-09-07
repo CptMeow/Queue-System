@@ -12,24 +12,37 @@ function saveCurrentQueue(queueNumber) {
     localStorage.setItem('currentQueue', queueNumber);
 }
 
-// โหลดคิวปัจจุบันเมื่อเริ่มต้น
-let currentQueueNumber = loadCurrentQueue();
-document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
+// ฟังก์ชันล้างคิว
+function clearQueue() {
+    currentQueueNumber = 1; // รีเซ็ตคิวกลับไปที่ 1
+    document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
+    saveCurrentQueue(currentQueueNumber);
+}
 
-// หน้าสำหรับจัดการคิว
-if (document.getElementById('nextQueueBtn')) {
-    document.getElementById('nextQueueBtn').addEventListener('click', function() {
-        currentQueueNumber++;
-        let queueStr = currentQueueNumber.toString().padStart(3, '0');
-        document.getElementById('currentQueue').innerText = queueStr;
-        
-        // บันทึกคิวปัจจุบันลงใน LocalStorage
-        saveCurrentQueue(currentQueueNumber);
+// ฟังก์ชันสร้างปุ่มเรียกคิวสำหรับแต่ละห้อง
+function createQueueButtons() {
+    const buttonsContainer = document.getElementById('buttonsContainer');
+    const roomSelect = document.getElementById('roomSelect');
 
-        // เรียกฟังก์ชันออกเสียง
-        let selectedRoom = document.getElementById('roomSelect').value;
-        announceQueue(queueStr, selectedRoom);
-    });
+    for (let i = 1; i <= 7; i++) {
+        let button = document.createElement('button');
+        button.textContent = `เรียกคิวสำหรับห้อง ${i}`;
+        button.dataset.room = i;
+        button.addEventListener('click', function() {
+            let queueStr = currentQueueNumber.toString().padStart(3, '0');
+            document.getElementById('currentQueue').innerText = queueStr;
+
+            // บันทึกคิวปัจจุบันลงใน LocalStorage
+            saveCurrentQueue(currentQueueNumber);
+
+            // เรียกฟังก์ชันออกเสียง
+            announceQueue(queueStr, button.dataset.room);
+            
+            // เพิ่มคิว
+            currentQueueNumber++;
+        });
+        buttonsContainer.appendChild(button);
+    }
 }
 
 // ฟังก์ชันสำหรับออกเสียงคิว
@@ -60,7 +73,7 @@ function announceQueue(queueNumber, roomNumber) {
     window.speechSynthesis.speak(msg);
 }
 
-// โหลดเสียงภาษาไทยให้พร้อมใช้งาน
+// ฟังก์ชันโหลดเสียงภาษาไทยให้พร้อมใช้งาน
 window.speechSynthesis.onvoiceschanged = () => {
     const voices = window.speechSynthesis.getVoices();
     let thaiVoice = voices.find(voice => voice.lang === 'th-TH');
@@ -70,3 +83,19 @@ window.speechSynthesis.onvoiceschanged = () => {
         console.log("ไม่พบเสียงภาษาไทยในระบบนี้");
     }
 };
+
+// เริ่มต้นเมื่อ DOM โหลดเสร็จ
+document.addEventListener('DOMContentLoaded', function() {
+    currentQueueNumber = loadCurrentQueue();
+    document.getElementById('currentQueue').innerText = currentQueueNumber.toString().padStart(3, '0');
+
+    createQueueButtons();
+
+    // ปุ่มล้างคิว
+    const clearQueueBtn = document.getElementById('clearQueueBtn');
+    if (clearQueueBtn) {
+        clearQueueBtn.addEventListener('click', function() {
+            clearQueue();
+        });
+    }
+});
