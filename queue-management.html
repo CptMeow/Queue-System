@@ -4,24 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จัดการคิว</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
         <h1>จัดการคิว</h1>
-        
+        <div class="controls">
+            <label for="room-select">เลือกห้อง:</label>
+            <select v-model="selectedRoom" id="room-select">
+                <option v-for="room in rooms" :value="room.roomNumber">{{ room.roomNumber }}</option>
+            </select>
+
+            <button @click="callNextQueue">เรียกคิวถัดไป</button>
+            <button @click="resetQueues">รีเซ็ตคิว</button>
+        </div>
+
         <div class="grid-container">
-            <div v-for="room in roomQueues" :key="room" class="grid-item">
-                <h2>ห้อง {{ room }}</h2>
-                <p>คิวปัจจุบัน: {{ getCurrentQueueForRoom(room) }}</p>
-                <button @click="callNextQueue(room)">เรียกคิวถัดไป</button>
+            <div v-for="room in rooms" :key="room.roomNumber" class="room">
+                <h2>ห้อง {{ room.roomNumber }}</h2>
+                <p>คิวปัจจุบัน: {{ room.currentQueue }}</p>
+                <h3>คิวที่เรียกไปแล้ว</h3>
+                <ul>
+                    <li v-for="queue in room.calledQueues" :key="queue">คิว {{ queue }}</li>
+                </ul>
             </div>
         </div>
-        
-        <button @click="confirmResetQueues" class="reset-button">เริ่มต้นคิวใหม่</button>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="app.js"></script>
 </body>
 </html>
