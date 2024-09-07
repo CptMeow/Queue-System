@@ -30,13 +30,22 @@ function callNextQueue(roomNumber) {
     saveCurrentQueue(queueNumber, roomNumber);
     updateCalledQueue(roomNumber);
 
-    // อัปเดตหน้าจอรอคิว
+    // อัปเดตหน้าจอจัดการคิว
     updateQueueDisplay();
 }
 
 function updateQueueDisplay() {
-    // ทำให้แน่ใจว่าฟังก์ชันนี้อัปเดตหน้าจอการแสดงผล
-    // คุณอาจต้องเขียนฟังก์ชันนี้เพื่อรีเฟรชข้อมูลในหน้า queue-display.html
+    const currentQueueList = document.getElementById('currentQueueList');
+    currentQueueList.innerHTML = '';
+
+    for (let i = 1; i <= numberOfRooms; i++) {
+        const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
+        const currentQueueNumber = (currentQueue.room === i.toString()) ? currentQueue.queue : 'ไม่มีคิวปัจจุบัน';
+
+        const roomDiv = document.createElement('div');
+        roomDiv.textContent = `ห้อง ${i}: ${currentQueueNumber}`;
+        currentQueueList.appendChild(roomDiv);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -70,4 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateQueueDisplay(); // อัปเดตหน้าจอการแสดงผลหลังการล้าง
         });
     }
+
+    // อัปเดตหมายเลขคิวปัจจุบันเมื่อโหลดหน้า
+    updateQueueDisplay();
 });
