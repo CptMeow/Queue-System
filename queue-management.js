@@ -5,7 +5,7 @@ function speakQueue(queueNumber, roomNumber) {
     const utterance = new SpeechSynthesisUtterance();
     utterance.text = `ห้อง ${roomNumber} คิวที่ ${queueNumber}`;
     utterance.lang = 'th-TH'; // ใช้ภาษาไทย
-    utterance.rate = 0.8; // ปรับความเร็วของเสียงพูดให้ช้าลง
+    utterance.rate = 0.5; // ปรับความเร็วของเสียงพูดให้ช้าลง
     window.speechSynthesis.speak(utterance);
 }
 
