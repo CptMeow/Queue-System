@@ -2,13 +2,13 @@ new Vue({
     el: '#app',
     data: {
         rooms: [
-            { roomNumber: 1, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 2, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 3, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 4, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 5, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 6, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 7, currentQueue: 1, calledQueues: [] }
+            { roomNumber: 1, roomName:'3', currentQueue: 1, calledQueues: [] },
+            { roomNumber: 2, roomName:'4', currentQueue: 1, calledQueues: [] },
+            { roomNumber: 3, roomName:'5', currentQueue: 1, calledQueues: [] },
+            { roomNumber: 4, roomName:'6', currentQueue: 1, calledQueues: [] },
+            { roomNumber: 5, roomName:'8/1', currentQueue: 1, calledQueues: [] },
+            { roomNumber: 6, roomName:'10', currentQueue: 1, calledQueues: [] },
+            { roomNumber: 7, roomName:'11', currentQueue: 1, calledQueues: [] }
         ],
         selectedRoom: 1,
     },
@@ -24,7 +24,7 @@ new Vue({
             const room = this.rooms.find(r => r.roomNumber === this.selectedRoom);
             if (room) {
                 room.calledQueues.push(room.currentQueue);
-                this.speakQueue(room.currentQueue, room.roomNumber);
+                this.speakQueue(room.currentQueue, room.roomName);
 
                 if (room.calledQueues.length > 5) {
                     room.calledQueues.shift(); // เก็บแค่ 5 คิวล่าสุด
@@ -46,8 +46,8 @@ new Vue({
                 alert('คิวถูกรีเซ็ตเรียบร้อยแล้ว!');
             }
         },
-        speakQueue(queueNumber, roomNumber) {
-            const message = `เชิญหมายเลข ${queueNumber} ที่ห้อง ${roomNumber}`;
+        speakQueue(queueNumber, roomName) {
+            const message = `เชิญหมายเลข ${queueNumber} ที่ห้อง ${roomName}`;
             const speech = new SpeechSynthesisUtterance(message);
             speech.lang = 'th-TH';
             speech.rate = 0.8; // ปรับความเร็วเสียงให้อยู่ในระดับที่ช้าลง
