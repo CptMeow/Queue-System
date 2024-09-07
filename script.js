@@ -3,24 +3,32 @@ function announceQueue(queueNumber, roomNumber) {
     let msg = new SpeechSynthesisUtterance();
     msg.lang = 'th-TH'; // กำหนดให้เป็นภาษาไทย
 
-    // ตั้งข้อความที่ต้องการออกเสียง
-    msg.text = `ขอเชิญหมายเลข ${queueNumber} ที่ห้อง ${roomNumber}`;
+    // ตรวจสอบว่า Web Speech API สามารถใช้งานได้หรือไม่
+    if ('speechSynthesis' in window) {
+        // ตรวจสอบการโหลดเสียง
+        window.speechSynthesis.onvoiceschanged = () => {
+            let voices = window.speechSynthesis.getVoices();
+            let thaiVoice = voices.find(voice => voice.lang === 'th-TH');
 
-    // ปรับปรุงการออกเสียง (ความเร็วและระดับเสียง)
-    msg.rate = 0.9;  // ลดความเร็วการออกเสียง
-    msg.pitch = 1;   // ระดับเสียงปกติ
+            if (thaiVoice) {
+                msg.voice = thaiVoice;
+            }
 
-    // ตรวจสอบและเลือกเสียงภาษาไทย
-    const voices = window.speechSynthesis.getVoices();
-    let thaiVoice = voices.find(voice => voice.lang === 'th-TH'); // ค้นหาเสียงภาษาไทย
+            // ตั้งข้อความที่ต้องการออกเสียง
+            msg.text = `ขอเชิญหมายเลข ${queueNumber} ที่ห้อง ${roomNumber}`;
 
-    if (thaiVoice) {
-        msg.voice = thaiVoice; // ตั้งค่าเสียงภาษาไทย
+            // ปรับปรุงการออกเสียง (ความเร็วและระดับเสียง)
+            msg.rate = 0.9;  // ลดความเร็วการออกเสียง
+            msg.pitch = 1;   // ระดับเสียงปกติ
+
+            // ออกเสียง
+            window.speechSynthesis.speak(msg);
+        };
+    } else {
+        console.error("Web Speech API ไม่สามารถใช้งานได้ในเบราว์เซอร์นี้");
     }
-
-    // ออกเสียง
-    window.speechSynthesis.speak(msg);
 }
+
 
 // โหลดเสียงภาษาไทยให้พร้อมใช้งาน
 window.speechSynthesis.onvoiceschanged = () => {
