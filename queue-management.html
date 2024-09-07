@@ -7,27 +7,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>ระบบจัดการคิวโรงพยาบาล</h1>
-    <div id="queue-management">
-        <!-- ปุ่มเรียกคิวสำหรับห้องต่าง ๆ -->
-        <div id="roomButtons">
-            <!-- ใช้ JavaScript เพื่อสร้างปุ่มเหล่านี้โดยอัตโนมัติ -->
-        </div>
-        <div id="currentQueueDisplay">
-            <h2>หมายเลขคิวปัจจุบัน:</h2>
-            <div id="currentQueueList">
-                <!-- ข้อมูลหมายเลขคิวปัจจุบันจะถูกแทรกที่นี่โดย JavaScript -->
+    <div class="container">
+        <h1>ระบบจัดการคิวโรงพยาบาล</h1>
+        <div id="queue-management">
+            <!-- ปุ่มเรียกคิวสำหรับห้องต่าง ๆ -->
+            <div id="roomButtons" class="button-container">
+                <!-- ใช้ JavaScript เพื่อสร้างปุ่มเหล่านี้โดยอัตโนมัติ -->
             </div>
-        </div>
-        <div id="recentQueuesDisplay">
-            <h2>คิวที่เรียกไปแล้วล่าสุด 5 คิว:</h2>
-            <div id="recentQueuesList">
-                <!-- ข้อมูลคิวล่าสุด 5 คิวจะถูกแทรกที่นี่โดย JavaScript -->
+            <div id="currentQueueDisplay" class="info-box">
+                <h2>หมายเลขคิวปัจจุบัน:</h2>
+                <div id="currentQueueList">
+                    <!-- ข้อมูลหมายเลขคิวปัจจุบันจะถูกแทรกที่นี่โดย JavaScript -->
+                </div>
             </div>
+            <div id="recentQueuesDisplay" class="info-box">
+                <h2>คิวที่เรียกไปแล้วล่าสุด 5 คิว:</h2>
+                <div id="recentQueuesList">
+                    <!-- ข้อมูลคิวล่าสุด 5 คิวจะถูกแทรกที่นี่โดย JavaScript -->
+                </div>
+            </div>
+            <button id="clearQueuesButton" class="action-button">ล้างคิวทั้งหมด</button>
         </div>
-        <button id="clearQueuesButton">ล้างคิวทั้งหมด</button>
     </div>
-
     <script src="queue-management.js"></script>
 </body>
 </html>
