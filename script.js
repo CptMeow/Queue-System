@@ -1,16 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const numberOfRooms = 7;
 
-    // ตรวจสอบว่าปุ่มมีอยู่หรือไม่
-    const callQueueButton = document.getElementById('callQueueButton');
-    if (!callQueueButton) {
-        console.error("ไม่พบปุ่มเรียกคิวที่มี id 'callQueueButton'");
-        return;
-    }
-
     // ฟังก์ชันเพื่อเพิ่มห้อง
     function addRoom() {
         const roomSelect = document.getElementById('roomSelect');
+        roomSelect.innerHTML = ''; // ล้างตัวเลือกห้องก่อนหน้า
+
         for (let i = 1; i <= numberOfRooms; i++) {
             let option = document.createElement('option');
             option.value = i;
@@ -26,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentQueue = loadCurrentQueue();
 
         console.log("โหลดคิวปัจจุบัน:", currentQueue);
+
+        queueList.innerHTML = ''; // ล้างรายการคิวก่อนหน้า
 
         for (let i = 1; i <= numberOfRooms; i++) {
             let queueItem = document.createElement('div');
@@ -101,13 +98,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ฟังก์ชันเรียกคิวใหม่เมื่อกดปุ่ม
-    callQueueButton.addEventListener('click', function() {
-        console.log("กดปุ่มเรียกคิวใหม่");
-        callNextQueue();
-    });
+    // ฟังก์ชันล้างคิวทั้งหมด
+    function clearAllQueues() {
+        for (let i = 1; i <= numberOfRooms; i++) {
+            localStorage.removeItem(`calledQueue-${i}`);
+        }
+        localStorage.removeItem('currentQueue');
+        console.log("ล้างคิวทั้งหมด");
+        createQueueItems(); // อัพเดตหน้าจอหลังจากล้างคิว
+    }
 
-    // เรียกใช้ฟังก์ชันเพิ่มห้องและสร้างรายการคิว
-    addRoom();
-    createQueueItems();
-});
+    // ฟังก์ชันเพิ่มห้องใหม่
+    function addRoom() {
+        let currentRoomCount = numberOfRooms;
+        numberOfRooms = currentRoomCount + 1;
+        console.log("เพิ่มห้องใหม่:", numberOfRooms);
+        addRoom();
+        createQueueItems();
+    }
+
+    // ตรวจสอบและติดตั้ง Event Listener
+    document.getElementById('callQueueButton').addEventListener('click', function() {
+        console.log("กดปุ่มเรียกค
