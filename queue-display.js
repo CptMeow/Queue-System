@@ -3,8 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function createQueueTable() {
         const queueTableBody = document.getElementById('queueTableBody');
-        const currentQueue = loadCurrentQueue();
+        if (!queueTableBody) {
+            console.error("ไม่พบ <tbody> สำหรับตารางคิว");
+            return;
+        }
 
+        const currentQueue = loadCurrentQueue();
         console.log("โหลดคิวปัจจุบัน:", currentQueue);
 
         queueTableBody.innerHTML = ''; // ล้างตารางก่อนหน้า
@@ -45,10 +49,16 @@ document.addEventListener('DOMContentLoaded', function() {
         createQueueTable(); // อัพเดตหน้าจอหลังจากล้างคิว
     }
 
-    document.getElementById('clearQueueButton').addEventListener('click', function() {
-        console.log("กดปุ่มล้างคิว");
-        clearAllQueues();
-    });
+    // ตรวจสอบและติดตั้ง Event Listener
+    const clearQueueButton = document.getElementById('clearQueueButton');
+    if (clearQueueButton) {
+        clearQueueButton.addEventListener('click', function() {
+            console.log("กดปุ่มล้างคิว");
+            clearAllQueues();
+        });
+    } else {
+        console.error("ไม่พบปุ่มล้างคิว");
+    }
 
     createQueueTable();
 });
