@@ -94,15 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateQueueDisplays() {
-        for (let i = 1; i <= numberOfRooms; i++) {
-            let queueSpan = document.getElementById(`currentQueue-${i}`);
-            if (queueSpan) {
-                let calledQueue = localStorage.getItem(`calledQueue-${i}`);
-                queueSpan.textContent = calledQueue ? calledQueue : 'ไม่มีคิว';
-            } else {
-                console.error(`ไม่พบ <span> สำหรับห้อง ${i}`);
-            }
-        }
+        const event = new Event('storage');
+        event.key = `calledQueue-${roomSelect.value}`;
+        window.dispatchEvent(event);
     }
 
     // เริ่มต้นระบบ
