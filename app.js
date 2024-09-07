@@ -11,7 +11,6 @@ new Vue({
             { roomNumber: 7, currentQueue: 1, calledQueues: [] }
         ],
         selectedRoom: 1,
-        message: '',
     },
     methods: {
         callNextQueue() {
