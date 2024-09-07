@@ -18,7 +18,7 @@ function updateCalledQueue(roomNumber) {
 }
 
 function saveCurrentQueue(queueNumber, roomNumber) {
-    const queueData = { queue: queueNumber, room: parseInt(roomNumber) };
+    const queueData = { queue: queueNumber, room: roomNumber };
     localStorage.setItem('currentQueue', JSON.stringify(queueData));
 }
 
