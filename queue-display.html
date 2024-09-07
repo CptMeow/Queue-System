@@ -3,94 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าจอแสดงคิว</title>
+    <title>แสดงคิว</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 100%;
-            height: 100vh; /* ใช้ความสูงเต็มหน้าจอ */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        .info, .queue-table, .contact {
-            margin: 20px 0;
-            width: 100%;
-            max-width: 1200px; /* กำหนดความกว้างสูงสุด */
-        }
-        .info p, .contact p {
-            text-align: center;
-            font-size: 1.2em;
+            height: 100vh;
         }
         table {
-            width: 100%;
             border-collapse: collapse;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
         }
         th {
-            background-color: #007bff;
-            color: white;
-        }
-        tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            background-color: #007bff;
-            cursor: pointer;
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="info">
-            <h1>ชื่อโรงพยาบาล</h1>
-            <p>ข้อความทั่วไปเกี่ยวกับการรอคิว</p>
-        </div>
-
-        <!-- ส่วนแสดงตารางคิว -->
-        <div class="queue-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ห้อง</th>
-                        <th>คิวปัจจุบัน</th>
-                        <th>คิวที่เรียกไปแล้ว</th>
-                    </tr>
-                </thead>
-                <tbody id="queueTableBody">
-                    <!-- รายการคิวจะถูกเพิ่มจาก script.js -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- ส่วนแสดงรายละเอียดติดต่อ -->
-        <div class="contact">
-            <p>รายละเอียดติดต่อโรงพยาบาล</p>
-            <button id="clearQueueButton">ล้างคิวทั้งหมด</button>
-        </div>
+    <div class="header">
+        <h1>ระบบแสดงคิว</h1>
     </div>
-
+    <table>
+        <thead>
+            <tr>
+                <th>ห้อง</th>
+                <th>คิวปัจจุบัน</th>
+            </tr>
+        </thead>
+        <tbody id="queueTableBody">
+            <!-- รายการคิวจะถูกเพิ่มที่นี่ -->
+        </tbody>
+    </table>
     <script src="queue-display.js"></script>
 </body>
 </html>
