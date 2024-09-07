@@ -12,6 +12,13 @@ new Vue({
         ],
         selectedRoom: 1,
     },
+    mounted() {
+        // โหลดข้อมูลคิวจาก LocalStorage เมื่อโหลดหน้าเว็บใหม่
+        const storedRooms = JSON.parse(localStorage.getItem('rooms'));
+        if (storedRooms) {
+            this.rooms = storedRooms;
+        }
+    },
     methods: {
         callNextQueue() {
             const room = this.rooms.find(r => r.roomNumber === this.selectedRoom);
@@ -23,6 +30,8 @@ new Vue({
                     room.calledQueues.shift(); // เก็บแค่ 5 คิวล่าสุด
                 }
                 room.currentQueue++;
+                // บันทึกข้อมูลคิวลง LocalStorage
+                localStorage.setItem('rooms', JSON.stringify(this.rooms));
             } else {
                 alert('ห้องที่เลือกไม่ถูกต้อง');
             }
@@ -33,6 +42,7 @@ new Vue({
                     room.currentQueue = 1;
                     room.calledQueues = [];
                 });
+                localStorage.setItem('rooms', JSON.stringify(this.rooms));
                 alert('คิวถูกรีเซ็ตเรียบร้อยแล้ว!');
             }
         },
