@@ -5,7 +5,7 @@ function speakQueue(queueNumber, roomNumber) {
     const utterance = new SpeechSynthesisUtterance();
     utterance.text = `ห้อง ${roomNumber} คิวที่ ${queueNumber}`;
     utterance.lang = 'th-TH'; // ใช้ภาษาไทย
-    utterance.rate = 0.5; // ปรับความเร็วของเสียงพูดให้ช้าลง
+    utterance.rate = 0.8; // ปรับความเร็วของเสียงพูดให้ช้าลง
     window.speechSynthesis.speak(utterance);
 }
 
@@ -43,9 +43,31 @@ function callNextQueue(roomNumber) {
     updateQueueDisplay();
 }
 
+function getRecentQueues(roomNumber) {
+    const queuesString = localStorage.getItem(`calledQueue-${roomNumber}`);
+    let queues = [];
+
+    if (queuesString) {
+        try {
+            queues = JSON.parse(queuesString);
+            if (!Array.isArray(queues)) {
+                queues = [];
+            }
+        } catch (e) {
+            console.error('Error parsing queues:', e);
+            queues = [];
+        }
+    }
+
+    return queues.slice(-maxRecentQueues);
+}
+
 function updateQueueDisplay() {
     const currentQueueList = document.getElementById('currentQueueList');
     currentQueueList.innerHTML = '';
+
+    const recentQueuesList = document.getElementById('recentQueuesList');
+    recentQueuesList.innerHTML = '';
 
     for (let i = 1; i <= numberOfRooms; i++) {
         const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
@@ -54,6 +76,11 @@ function updateQueueDisplay() {
         const roomDiv = document.createElement('div');
         roomDiv.textContent = `ห้อง ${i}: ${currentQueueNumber}`;
         currentQueueList.appendChild(roomDiv);
+
+        const recentQueues = getRecentQueues(i);
+        const recentQueuesDiv = document.createElement('div');
+        recentQueuesDiv.textContent = `ห้อง ${i}: ${recentQueues.join(', ') || 'ไม่มีคิวที่เรียกไปแล้ว'}`;
+        recentQueuesList.appendChild(recentQueuesDiv);
     }
 }
 
