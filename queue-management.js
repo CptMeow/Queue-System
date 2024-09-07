@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const numberOfRooms = 7; // จำนวนห้องที่กำหนดไว้ล่วงหน้า
 
-    function addRoom() {
+    function addRoomOptions() {
         const roomSelect = document.getElementById('roomSelect');
         if (roomSelect) {
             roomSelect.innerHTML = ''; // ล้างตัวเลือกห้องก่อนหน้า
@@ -46,14 +46,21 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCalledQueue(selectedRoom);
             saveCurrentQueue(nextQueueNumber, selectedRoom);
 
-            // แสดงผลคิวปัจจุบันในตาราง
-            const queueSpan = document.getElementById(`currentQueue-${selectedRoom}`);
-            if (queueSpan) {
-                queueSpan.innerText = nextQueueNumber;
-                console.log("อัพเดตคิวปัจจุบันใน DOM:", nextQueueNumber);
-            } else {
-                console.error(`ไม่พบ <span> สำหรับห้อง ${selectedRoom}`);
-            }
+            // แสดงผลคิวปัจจุบันในหน้าแสดงคิว
+            fetch('queue-display.html')
+                .then(response => response.text())
+                .then(html => {
+                    let parser = new DOMParser();
+                    let doc = parser.parseFromString(html, 'text/html');
+                    let queueSpan = doc.getElementById(`currentQueue-${selectedRoom}`);
+                    if (queueSpan) {
+                        queueSpan.innerText = nextQueueNumber;
+                        console.log("อัพเดตคิวปัจจุบันใน DOM:", nextQueueNumber);
+                    } else {
+                        console.error(`ไม่พบ <span> สำหรับห้อง ${selectedRoom}`);
+                    }
+                })
+                .catch(error => console.error("เกิดข้อผิดพลาดในการดึงหน้าแสดงคิว:", error));
         } else {
             console.error("ไม่มีคิวปัจจุบันในการเรียกหรือห้องไม่ถูกต้อง");
         }
@@ -93,19 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createQueueItems() {
-        const roomSelect = document.getElementById('roomSelect');
-        if (roomSelect) {
-            roomSelect.innerHTML = '';
-            for (let i = 1; i <= numberOfRooms; i++) {
-                let option = document.createElement('option');
-                option.value = i;
-                option.textContent = `ห้อง ${i}`;
-                roomSelect.appendChild(option);
-            }
-            console.log("สร้างรายการห้องเสร็จสิ้น");
-        } else {
-            console.error("ไม่พบ select box สำหรับห้อง");
-        }
+        // Update UI elements as needed
+        console.log("สร้างรายการห้องเสร็จสิ้น");
     }
 
     // เริ่มต้นระบบ
@@ -121,5 +117,5 @@ document.addEventListener('DOMContentLoaded', function() {
         clearAllQueues();
     });
 
-    addRoom();
+    addRoomOptions();
 });
