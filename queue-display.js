@@ -2,13 +2,13 @@ new Vue({
     el: '#app',
     data: {
         rooms: [
-            { roomNumber: 1, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 2, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 3, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 4, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 5, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 6, currentQueue: 1, calledQueues: [] },
-            { roomNumber: 7, currentQueue: 1, calledQueues: [] }
+            { roomNumber: 1, calledQueues: [] },
+            { roomNumber: 2, calledQueues: [] },
+            { roomNumber: 3, calledQueues: [] },
+            { roomNumber: 4, calledQueues: [] },
+            { roomNumber: 5, calledQueues: [] },
+            { roomNumber: 6, calledQueues: [] },
+            { roomNumber: 7, calledQueues: [] }
         ]
     },
     mounted() {
@@ -17,9 +17,9 @@ new Vue({
     },
     methods: {
         updateQueueData() {
-            const storedRooms = JSON.parse(localStorage.getItem('rooms'));
-            if (storedRooms) {
-                this.rooms = storedRooms;
+            const storedData = JSON.parse(localStorage.getItem('queueData'));
+            if (storedData) {
+                this.rooms = storedData.rooms;
             }
         }
     }
