@@ -4,13 +4,13 @@ new Vue({
         time: '',
         currentQueue: 1, // คิวปัจจุบันที่จะเรียก
         rooms: [
-            { roomNumber: 1, calledQueues: [] },
-            { roomNumber: 2, calledQueues: [] },
-            { roomNumber: 3, calledQueues: [] },
-            { roomNumber: 4, calledQueues: [] },
-            { roomNumber: 5, calledQueues: [] },
-            { roomNumber: 6, calledQueues: [] },
-            { roomNumber: 7, calledQueues: [] }
+                { roomNumber: 1, currentQueue: null, calledQueues: [] },
+              { roomNumber: 2, currentQueue: null, calledQueues: [] },
+              { roomNumber: 3, currentQueue: null, calledQueues: [] },
+              { roomNumber: 4, currentQueue: null, calledQueues: [] },
+              { roomNumber: 5, currentQueue: null, calledQueues: [] },
+              { roomNumber: 6, currentQueue: null, calledQueues: [] },
+              { roomNumber: 7, currentQueue: null, calledQueues: [] }
         ],
         selectedRoom: 1 // ห้องที่เลือกเรียกคิว
     },
@@ -38,6 +38,7 @@ new Vue({
             const room = this.rooms.find(r => r.roomNumber === this.selectedRoom);
             if (room) {
                 room.calledQueues.push(this.currentQueue);
+                room.currentQueue = this.currentQueue; // ตั้งคิวปัจจุบันเป็นหมายเลขคิวถัดไป
                 this.speakQueue(this.currentQueue, room.roomNumber);
 
                 if (room.calledQueues.length > 5) {
