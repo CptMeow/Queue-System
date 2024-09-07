@@ -12,8 +12,8 @@ new Vue({
         ]
     },
     mounted() {
-        this.updateQueueData(); // โหลดข้อมูลครั้งแรกเมื่อเปิดหน้าเว็บ
-        setInterval(this.updateQueueData, 5000); // อัปเดตข้อมูลทุก 5 วินาที
+        this.updateQueueData(); // โหลดข้อมูลครั้งแรก
+        window.addEventListener('storage', this.updateQueueData); // ฟังการเปลี่ยนแปลงของ LocalStorage
     },
     methods: {
         updateQueueData() {
@@ -22,5 +22,8 @@ new Vue({
                 this.rooms = storedData.rooms;
             }
         }
+    },
+    beforeDestroy() {
+        window.removeEventListener('storage', this.updateQueueData); // ลบ event listener เมื่อ component ถูกทำลาย
     }
 });
