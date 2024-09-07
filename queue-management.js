@@ -86,19 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // กำหนดความสูงของเสียงและความเร็วของเสียง
         utterance.pitch = 1; // ความสูงของเสียง
-        utterance.rate = 0.8; // ความเร็วของเสียง
-
-        // ค้นหาเสียงที่เป็นผู้หญิง
-        const voices = speechSynthesis.getVoices();
-        const femaleVoice = voices.find(voice => voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('หญิง'));
-
-        // หากพบเสียงที่เป็นผู้หญิง กำหนดให้กับ utterance
-        if (femaleVoice) {
-            utterance.voice = femaleVoice;
-        } else {
-            // ถ้าไม่พบเสียงที่เป็นผู้หญิง ให้ใช้เสียงที่ตั้งค่าเริ่มต้น
-            console.warn("ไม่พบเสียงผู้หญิงที่กำหนด");
-        }
+        utterance.rate = 0.5; // ความเร็วของเสียง (ช้าลง)
 
         // เรียกใช้ SpeechSynthesis
         speechSynthesis.speak(utterance);
