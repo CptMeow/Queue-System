@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 option.textContent = `ห้อง ${i}`;
                 roomSelect.appendChild(option);
             }
-            console.log("เพิ่มตัวเลือกห้องใน select box:", numberOfRooms);
         } else {
             console.error("ไม่พบ select box สำหรับห้อง");
         }
@@ -20,22 +19,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initializeQueue() {
         for (let i = 1; i <= numberOfRooms; i++) {
-            // ตั้งค่าเริ่มต้นสำหรับคิวที่เรียกไปแล้ว
             if (!localStorage.getItem(`calledQueue-${i}`)) {
                 localStorage.setItem(`calledQueue-${i}`, 0);
             }
         }
-        // ตั้งค่าคิวปัจจุบันเริ่มต้น
         if (!localStorage.getItem('currentQueue')) {
             localStorage.setItem('currentQueue', JSON.stringify({ queue: 0, room: 1 }));
         }
-        console.log("ระบบเริ่มต้นเสร็จสิ้น");
     }
 
     function loadCurrentQueue() {
         let savedQueue = localStorage.getItem('currentQueue');
         if (savedQueue) {
-            console.log("คิวที่บันทึกไว้ใน LocalStorage:", savedQueue);
             return JSON.parse(savedQueue);
         }
         console.error("ไม่มีคิวใน LocalStorage");
@@ -44,33 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateCalledQueue(roomNumber) {
         let calledQueue = parseInt(localStorage.getItem(`calledQueue-${roomNumber}`)) || 0;
-        console.log(`อัพเดตคิวที่เรียกไปแล้วในห้อง ${roomNumber}:`, calledQueue);
         calledQueue++;
         localStorage.setItem(`calledQueue-${roomNumber}`, calledQueue);
-        console.log(`คิวที่เรียกไปแล้วในห้อง ${roomNumber} หลังจากอัพเดต:`, calledQueue);
     }
 
     function saveCurrentQueue(queueNumber, roomNumber) {
-        const queueData = { queue: queueNumber, room: parseInt(roomNumber) }; // แปลงห้องเป็นตัวเลข
+        const queueData = { queue: queueNumber, room: parseInt(roomNumber) };
         localStorage.setItem('currentQueue', JSON.stringify(queueData));
-        console.log("บันทึกคิวปัจจุบันลง LocalStorage:", queueData);
-    }
-
-    function updateQueueDisplay(roomNumber, queueNumber) {
-        fetch('queue-display.html')
-            .then(response => response.text())
-            .then(html => {
-                let parser = new DOMParser();
-                let doc = parser.parseFromString(html, 'text/html');
-                let queueSpan = doc.getElementById(`currentQueue-${roomNumber}`);
-                if (queueSpan) {
-                    queueSpan.innerText = queueNumber;
-                    console.log("อัพเดตคิวปัจจุบันใน DOM:", queueNumber);
-                } else {
-                    console.error(`ไม่พบ <span> สำหรับห้อง ${roomNumber}`);
-                }
-            })
-            .catch(error => console.error("เกิดข้อผิดพลาดในการดึงหน้าแสดงคิว:", error));
     }
 
     function callNextQueue() {
@@ -88,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCalledQueue(selectedRoom);
             saveCurrentQueue(nextQueueNumber, selectedRoom);
 
-            console.log("เรียกคิวใหม่:", nextQueueNumber);
+            // เรียกใช้ฟังก์ชันเสียง
+            playAudio(`เสียงเรียกคิว ${nextQueueNumber} ห้อง ${selectedRoom}.mp3`);
 
             // อัพเดตหน้าจอแสดงคิว
             updateQueueDisplay(selectedRoom, nextQueueNumber);
@@ -102,26 +78,39 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.removeItem(`calledQueue-${i}`);
         }
         localStorage.removeItem('currentQueue');
-        console.log("ล้างคิวทั้งหมด");
-        createQueueItems(); // อัพเดตหน้าจอหลังจากล้างคิว
     }
 
-    function createQueueItems() {
-        // Update UI elements as needed
-        console.log("สร้างรายการห้องเสร็จสิ้น");
+    function playAudio(filename) {
+        const audio = new Audio(`audio/${filename}`);
+        audio.play().catch(error => console.error("ไม่สามารถเล่นเสียงได้:", error));
+    }
+
+    function updateQueueDisplay(roomNumber, queueNumber) {
+        fetch('queue-display.html')
+            .then(response => response.text())
+            .then(html => {
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(html, 'text/html');
+                let queueSpan = doc.getElementById(`currentQueue-${roomNumber}`);
+                if (queueSpan) {
+                    queueSpan.innerText = queueNumber;
+                } else {
+                    console.error(`ไม่พบ <span> สำหรับห้อง ${roomNumber}`);
+                }
+            })
+            .catch(error => console.error("เกิดข้อผิดพลาดในการดึงหน้าแสดงคิว:", error));
     }
 
     // เริ่มต้นระบบ
     initializeQueue();
 
     document.getElementById('callQueueButton').addEventListener('click', function() {
-        console.log("กดปุ่มเรียกคิวใหม่");
         callNextQueue();
     });
 
     document.getElementById('clearQueueButton').addEventListener('click', function() {
-        console.log("กดปุ่มล้างคิว");
         clearAllQueues();
+        updateQueueDisplay(); // อัพเดตหน้าจอหลังจากล้างคิว
     });
 
     addRoomOptions();
