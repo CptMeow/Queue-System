@@ -7,7 +7,7 @@ new Vue({
   },
   mounted() {
     this.updateTime(); // ตั้งเวลาเริ่มต้น
-    setInterval(this.updateTime, 1000); // อัปเดตเวลาใหม่ทุกวินาที
+    setInterval(() => this.updateTime(), 1000); // อัปเดตเวลาใหม่ทุกวินาที
     this.loadQueueData(); // โหลดข้อมูลคิว
   },
   methods: {
