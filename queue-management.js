@@ -73,16 +73,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-function clearAllQueues() {
-    for (let i = 1; i <= numberOfRooms; i++) {
-        localStorage.removeItem(`calledQueue-${i}`);
+    function clearAllQueues() {
+        for (let i = 1; i <= numberOfRooms; i++) {
+            localStorage.removeItem(`calledQueue-${i}`);
+        }
+        localStorage.removeItem('currentQueue');
+
+        // อัพเดตหน้าจอแสดงคิวหลังจากล้างคิว
+        updateQueueDisplays();
     }
-    localStorage.removeItem('currentQueue');
-
-    // อัพเดตหน้าจอแสดงคิวหลังจากล้างคิว
-    updateQueueDisplays();
-}
-
 
     function playQueueAudio(queueNumber, roomNumber) {
         const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
@@ -95,16 +94,15 @@ function clearAllQueues() {
     }
 
     function updateQueueDisplays() {
-        const queueDisplays = document.querySelectorAll('[id^="currentQueue-"]');
-        queueDisplays.forEach(span => {
-            const roomNumber = span.id.split('-')[1];
-            let currentQueue = loadCurrentQueue();
-            if (currentQueue && currentQueue.room == roomNumber) {
-                span.textContent = currentQueue.queue;
+        for (let i = 1; i <= numberOfRooms; i++) {
+            let queueSpan = document.getElementById(`currentQueue-${i}`);
+            if (queueSpan) {
+                let calledQueue = localStorage.getItem(`calledQueue-${i}`);
+                queueSpan.textContent = calledQueue ? calledQueue : 'ไม่มีคิว';
             } else {
-                span.textContent = 'ไม่มีคิว';
+                console.error(`ไม่พบ <span> สำหรับห้อง ${i}`);
             }
-        });
+        }
     }
 
     // เริ่มต้นระบบ
@@ -116,7 +114,6 @@ function clearAllQueues() {
 
     document.getElementById('clearQueueButton').addEventListener('click', function() {
         clearAllQueues();
-        updateQueueDisplays(); // อัพเดตหน้าจอหลังจากล้างคิว
     });
 
     addRoomOptions();
