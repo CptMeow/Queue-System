@@ -31,34 +31,39 @@ header h1 {
 
 main {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.info-box {
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 800px;
 }
 
-.info-box h2 {
-    font-size: 1.8em;
-    color: #333;
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
 }
 
-.info-box div {
+th {
+    background-color: #0044cc;
+    color: white;
     font-size: 1.5em;
 }
 
-#currentQueueDisplay, #recentQueuesDisplay {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fafafa;
-    text-align: center;
+td {
+    font-size: 1.2em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #e0e0e0;
 }
