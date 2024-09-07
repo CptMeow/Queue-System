@@ -8,9 +8,11 @@ function updateQueueTable() {
     queueTableBody.innerHTML = '';
 
     for (let i = 1; i <= numberOfRooms; i++) {
+        // รับหมายเลขคิวปัจจุบันจาก localStorage
         const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
         const currentQueueNumber = (currentQueue.room === i.toString()) ? `คิว ${currentQueue.queue}` : 'ไม่มีคิวปัจจุบัน';
 
+        // รับคิวที่เรียกไปแล้วล่าสุดจาก localStorage
         const recentQueues = getRecentQueues(i);
         const recentQueuesText = recentQueues.length > 0 ? recentQueues.join(', ') : 'ไม่มีคิวที่เรียกไปแล้ว';
 
