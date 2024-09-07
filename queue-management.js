@@ -73,12 +73,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function clearAllQueues() {
-        for (let i = 1; i <= numberOfRooms; i++) {
-            localStorage.removeItem(`calledQueue-${i}`);
-        }
-        localStorage.removeItem('currentQueue');
+function clearAllQueues() {
+    for (let i = 1; i <= numberOfRooms; i++) {
+        localStorage.removeItem(`calledQueue-${i}`);
     }
+    localStorage.removeItem('currentQueue');
+
+    // อัพเดตหน้าจอแสดงคิวหลังจากล้างคิว
+    updateQueueDisplays();
+}
+
 
     function playQueueAudio(queueNumber, roomNumber) {
         const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
