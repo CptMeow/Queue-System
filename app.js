@@ -1,7 +1,7 @@
 new Vue({
     el: '#app',
     data: {
-        time: this.getCurrentTime(),
+        time: '',
         currentQueue: 1, // คิวปัจจุบันที่จะเรียก
         rooms: [
             { roomNumber: 1, calledQueues: [] },
@@ -15,9 +15,8 @@ new Vue({
         selectedRoom: 1 // ห้องที่เลือกเรียกคิว
     },
     mounted() {
-        setInterval(() => {
-          this.time = this.getCurrentTime();
-        }, 1000);
+        this.updateTime(); // Call the method to set initial time
+        setInterval(this.updateTime, 1000); // Update time every second
         const storedData = JSON.parse(localStorage.getItem('queueData'));
         if (storedData) {
             this.currentQueue = storedData.currentQueue;
@@ -25,6 +24,9 @@ new Vue({
         }
     },
     methods: {
+        updateTime() {
+      this.time = this.getCurrentTime();
+    },
          getCurrentTime() {
           const now = new Date();
           const hours = String(now.getHours()).padStart(2, '0');
