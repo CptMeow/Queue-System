@@ -22,7 +22,7 @@
     <label for="room-select">เลือกห้อง:</label>
     <select v-model="selectedRoom" id="room-select">
       <option v-for="room in rooms" :value="room.roomNumber">
-        ห้อง {{ room.roomNumber }}
+        ห้อง {{ room.roomName }}
       </option>
     </select>
     <button @click="callNextQueue">เรียกคิว</button>
@@ -40,7 +40,7 @@
       </thead>
       <tbody>
         <tr v-for="room in rooms" :key="room.roomNumber">
-          <td>ห้อง {{ room.roomNumber }}</td>
+          <td>ห้อง {{ room.roomName }}</td>
           <td>{{ room.calledQueues.join(', ') || 'ยังไม่มีคิว' }}</td>
         </tr>
       </tbody>
