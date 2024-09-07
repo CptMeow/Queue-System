@@ -77,4 +77,33 @@ document.addEventListener('DOMContentLoaded', function() {
         updateQueueDisplays();
     }
 
-    function playQueueAudio(queueNumber
+    function playQueueAudio(queueNumber, roomNumber) {
+        const text = `เรียกคิว ${queueNumber} ห้อง ${roomNumber}`;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'th-TH'; // ภาษาไทย
+        utterance.pitch = 1; // ความสูงของเสียง
+        utterance.rate = 0.4; // ความเร็วของเสียง (ต่ำกว่า 1 ทำให้เสียงช้าลง)
+
+        speechSynthesis.speak(utterance);
+    }
+
+    function updateQueueDisplays() {
+        // สร้างเหตุการณ์ใหม่เพื่อกระตุ้นการอัพเดต
+        const event = new Event('storage');
+        event.key = `calledQueue-${document.getElementById('roomSelect').value}`;
+        window.dispatchEvent(event);
+    }
+
+    // เริ่มต้นระบบ
+    initializeQueue();
+
+    document.getElementById('callQueueButton').addEventListener('click', function() {
+        callNextQueue();
+    });
+
+    document.getElementById('clearQueueButton').addEventListener('click', function() {
+        clearAllQueues();
+    });
+
+    addRoomOptions();
+});
