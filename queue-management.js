@@ -40,6 +40,11 @@ function updateQueueTable() {
     const currentQueueInfo = document.getElementById('currentQueueInfo');
     const recentQueueInfo = document.getElementById('recentQueueInfo');
 
+    if (!roomButtons || !currentQueueInfo || !recentQueueInfo) {
+        console.error('One or more required elements are missing in the HTML.');
+        return;
+    }
+
     roomButtons.innerHTML = '';
     currentQueueInfo.innerHTML = '';
     recentQueueInfo.innerHTML = '';
