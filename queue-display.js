@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getCurrentQueue(roomNumber) {
         const currentQueue = JSON.parse(localStorage.getItem('currentQueue')) || {};
         if (currentQueue.room === roomNumber.toString()) {
-            return currentQueue.queue;
+            return `คิว ${currentQueue.queue}`;
         }
         return 'ไม่มีคิวปัจจุบัน';
     }
