@@ -1,52 +1,45 @@
 document.addEventListener('DOMContentLoaded', function() {
     const numberOfRooms = 7;
+    const maxRecentQueues = 5;
 
-    function createQueueItems() {
+    function getRecentQueues(roomNumber) {
+        const calledQueueKey = `calledQueue-${roomNumber}`;
+        const queues = localStorage.getItem(calledQueueKey);
+        if (queues) {
+            return JSON.parse(queues).slice(-maxRecentQueues);
+        }
+        return [];
+    }
+
+    function updateQueueTable() {
         const tableBody = document.getElementById('queueTableBody');
-        if (tableBody) {
-            tableBody.innerHTML = '';
+        tableBody.innerHTML = '';
 
-            for (let i = 1; i <= numberOfRooms; i++) {
-                let row = document.createElement('tr');
-
-                let roomCell = document.createElement('td');
-                roomCell.textContent = `ห้อง ${i}`;
-                row.appendChild(roomCell);
-
-                let queueCell = document.createElement('td');
-                let queueSpan = document.createElement('span');
-                queueSpan.id = `currentQueue-${i}`;
-                queueSpan.textContent = 'ไม่มีคิว'; // ค่าเริ่มต้น
-                queueCell.appendChild(queueSpan);
-                row.appendChild(queueCell);
-
-                tableBody.appendChild(row);
-            }
-        } else {
-            console.error("ไม่พบ tbody สำหรับตารางคิว");
-        }
-        updateQueueDisplays();
-    }
-
-    function updateQueueDisplays() {
         for (let i = 1; i <= numberOfRooms; i++) {
-            let queueSpan = document.getElementById(`currentQueue-${i}`);
-            if (queueSpan) {
-                let calledQueue = localStorage.getItem(`calledQueue-${i}`);
-                queueSpan.textContent = calledQueue ? calledQueue : 'ไม่มีคิว';
-            } else {
-                console.error(`ไม่พบ <span> สำหรับห้อง ${i}`);
-            }
+            const recentQueues = getRecentQueues(i);
+
+            const row = document.createElement('tr');
+            const roomCell = document.createElement('td');
+            const queuesCell = document.createElement('td');
+
+            roomCell.textContent = `ห้อง ${i}`;
+
+            const queueList = recentQueues.length > 0 ? recentQueues.join(', ') : 'ไม่มีคิว';
+            queuesCell.textContent = queueList;
+
+            row.appendChild(roomCell);
+            row.appendChild(queuesCell);
+            tableBody.appendChild(row);
         }
     }
 
-    // ตรวจสอบการเปลี่ยนแปลงใน localStorage
-    window.addEventListener('storage', function(event) {
-        if (event.key && event.key.startsWith('calledQueue-')) {
-            updateQueueDisplays();
-        }
-    });
+    function loadQueueData() {
+        // Load the queue data and update the display
+        updateQueueTable();
+    }
 
-    // สร้างรายการห้องเมื่อโหลดหน้า
-    createQueueItems();
+    loadQueueData();
+
+    // Update the queue display every 5 seconds
+    setInterval(loadQueueData, 5000);
 });
