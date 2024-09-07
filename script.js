@@ -22,7 +22,9 @@ function announceQueue(queueNumber, roomNumber) {
             msg.pitch = 1;   // ระดับเสียงปกติ
 
             // ออกเสียง
-            window.speechSynthesis.speak(msg);
+            window.speechSynthesis.speak(msg).catch(error => {
+                console.error("เกิดข้อผิดพลาดในการออกเสียง:", error);
+            });
         };
     } else {
         console.error("Web Speech API ไม่สามารถใช้งานได้ในเบราว์เซอร์นี้");
