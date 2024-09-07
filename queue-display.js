@@ -52,7 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // อัพเดตคิวปัจจุบัน
             localStorage.setItem('currentQueue', currentQueue + 1);
-            document.getElementById(`currentQueue-${roomNumber}`).innerText = currentQueue + 1;
+            const newCurrentQueue = currentQueue + 1;
+            const queueSpan = document.getElementById(`currentQueue-${roomNumber}`);
+            if (queueSpan) {
+                queueSpan.innerText = newCurrentQueue;
+            }
         }
     }
 
