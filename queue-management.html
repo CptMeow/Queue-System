@@ -11,7 +11,7 @@
 <body>
   <div id="app">
     <h1>หน้าจอจัดการคิว</h1>
-    <div class="clock">{{ new Date().toLocaleTimeString() }}</div>
+    <div class="clock">{{ time }}</div>
     
     <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
     <div v-for="room in rooms" :key="room.roomNumber" class="room-section">
@@ -25,6 +25,9 @@
       <button @click="callNextQueue(room.roomNumber)">เรียกคิวถัดไป</button>
       <button @click="resetRoomQueue(room.roomNumber)">รีเซ็ตคิวห้องนี้</button>
     </div>
+
+    <!-- ปุ่มล้างคิวทุกห้อง -->
+    <button @click="resetAllQueues" class="reset-all">ล้างคิวทุกห้อง</button>
     
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
