@@ -21,15 +21,20 @@ new Vue({
         setInterval(this.updateTime, 1000); // Update time every second
         const storedData = JSON.parse(localStorage.getItem('queueData'));
         if (storedData) {
-            this.currentQueue = storedData.currentQueue;
-            // ตรวจสอบว่ามีฟิลด์ roomName หรือไม่ ถ้าไม่มี ให้เพิ่มจากค่าเริ่มต้นใน rooms
-            storedData.rooms.forEach((storedRoom, index) => {
-                if (!storedRoom.roomName) {
-                    storedRoom.roomName = this.rooms[index].roomName;
+            this.currentQueue = storedData.currentQueue || this.currentQueue;
+            
+            // โหลดข้อมูล rooms จาก localStorage หรือถ้าไม่มีข้อมูลให้ใช้ค่าจาก this.rooms
+            this.rooms.forEach((room, index) => {
+                const storedRoom = storedData.rooms[index];
+                if (storedRoom) {
+                    room.currentQueue = storedRoom.currentQueue;
+                    room.calledQueues = storedRoom.calledQueues;
                 }
             });
-            this.rooms = storedData.rooms;
         }
+
+        // อัปเดตข้อมูลใน localStorage จาก rooms ใหม่ทุกครั้ง
+        this.saveQueueData(); 
     },
     methods: {
         updateTime() {
