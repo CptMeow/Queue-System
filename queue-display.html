@@ -13,6 +13,7 @@
   <style>
     .room-section {
       margin-bottom: 20px;
+      display: none; /* ซ่อนไว้โดยเริ่มต้น */
     }
     .room-name {
       font-size: 1.5em;
@@ -31,9 +32,6 @@
     }
     .card-body {
       padding: 20px;
-    }
-    .inactive {
-      opacity: 0.5;
     }
   </style>
 </head>
@@ -56,8 +54,8 @@
 
     <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
     <div class="row">
-      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4">
-        <div :class="['card card-primary room-section', { 'inactive': !room.isActive }]" :style="{ backgroundColor: room.rgbColor }">
+      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4 room-section" v-if="room.isActive">
+        <div class="card card-primary" :style="{ backgroundColor: room.rgbColor }">
           <div class="card-header">
             <h3 class="card-title">{{ room.roomName }}</h3>
           </div>
@@ -74,17 +72,4 @@
 
             <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
             <ul>
-              <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AdminLTE/Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-  <script src="queue-display.js"></script>
-</body>
-</html>
+              <li
