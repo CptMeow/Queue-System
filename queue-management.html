@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>หน้าจอจัดการคิว</title>
   
-  <!-- เพิ่ม meta referrer -->
   <meta name="referrer" content="no-referrer">
-
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,7 +15,7 @@
     
     <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
     <div v-for="room in rooms" :key="room.roomNumber" class="room-section">
-      <h2>ห้อง {{ room.roomName }}</h2>
+      <h2>{{ room.roomName }}</h2>
       <p>คิวปัจจุบัน: <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span></p>
       <p>คิวที่เรียกไปแล้ว: 
         <ul>
