@@ -8,9 +8,11 @@ new Vue({
             { roomNumber: 2, roomName:'4', currentQueue: null, calledQueues: [] },
             { roomNumber: 3, roomName:'5', currentQueue: null, calledQueues: [] },
             { roomNumber: 4, roomName:'6', currentQueue: null, calledQueues: [] },
-            { roomNumber: 5, roomName:'8', currentQueue: null, calledQueues: [] },
-            { roomNumber: 6, roomName:'10', currentQueue: null, calledQueues: [] },
-            { roomNumber: 7, roomName:'11', currentQueue: null, calledQueues: [] }
+            { roomNumber: 5, roomName:'8/1', currentQueue: null, calledQueues: [] },
+            { roomNumber: 6, roomName:'8/2', currentQueue: null, calledQueues: [] },
+            { roomNumber: 7, roomName:'8/3', currentQueue: null, calledQueues: [] },
+            { roomNumber: 8, roomName:'10', currentQueue: null, calledQueues: [] },
+            { roomNumber: 9, roomName:'11', currentQueue: null, calledQueues: [] }
         ],
         selectedRoom: 1 // ห้องที่เลือกเรียกคิว
     },
