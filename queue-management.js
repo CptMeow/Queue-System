@@ -45,7 +45,7 @@ new Vue({
         room.calledQueues.push(room.nextQueue);
         room.nextQueue++; // เพิ่มหมายเลขคิวถัดไป
 
-        if (room.calledQueues.length > 5) {
+        if (room.calledQueues.length > 10) {
           room.calledQueues.shift(); // จำกัดจำนวนคิวที่เก็บไว้ใน calledQueues ให้ไม่เกิน 5
         }
 
