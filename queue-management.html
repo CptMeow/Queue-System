@@ -1,56 +1,35 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดการคิว</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หน้าจอจัดการคิว</title>
+  
+  <!-- เพิ่ม meta referrer -->
+  <meta name="referrer" content="no-referrer">
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="app">
-  <div class="clock">{{ time }}</div>
-  <!-- ส่วนแสดงหมายเลขคิวถัดไป -->
-  <div style="text-align: center; margin: 20px;">
-    <h1>หมายเลขคิวถัดไป:</h1>
-    <div style="font-size: 48px; font-weight: bold; color: red;">
-      {{ currentQueue }}
+  <div id="app">
+    <h1>หน้าจอจัดการคิว</h1>
+    <div class="clock">{{ new Date().toLocaleTimeString() }}</div>
+    
+    <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
+    <div v-for="room in rooms" :key="room.roomNumber" class="room-section">
+      <h2>ห้อง {{ room.roomName }}</h2>
+      <p>คิวปัจจุบัน: <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span></p>
+      <p>คิวที่เรียกไปแล้ว: 
+        <ul>
+          <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
+        </ul>
+      </p>
+      <button @click="callNextQueue(room.roomNumber)">เรียกคิวถัดไป</button>
+      <button @click="resetRoomQueue(room.roomNumber)">รีเซ็ตคิวห้องนี้</button>
     </div>
+    
   </div>
-
-  <!-- ตัวเลือกห้องและปุ่มเรียกคิว -->
-  <div class="queue-management">
-    <label for="room-select">เลือกห้อง:</label>
-    <select v-model="selectedRoom" id="room-select">
-      <option v-for="room in rooms" :value="room.roomNumber">
-        {{ room.roomName }}
-      </option>
-    </select>
-    <button @click="callNextQueue">เรียกคิว</button>
-    <button @click="resetQueues">เริ่มต้นคิวใหม่</button>
-  </div>
-  
-  <!-- ตารางแสดงคิวแต่ละห้อง -->
-  <div class="queue-table">
-    <table>
-      <thead>
-        <tr>
-          <th>ห้อง</th>
-          <th>คิวที่เรียกไปแล้ว</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="room in rooms" :key="room.roomNumber">
-          <td>{{ room.roomName }}</td>
-          <td>{{ room.calledQueues.join(', ') || 'ยังไม่มีคิว' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="queue-management.js"></script>
 </body>
 </html>
