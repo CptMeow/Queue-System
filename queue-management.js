@@ -33,6 +33,16 @@ new Vue({
       const storedData = JSON.parse(localStorage.getItem('queueData'));
       if (storedData) {
         this.rooms = storedData.rooms || this.rooms;
+
+        // ตรวจสอบและกำหนดค่าเริ่มต้นสำหรับ currentQueue และ nextQueue ในแต่ละห้อง
+        this.rooms.forEach(room => {
+          if (room.currentQueue === undefined || room.currentQueue === null) {
+            room.currentQueue = null; // กำหนดเป็น null ถ้าไม่พบค่า
+          }
+          if (room.nextQueue === undefined || room.nextQueue === null) {
+            room.nextQueue = 1; // กำหนดเป็น 1 ถ้าไม่พบค่า
+          }
+        });
       }
     },
     callNextQueue(roomNumber) {
