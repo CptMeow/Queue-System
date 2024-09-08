@@ -4,15 +4,15 @@ new Vue({
         time: '',
         currentQueue: 1, // คิวปัจจุบันที่จะเรียก
         rooms: [
-            { roomNumber: 1, roomName:'3', currentQueue: null, calledQueues: [] },
-            { roomNumber: 2, roomName:'4', currentQueue: null, calledQueues: [] },
-            { roomNumber: 3, roomName:'5', currentQueue: null, calledQueues: [] },
-            { roomNumber: 4, roomName:'6', currentQueue: null, calledQueues: [] },
-            { roomNumber: 5, roomName:'8 โต๊ะ 1', currentQueue: null, calledQueues: [] },
-            { roomNumber: 6, roomName:'8 โต๊ะ 2', currentQueue: null, calledQueues: [] },
-            { roomNumber: 7, roomName:'8 โต๊ะ 3', currentQueue: null, calledQueues: [] },
-            { roomNumber: 8, roomName:'10', currentQueue: null, calledQueues: [] },
-            { roomNumber: 9, roomName:'11', currentQueue: null, calledQueues: [] }
+            { roomNumber: 1, roomName:'ห้องตรวจ 3', currentQueue: null, calledQueues: [] },
+            { roomNumber: 2, roomName:'ห้องตรวจ 4', currentQueue: null, calledQueues: [] },
+            { roomNumber: 3, roomName:'ห้องตรวจ 5', currentQueue: null, calledQueues: [] },
+            { roomNumber: 4, roomName:'ห้องตรวจ 6', currentQueue: null, calledQueues: [] },
+            { roomNumber: 5, roomName:'ห้องตรวจ 8 โต๊ะ 1', currentQueue: null, calledQueues: [] },
+            { roomNumber: 6, roomName:'ห้องตรวจ 8 โต๊ะ 2', currentQueue: null, calledQueues: [] },
+            { roomNumber: 7, roomName:'ห้องตรวจ 8 โต๊ะ 3', currentQueue: null, calledQueues: [] },
+            { roomNumber: 8, roomName:'ห้องตรวจ 10', currentQueue: null, calledQueues: [] },
+            { roomNumber: 9, roomName:'ห้องตรวจ 11', currentQueue: null, calledQueues: [] }
         ],
         selectedRoom: 1 // ห้องที่เลือกเรียกคิว
     },
