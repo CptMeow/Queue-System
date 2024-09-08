@@ -88,6 +88,8 @@
 
             <button @click="callNextQueue(room.roomNumber)" class="btn btn-primary">เรียกคิวถัดไป</button>
             <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-danger">รีเซ็ตคิวห้องนี้</button>
+            <button @click="reCallLastQueue(room.roomNumber)" class="btn btn-info">เรียกคิวล่าสุดอีกครั้ง</button>
+            <button @click="reCallQueue(room.roomNumber, queue)" v-for="queue in room.calledQueues" :key="queue" class="btn btn-secondary">เรียกคิวหมายเลข {{ queue }} อีกครั้ง</button>
           </div>
         </div>
       </div>
