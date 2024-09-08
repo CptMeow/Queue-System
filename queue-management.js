@@ -1,6 +1,7 @@
 new Vue({
   el: '#app',
   data: {
+    time: '',
     rooms: [
       { roomNumber: 1, roomName: 'ห้องตรวจ 3', currentQueue: null, nextQueue: 1, calledQueues: [] },
       { roomNumber: 2, roomName: 'ห้องตรวจ 4', currentQueue: null, nextQueue: 1, calledQueues: [] },
@@ -14,10 +15,20 @@ new Vue({
     ]
   },
   mounted() {
+    this.updateTime(); // โหลดเวลาเริ่มต้น
+    setInterval(this.updateTime, 1000); // อัปเดตเวลาใหม่ทุกวินาที
+
     this.loadQueueData(); // โหลดข้อมูลจาก localStorage เมื่อเริ่มต้น
     window.addEventListener('storage', this.loadQueueData); // ฟังการเปลี่ยนแปลงของ LocalStorage
   },
   methods: {
+    updateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      this.time = `${hours}:${minutes}:${seconds}`;
+    },
     loadQueueData() {
       const storedData = JSON.parse(localStorage.getItem('queueData'));
       if (storedData) {
@@ -49,6 +60,17 @@ new Vue({
         room.calledQueues = [];
         this.saveQueueData();
         alert(`คิวสำหรับห้อง ${room.roomName} ถูกรีเซ็ตเรียบร้อยแล้ว!`);
+      }
+    },
+    resetAllQueues() {
+      if (confirm('คุณแน่ใจหรือไม่ว่าต้องการล้างคิวทุกห้อง?')) {
+        this.rooms.forEach(room => {
+          room.currentQueue = null;
+          room.nextQueue = 1;
+          room.calledQueues = [];
+        });
+        this.saveQueueData();
+        alert('คิวทุกห้องถูกล้างเรียบร้อยแล้ว!');
       }
     },
     saveQueueData() {
