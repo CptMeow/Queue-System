@@ -107,6 +107,18 @@ new Vue({
         room.isActive = !room.isActive;
         this.saveQueueData();
       }
+    },
+    clearAllData() {
+      if (confirm('คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลทั้งหมด? ข้อมูลทั้งหมดจะถูกลบออกและไม่สามารถกู้คืนได้!')) {
+        localStorage.removeItem('queueData');
+        this.rooms.forEach(room => {
+          room.currentQueue = null;
+          room.nextQueue = 1;
+          room.calledQueues = [];
+        });
+        this.saveQueueData();
+        alert('ข้อมูลทั้งหมดถูกล้างเรียบร้อยแล้ว!');
+      }
     }
   },
   beforeDestroy() {
