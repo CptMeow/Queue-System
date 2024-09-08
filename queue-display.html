@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>หน้าจอรอคิว</title>
   
-  <meta name="referrer" content="no-referrer">
   <!-- AdminLTE/Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
@@ -13,25 +12,9 @@
   <style>
     .room-section {
       margin-bottom: 20px;
-      display: none; /* ซ่อนไว้โดยเริ่มต้น */
-    }
-    .room-name {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    .queue-info {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
-    .queue-next {
-      font-size: 2em;
-      font-weight: bold;
-      color: #ffffff;
-      padding: 10px;
-      border-radius: 8px;
-    }
-    .card-body {
       padding: 20px;
+      color: #fff;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -52,14 +35,12 @@
       </div>
     </div>
 
-    <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
+    <!-- แสดงข้อมูลคิวแยกตามแต่ละห้องที่เปิดใช้งาน -->
     <div class="row">
-      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4 room-section" v-if="room.isActive">
-        <div class="card card-primary" :style="{ backgroundColor: room.rgbColor }">
-          <div class="card-header">
-            <h3 class="card-title">{{ room.roomName }}</h3>
-          </div>
+      <div v-for="room in rooms" :key="room.roomNumber" v-if="room.isActive" class="col-md-4">
+        <div class="card room-section" :style="{ backgroundColor: room.rgbColor }">
           <div class="card-body">
+            <h3 class="card-title">{{ room.roomName }}</h3>
             <p class="queue-info">คิวปัจจุบัน: 
               <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span>
             </p>
@@ -67,9 +48,23 @@
             <!-- คิวถัดไปของแต่ละห้อง -->
             <p class="queue-info">
               คิวถัดไป: 
-              <span class="queue-next">{{ room.nextQueue }}</span>
+              <span>{{ room.nextQueue }}</span>
             </p>
 
             <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
             <ul>
-              <li
+              <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- AdminLTE/Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+  <script src="queue-display.js"></script>
+</body>
+</html>
