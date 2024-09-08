@@ -22,6 +22,16 @@
       font-size: 1.2em;
       margin-bottom: 10px;
     }
+    .queue-next {
+      font-size: 2em;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .queue-next.bg-warning {
+      background-color: #ffc107;
+    }
     .card-body {
       padding: 20px;
     }
@@ -55,11 +65,21 @@
             <h3 class="card-title">{{ room.roomName }}</h3>
           </div>
           <div class="card-body">
-            <p class="queue-info">คิวปัจจุบัน: <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span></p>
+            <p class="queue-info">คิวปัจจุบัน: 
+              <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span>
+            </p>
+
+            <!-- คิวถัดไปของแต่ละห้อง -->
+            <p class="queue-info">
+              คิวถัดไป: 
+              <span class="queue-next bg-warning">{{ room.nextQueue }}</span>
+            </p>
+
             <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
             <ul>
               <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
             </ul>
+
             <button @click="callNextQueue(room.roomNumber)" class="btn btn-primary">เรียกคิวถัดไป</button>
             <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-danger">รีเซ็ตคิวห้องนี้</button>
           </div>
