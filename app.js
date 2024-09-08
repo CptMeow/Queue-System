@@ -4,13 +4,13 @@ new Vue({
         time: '',
         currentQueue: 1, // คิวปัจจุบันที่จะเรียก
         rooms: [
-                { roomNumber: 1, currentQueue: null, calledQueues: [] },
-              { roomNumber: 2, currentQueue: null, calledQueues: [] },
-              { roomNumber: 3, currentQueue: null, calledQueues: [] },
-              { roomNumber: 4, currentQueue: null, calledQueues: [] },
-              { roomNumber: 5, currentQueue: null, calledQueues: [] },
-              { roomNumber: 6, currentQueue: null, calledQueues: [] },
-              { roomNumber: 7, currentQueue: null, calledQueues: [] }
+            { roomNumber: 1, roomName:'3', currentQueue: null, calledQueues: [] },
+            { roomNumber: 2, roomName:'4', currentQueue: null, calledQueues: [] },
+            { roomNumber: 3, roomName:'5', currentQueue: null, calledQueues: [] },
+            { roomNumber: 4, roomName:'6', currentQueue: null, calledQueues: [] },
+            { roomNumber: 5, roomName:'8', currentQueue: null, calledQueues: [] },
+            { roomNumber: 6, roomName:'10', currentQueue: null, calledQueues: [] },
+            { roomNumber: 7, roomName:'11', currentQueue: null, calledQueues: [] }
         ],
         selectedRoom: 1 // ห้องที่เลือกเรียกคิว
     },
@@ -39,7 +39,7 @@ new Vue({
             if (room) {
                 room.calledQueues.push(this.currentQueue);
                 room.currentQueue = this.currentQueue; // ตั้งคิวปัจจุบันเป็นหมายเลขคิวถัดไป
-                this.speakQueue(this.currentQueue, room.roomNumber);
+                this.speakQueue(this.currentQueue, room.roomName);
 
                 if (room.calledQueues.length > 5) {
                     room.calledQueues.shift(); // เก็บแค่ 5 คิวล่าสุด
@@ -72,8 +72,8 @@ new Vue({
             };
             localStorage.setItem('queueData', JSON.stringify(data));
         },
-        speakQueue(queueNumber, roomNumber) {
-            const message = `เชิญหมายเลข  ${queueNumber}  ที่ ห้องตรวจ  ${roomNumber}`;
+        speakQueue(queueNumber, roomName) {
+            const message = `เชิญหมายเลข  ${queueNumber}  ที่ ห้องตรวจ  ${roomName}`;
             const speech = new SpeechSynthesisUtterance(message);
             speech.lang = 'th-TH';
             speech.rate = 0.7; // ปรับความเร็วเสียงให้พูดช้าลง
