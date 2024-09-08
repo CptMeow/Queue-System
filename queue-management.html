@@ -9,6 +9,8 @@
   <!-- AdminLTE/Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
   
   <style>
     .room-section {
@@ -70,7 +72,7 @@
           <div class="card-header">
             <h3 class="card-title">{{ room.roomName }}</h3>
             <button @click="toggleRoomStatus(room.roomNumber)" class="btn btn-toggle" :class="{'btn-success': room.isActive, 'btn-secondary': !room.isActive}">
-              {{ room.isActive ? 'ปิดการใช้งาน' : 'เปิดการใช้งาน' }}
+              <i :class="room.isActive ? 'fas fa-toggle-on' : 'fas fa-toggle-off'"></i>
             </button>
           </div>
           <div class="card-body">
