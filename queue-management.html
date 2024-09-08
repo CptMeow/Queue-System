@@ -41,6 +41,9 @@
     .inactive-room {
       opacity: 0.5;
     }
+    .btn-toggle {
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -98,6 +101,7 @@
     <!-- ปุ่มล้างคิวทุกห้อง -->
     <div class="row justify-content-center">
       <button @click="resetAllQueues" class="btn btn-warning btn-lg reset-all">ล้างคิวทุกห้อง</button>
+      <button @click="clearAllData" class="btn btn-danger btn-lg reset-all">ล้างข้อมูลทั้งหมด</button>
     </div>
     
   </div>
