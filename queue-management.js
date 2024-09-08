@@ -3,16 +3,27 @@ new Vue({
   data: {
     time: '',
     rooms: [
-      { roomNumber: 1, roomName: 'ห้องตรวจ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'ชมพู' },
-      { roomNumber: 2, roomName: 'ห้องตรวจ 4', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'เขียว' },
-      { roomNumber: 3, roomName: 'ห้องตรวจ 5', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'ฟ้า' },
-      { roomNumber: 4, roomName: 'ห้องตรวจ 6', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'เหลือง' },
-      { roomNumber: 5, roomName: 'ห้องตรวจ 8 โต๊ะ 1', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'ส้ม' },
-      { roomNumber: 6, roomName: 'ห้องตรวจ 8 โต๊ะ 2', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'ม่วง' },
-      { roomNumber: 7, roomName: 'ห้องตรวจ 8 โต๊ะ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'แดง' },
-      { roomNumber: 8, roomName: 'ห้องตรวจ 10', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'เทา' },
-      { roomNumber: 9, roomName: 'ห้องตรวจ 11', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, color: 'ขาว' }
-    ]
+      { roomNumber: 1, roomName: 'ห้องตรวจ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFC0CB' },
+      { roomNumber: 2, roomName: 'ห้องตรวจ 4', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#98FB98' },
+      { roomNumber: 3, roomName: 'ห้องตรวจ 5', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#87CEEB' },
+      { roomNumber: 4, roomName: 'ห้องตรวจ 6', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFF00' },
+      { roomNumber: 5, roomName: 'ห้องตรวจ 8 โต๊ะ 1', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFA500' },
+      { roomNumber: 6, roomName: 'ห้องตรวจ 8 โต๊ะ 2', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#800080' },
+      { roomNumber: 7, roomName: 'ห้องตรวจ 8 โต๊ะ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FF6347' },
+      { roomNumber: 8, roomName: 'ห้องตรวจ 10', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#D3D3D3' },
+      { roomNumber: 9, roomName: 'ห้องตรวจ 11', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFFFF' }
+    ],
+    colorNames: {
+      '#FFC0CB': 'ชมพู',
+      '#98FB98': 'เขียวอ่อน',
+      '#87CEEB': 'ฟ้าอ่อน',
+      '#FFFF00': 'เหลือง',
+      '#FFA500': 'ส้ม',
+      '#800080': 'ม่วง',
+      '#FF6347': 'มะเขือเทศ',
+      '#D3D3D3': 'เทาอ่อน',
+      '#FFFFFF': 'ขาว'
+    }
   },
   mounted() {
     this.updateTime(); // โหลดเวลาเริ่มต้น
@@ -47,7 +58,7 @@ new Vue({
         }
 
         this.saveQueueData();
-        this.speakQueue(room.currentQueue, room.roomNumber, room.roomName, room.color); // เล่นเสียงเรียกคิว
+        this.speakQueue(room.currentQueue, room.roomNumber, room.roomName, room.rgbColor); // เล่นเสียงเรียกคิว
       }
     },
     resetRoomQueue(roomNumber) {
@@ -63,11 +74,9 @@ new Vue({
     resetAllQueues() {
       if (confirm('คุณแน่ใจหรือไม่ว่าต้องการล้างคิวทุกห้อง?')) {
         this.rooms.forEach(room => {
-          if (room.isActive) {
-            room.currentQueue = null;
-            room.nextQueue = 1;
-            room.calledQueues = [];
-          }
+          room.currentQueue = null;
+          room.nextQueue = 1;
+          room.calledQueues = [];
         });
         this.saveQueueData();
         alert('คิวทุกห้องถูกล้างเรียบร้อยแล้ว!');
@@ -79,8 +88,9 @@ new Vue({
       };
       localStorage.setItem('queueData', JSON.stringify(data));
     },
-    speakQueue(queueNumber, roomNumber, roomName, roomColor) {
-      let message = `เชิญบัตรคิวสี ${roomColor} หมายเลข ${queueNumber} ที่ ${roomName}`;
+    speakQueue(queueNumber, roomNumber, roomName, rgbColor) {
+      const colorName = this.colorNames[rgbColor] || 'สีไม่รู้จัก';
+      let message = `เชิญบัตรคิวสี${colorName} หมายเลข ${queueNumber} ที่ ${roomName}`;
       const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=th-TH&client=tw-ob&q=${encodeURIComponent(message)}`;
       const audio = new Audio(audioUrl);
       audio.play();
@@ -90,13 +100,7 @@ new Vue({
       if (room) {
         room.isActive = !room.isActive;
         this.saveQueueData();
-        alert(`สถานะของห้อง ${room.roomName} ได้รับการปรับปรุงแล้ว!`);
       }
-    }
-  },
-  computed: {
-    activeRooms() {
-      return this.rooms.filter(room => room.isActive);
     }
   },
   beforeDestroy() {
