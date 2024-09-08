@@ -8,9 +8,9 @@ new Vue({
             { roomNumber: 2, roomName:'ห้องตรวจ 4', currentQueue: null, calledQueues: [] },
             { roomNumber: 3, roomName:'ห้องตรวจ 5', currentQueue: null, calledQueues: [] },
             { roomNumber: 4, roomName:'ห้องตรวจ 6', currentQueue: null, calledQueues: [] },
-            { roomNumber: 5, roomName:'ห้องตรวจ 8 โต๊ะ 1', currentQueue: null, calledQueues: [] },
-            { roomNumber: 6, roomName:'ห้องตรวจ 8 โต๊ะ 2', currentQueue: null, calledQueues: [] },
-            { roomNumber: 7, roomName:'ห้องตรวจ 8 โต๊ะ 3', currentQueue: null, calledQueues: [] },
+            { roomNumber: 5, roomName:'ห้องตรวจ 8  โต๊ะ  1', currentQueue: null, calledQueues: [] },
+            { roomNumber: 6, roomName:'ห้องตรวจ 8   โต๊ะ   2', currentQueue: null, calledQueues: [] },
+            { roomNumber: 7, roomName:'ห้องตรวจ 8    โต๊ะ    3', currentQueue: null, calledQueues: [] },
             { roomNumber: 8, roomName:'ห้องตรวจ 10', currentQueue: null, calledQueues: [] },
             { roomNumber: 9, roomName:'ห้องตรวจ 11', currentQueue: null, calledQueues: [] }
         ],
