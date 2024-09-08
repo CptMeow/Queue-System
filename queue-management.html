@@ -29,11 +29,17 @@
       padding: 10px;
       border-radius: 8px;
     }
+    .queue-next.bg-warning {
+      background-color: #ffc107;
+    }
     .card-body {
       padding: 20px;
     }
     .reset-all {
       margin-top: 20px;
+    }
+    .inactive-room {
+      opacity: 0.5;
     }
   </style>
 </head>
@@ -56,10 +62,13 @@
 
     <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
     <div class="row">
-      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4">
-        <div :class="['card card-primary room-section', { 'inactive': !room.isActive }]" :style="{ backgroundColor: room.rgbColor }">
+      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4" :class="{'inactive-room': !room.isActive}">
+        <div class="card card-primary room-section">
           <div class="card-header">
             <h3 class="card-title">{{ room.roomName }}</h3>
+            <button @click="toggleRoomStatus(room.roomNumber)" class="btn btn-toggle" :class="{'btn-success': room.isActive, 'btn-secondary': !room.isActive}">
+              {{ room.isActive ? 'ปิดการใช้งาน' : 'เปิดการใช้งาน' }}
+            </button>
           </div>
           <div class="card-body">
             <p class="queue-info">คิวปัจจุบัน: 
@@ -69,7 +78,7 @@
             <!-- คิวถัดไปของแต่ละห้อง -->
             <p class="queue-info">
               คิวถัดไป: 
-              <span class="queue-next">{{ room.nextQueue }}</span>
+              <span class="queue-next" :style="{ backgroundColor: room.rgbColor }">{{ room.nextQueue }}</span>
             </p>
 
             <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
@@ -88,6 +97,7 @@
     <div class="row justify-content-center">
       <button @click="resetAllQueues" class="btn btn-warning btn-lg reset-all">ล้างคิวทุกห้อง</button>
     </div>
+    
   </div>
 
   <!-- AdminLTE/Bootstrap JS -->
