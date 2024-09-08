@@ -3,107 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>หน้าจอจัดการคิว</title>
-  
   <meta name="referrer" content="no-referrer">
+  <title>หน้าจอจัดการคิว</title>
   <!-- AdminLTE/Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
-    .room-section {
-      margin-bottom: 20px;
+    .card-text-big {
+      font-size: 50px;
     }
-    .room-name {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    .queue-info {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
-    .queue-next {
-      font-size: 2em;
-      font-weight: bold;
-      color: #ffffff;
-      padding: 10px;
-      border-radius: 8px;
-    }
-    .queue-next.bg-warning {
-      background-color: #ffc107;
-    }
-    .card-body {
-      padding: 20px;
-    }
-    .reset-all {
-      margin-top: 20px;
-    }
-    .inactive-room {
-      opacity: 0.5;
-    }
-    .btn-toggle {
-      margin-top: 10px;
+    .card-room {
+      background-color: #dee2e6;
     }
   </style>
-</head>
+  </head>
 <body>
-  <div class="container mt-4" id="app">
-    <h1 class="text-center mb-4">หน้าจอจัดการคิว</h1>
-
-    <!-- นาฬิกา -->
-    <div class="row justify-content-center mb-4">
-      <div class="col-md-6">
-        <div class="info-box bg-info">
-          <span class="info-box-icon"><i class="far fa-clock"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">เวลาปัจจุบัน</span>
-            <span class="info-box-number">{{ time }}</span>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg bg-nav-red text-uppercase" id="mainNav">
+      <div class="container-fluid">
+        <div class="d-flex justify-content-between w-100">
+          <span class="navbar-brand text-white">
+            <h1 class="mb-0">ระบบจัดการคิวห้องตรวจหัวใจและหลอดเลือด ตึกเพชรรัตน์ ชั้น 2</h1>
+          </span>
+          <div class="d-flex align-items-center">
+            <!-- นาฬิกา -->
+            <h3 class="text-left mb-0 text-white" style="width:440px">
+              <span class="info-box-icon me-2"><i class="far fa-clock"></i></span>
+              <span class="info-box-text">{{ thaiDate }} เวลา {{ time }}</span>
+            </h3>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
-    <div class="row">
-      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4" :class="{'inactive-room': !room.isActive}">
-        <div class="card card-primary room-section">
-          <div class="card-header">
-            <h3 class="card-title">{{ room.roomName }}</h3>
-            <button @click="toggleRoomStatus(room.roomNumber)" class="btn btn-toggle" :class="{'btn-success': room.isActive, 'btn-secondary': !room.isActive}">
-              <i :class="room.isActive ? 'fas fa-toggle-on' : 'fas fa-toggle-off'"></i>
-            </button>
+    </nav>
+    <div class="container-fluid">
+      <div class="row m-2 d-none">
+        <!-- ปุ่มล้างคิวทุกห้อง -->
+        <div class="col-12 d-flex justify-content-end m-1">
+          <button @click="resetAllQueues" class="btn btn-warning btn-sm reset-all me-2">
+            <i class="fas fa-broom"></i> ล้างคิวทุกห้อง
+          </button>
+          <button @click="clearAllData" class="btn btn-danger btn-sm reset-all ml-1">
+            <i class="fas fa-trash"></i> ล้างข้อมูลทั้งหมด
+          </button>
+        </div>
+      </div>
+      <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
+      <div class="row m-2">
+        <div v-for="room in rooms" :key="room.roomNumber" class="col-md-2 m-0 p-1" :class="{'inactive-room': !room.isActive}">
+          <div class="card card-room m-0 p-0" :class="{'card-success': room.isActive, 'card-secondary': !room.isActive}">
+            <div class="card-header d-flex justify-content-between align-items-center m-0 p-1">
+              <h3 class="card-title mb-0 ml-1">{{ room.roomName }}</h3>
+              <button @click="toggleRoomStatus(room.roomNumber)" class="btn btn-sm btn-toggle ml-auto" :class="{'btn-primary': room.isActive, 'btn-light': !room.isActive}">
+                <i :class="room.isActive ? 'fas fa-toggle-on' : 'fas fa-toggle-off'"></i>
+              </button>
+              <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-sm btn-danger ml-1"><i class="fas fa-broom"></i></button>
+            </div>
+            <div class="card-body bg-lighter text-dark  m-1 p-1">
+              <div class="d-flex justify-content-between align-items-center" v-if="room.isActive">
+                <div class="queue-info mb-0 p-2 text-center d-block border rounded" :style="{ backgroundColor: room.rgbColor }">
+                  คิวปัจจุบัน<br>
+                  <span class=" card-text-big" v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else class="text-danger">ไม่มีคิว</span>
+                </div>
+                <!-- คิวถัดไปของแต่ละห้อง -->
+                <div class="queue-info mb-0 p-2 text-center d-block border rounded">
+                  คิวถัดไป<br>
+                  <span class="queue-next card-text-big">{{ room.nextQueue }}</span>
+                </div>
+              </div>
+              <div v-else class="d-flex align-items-center justify-content-center text-danger text-center" style="height:117px">
+                <strong style="font-size:20px">ห้องตรวจนี้ถูกปิดใช้งาน</strong> 
+              </div>
+              
+              <div class="mt-1">
+                <button @click="callNextQueue(room.roomNumber)" class="btn btn-block btn-sm btn-success" :disabled="!room.isActive"><i class="fas fa-arrow-right"></i> เรียกคิวถัดไป</button>
+                <button @click="reCallLastQueue(room.roomNumber)" class="btn btn-block btn-sm  btn-info" :disabled="!room.isActive"><i class="fas fa-redo"></i> เรียกคิวล่าสุดอีกครั้ง</button>
+                <button @click="reCallQueue(room.roomNumber, queue)" v-for="queue in room.calledQueues" :key="queue" class="btn btn-block btn-sm btn-secondary d-none" :disabled="!room.isActive">เรียกคิวหมายเลข {{ queue }} อีกครั้ง</button>
+              </div>
+              <div class="d-none">
+                <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
+                <ul class="list-inline m-0 d-inline">
+                  <li v-for="queue in room.calledQueues" :key="queue" class="list-inline-item border">{{ queue }}</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="card-body">
-            <p class="queue-info">คิวปัจจุบัน: 
-              <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span>
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center justify-content-center" style="height: 100%;">
+          <div class="text-center">
+            <p class="mt-5" style="font-size:25px">
+              อย่าลืมกดปุ่มล้างคิวใหม่ทุกครั้งที่เริ่มวันใหม่
             </p>
-
-            <!-- คิวถัดไปของแต่ละห้อง -->
-            <p class="queue-info">
-              คิวถัดไป: 
-              <span class="queue-next" :style="{ backgroundColor: room.rgbColor }">{{ room.nextQueue }}</span>
-            </p>
-
-            <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
-            <ul>
-              <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
-            </ul>
-
-            <button @click="callNextQueue(room.roomNumber)" class="btn btn-primary">เรียกคิวถัดไป</button>
-            <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-danger">รีเซ็ตคิวห้องนี้</button>
-            <button @click="reCallLastQueue(room.roomNumber)" class="btn btn-info">เรียกคิวล่าสุดอีกครั้ง</button>
-            <button @click="reCallQueue(room.roomNumber, queue)" v-for="queue in room.calledQueues" :key="queue" class="btn btn-secondary">เรียกคิวหมายเลข {{ queue }} อีกครั้ง</button>
+            <div class="col-12 m-1">
+              <button @click="resetAllQueues" class="btn btn-block btn-warning btn-lg reset-all">
+                <i class="fas fa-broom"></i> ล้างคิวทุกห้อง
+              </button>
+              <button @click="clearAllData" class="btn btn-block btn-danger btn-lg reset-all">
+                <i class="fas fa-trash"></i> ล้างข้อมูลทั้งหมด 
+              </button>
+              <span>กดปุ่มนี้กรณีที่โปรแกรมทำงานไม่ถูกต้อง</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- ปุ่มล้างคิวทุกห้อง -->
-    <div class="row justify-content-center">
-      <button @click="resetAllQueues" class="btn btn-warning btn-lg reset-all">ล้างคิวทุกห้อง</button>
-      <button @click="clearAllData" class="btn btn-danger btn-lg reset-all">ล้างข้อมูลทั้งหมด</button>
     </div>
     
   </div>

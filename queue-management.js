@@ -2,6 +2,7 @@ new Vue({
   el: '#app',
   data: {
     time: '',
+    thaiDate: '',
     defaultRooms: [
       { roomNumber: 1, roomName: 'ห้องตรวจ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFC0CB', colorName: 'ชมพู' },
       { roomNumber: 2, roomName: 'ห้องตรวจ 4', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#98FB98', colorName: 'เขียวอ่อน' },
@@ -17,6 +18,7 @@ new Vue({
   },
   mounted() {
     this.updateTime(); // โหลดเวลาเริ่มต้น
+    this.getCurrentThaiDate();
     setInterval(this.updateTime, 1000); // อัปเดตเวลาใหม่ทุกวินาที
 
     this.loadQueueData(); // โหลดข้อมูลจาก localStorage เมื่อเริ่มต้น
@@ -118,6 +120,11 @@ new Vue({
         this.saveQueueData();
         alert('ข้อมูลทั้งหมดถูกล้างเรียบร้อยแล้ว!');
       }
+    },
+    getCurrentThaiDate() {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const currentDate = new Date();
+      this.thaiDate = currentDate.toLocaleDateString('th-TH', options);
     }
   },
   beforeDestroy() {

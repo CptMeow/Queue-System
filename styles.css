@@ -1,57 +1,139 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-#app {
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-.clock {
-  font-size: 1.5em;
+.room-section {
   margin-bottom: 20px;
-  text-align: center;
+  padding: 20px;
+  color: #fff;
+  border-radius: 8px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.prompt-thin {
+  font-family: "Prompt", sans-serif;
+  font-weight: 100;
+  font-style: normal;
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+.prompt-extralight {
+  font-family: "Prompt", sans-serif;
+  font-weight: 200;
+  font-style: normal;
 }
 
-th {
-  background-color: #f4f4f4;
-  color: #333;
+.prompt-light {
+  font-family: "Prompt", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
-td ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.prompt-regular {
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-td ul li {
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
+.prompt-medium {
+  font-family: "Prompt", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
-td ul li:last-child {
-  border-bottom: none;
+.prompt-semibold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.prompt-bold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.prompt-extrabold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.prompt-black {
+  font-family: "Prompt", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.prompt-thin-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.prompt-extralight-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.prompt-light-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.prompt-regular-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.prompt-medium-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.prompt-semibold-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.prompt-bold-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.prompt-extrabold-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.prompt-black-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+.text-big-size {
+  font-size: 36px;
+  color: #000;
+}
+.block-line {
+  display: inline-block; /* Ensures the span behaves like an inline block */
+  width: 20px; /* Adjust width as needed */
+  height: 100%; /* Sets the height to fill the table cell */
+}
+.block-list-item {
+  width:70px;
+}
+.bg-nav {
+  background-color: #155724  ;
+}
+
+.bg-nav-red {
+  background-color: #b02a37  ;
 }
