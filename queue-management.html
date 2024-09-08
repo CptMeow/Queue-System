@@ -29,14 +29,14 @@
       padding: 10px;
       border-radius: 8px;
     }
-    .queue-next.bg-warning {
-      background-color: #ffc107;
-    }
     .card-body {
       padding: 20px;
     }
     .reset-all {
       margin-top: 20px;
+    }
+    .bg-custom {
+      background-color: var(--room-color);
     }
   </style>
 </head>
@@ -60,9 +60,12 @@
     <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
     <div class="row">
       <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4">
-        <div class="card card-primary room-section">
+        <div :class="['card card-primary room-section', { 'bg-custom': room.isActive }]" :style="{ '--room-color': room.rgbColor }">
           <div class="card-header">
             <h3 class="card-title">{{ room.roomName }}</h3>
+            <button @click="toggleRoomStatus(room.roomNumber)" class="btn btn-sm" :class="room.isActive ? 'btn-danger' : 'btn-success'">
+              {{ room.isActive ? 'ปิดห้อง' : 'เปิดห้อง' }}
+            </button>
           </div>
           <div class="card-body">
             <p class="queue-info">คิวปัจจุบัน: 
@@ -72,7 +75,7 @@
             <!-- คิวถัดไปของแต่ละห้อง -->
             <p class="queue-info">
               คิวถัดไป: 
-              <span class="queue-next bg-warning">{{ room.nextQueue }}</span>
+              <span class="queue-next" :class="{'bg-warning': room.isActive}">{{ room.nextQueue }}</span>
             </p>
 
             <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
@@ -80,8 +83,14 @@
               <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
             </ul>
 
-            <button @click="callNextQueue(room.roomNumber)" class="btn btn-primary">เรียกคิวถัดไป</button>
-            <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-danger">รีเซ็ตคิวห้องนี้</button>
+            <button @click="callNextQueue(room.roomNumber)" class="btn btn-primary" :disabled="!room.isActive">เรียกคิวถัดไป</button>
+            <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-danger" :disabled="!room.isActive">รีเซ็ตคิวห้องนี้</button>
+
+            <!-- ฟอร์มเลือกสีของห้อง -->
+            <div v-if="room.isActive" class="mt-3">
+              <label for="colorPicker">เลือกสีห้อง:</label>
+              <input type="color" v-model="room.rgbColor" id="colorPicker" />
+            </div>
           </div>
         </div>
       </div>
