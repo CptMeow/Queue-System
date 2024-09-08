@@ -2,7 +2,7 @@ new Vue({
   el: '#app',
   data: {
     time: '',
-    rooms: [
+    defaultRooms: [
       { roomNumber: 1, roomName: 'ห้องตรวจ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFC0CB', colorName: 'ชมพู' },
       { roomNumber: 2, roomName: 'ห้องตรวจ 4', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#98FB98', colorName: 'เขียวอ่อน' },
       { roomNumber: 3, roomName: 'ห้องตรวจ 5', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#87CEEB', colorName: 'ฟ้าอ่อน' },
@@ -12,7 +12,8 @@ new Vue({
       { roomNumber: 7, roomName: 'ห้องตรวจ 8 โต๊ะ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FF6347', colorName: 'มะเขือเทศ' },
       { roomNumber: 8, roomName: 'ห้องตรวจ 10', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#D3D3D3', colorName: 'เทาอ่อน' },
       { roomNumber: 9, roomName: 'ห้องตรวจ 11', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#ADD8E6', colorName: 'ฟ้าสว่าง' } // เปลี่ยนสีขาวเป็นสีฟ้าสว่าง
-    ]
+    ],
+    rooms: [] // ใช้ rooms เป็นข้อมูลหลัก
   },
   mounted() {
     this.updateTime(); // โหลดเวลาเริ่มต้น
@@ -32,7 +33,9 @@ new Vue({
     loadQueueData() {
       const storedData = JSON.parse(localStorage.getItem('queueData'));
       if (storedData) {
-        this.rooms = storedData.rooms || this.rooms;
+        this.rooms = storedData.rooms || this.defaultRooms;
+      } else {
+        this.rooms = this.defaultRooms; // ใช้ค่าเริ่มต้นหากไม่มีข้อมูลใน localStorage
       }
     },
     callNextQueue(roomNumber) {
@@ -96,7 +99,7 @@ new Vue({
     },
     speakQueue(queueNumber, roomNumber, roomName, rgbColor) {
       const colorName = this.rooms.find(r => r.rgbColor === rgbColor).colorName || 'สีไม่รู้จัก';
-      let message = `เชิญบัตรคิวสี${colorName} หมายเลข ${queueNumber} ที่ ${roomName}`;
+      let message = `เชิญบัตรคิว สี${colorName} หมายเลข "${queueNumber}" ที่ ${roomName}`;
       const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=th-TH&client=tw-ob&q=${encodeURIComponent(message)}`;
       const audio = new Audio(audioUrl);
       audio.play();
@@ -111,11 +114,7 @@ new Vue({
     clearAllData() {
       if (confirm('คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลทั้งหมด? ข้อมูลทั้งหมดจะถูกลบออกและไม่สามารถกู้คืนได้!')) {
         localStorage.removeItem('queueData');
-        this.rooms.forEach(room => {
-          room.currentQueue = null;
-          room.nextQueue = 1;
-          room.calledQueues = [];
-        });
+        this.rooms = JSON.parse(JSON.stringify(this.defaultRooms)); // รีเซ็ตค่าทั้งหมด
         this.saveQueueData();
         alert('ข้อมูลทั้งหมดถูกล้างเรียบร้อยแล้ว!');
       }
