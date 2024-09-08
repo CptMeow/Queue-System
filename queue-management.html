@@ -6,31 +6,77 @@
   <title>หน้าจอจัดการคิว</title>
   
   <meta name="referrer" content="no-referrer">
-  <link rel="stylesheet" href="styles.css">
+  <!-- AdminLTE/Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  
+  <style>
+    .room-section {
+      margin-bottom: 20px;
+    }
+    .room-name {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .queue-info {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    .reset-all {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <h1>หน้าจอจัดการคิว</h1>
-    <div class="clock">{{ time }}</div>
-    
+  <div class="container mt-4" id="app">
+    <h1 class="text-center mb-4">หน้าจอจัดการคิว</h1>
+
+    <!-- นาฬิกา -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-6">
+        <div class="info-box bg-info">
+          <span class="info-box-icon"><i class="far fa-clock"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">เวลาปัจจุบัน</span>
+            <span class="info-box-number">{{ time }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- แสดงข้อมูลคิวแยกตามแต่ละห้อง -->
-    <div v-for="room in rooms" :key="room.roomNumber" class="room-section">
-      <h2>{{ room.roomName }}</h2>
-      <p>คิวปัจจุบัน: <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span></p>
-      <p>คิวที่เรียกไปแล้ว: 
-        <ul>
-          <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
-        </ul>
-      </p>
-      <button @click="callNextQueue(room.roomNumber)">เรียกคิวถัดไป</button>
-      <button @click="resetRoomQueue(room.roomNumber)">รีเซ็ตคิวห้องนี้</button>
+    <div class="row">
+      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4">
+        <div class="card card-primary room-section">
+          <div class="card-header">
+            <h3 class="card-title">{{ room.roomName }}</h3>
+          </div>
+          <div class="card-body">
+            <p class="queue-info">คิวปัจจุบัน: <span v-if="room.currentQueue">{{ room.currentQueue }}</span><span v-else>ไม่มีคิว</span></p>
+            <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
+            <ul>
+              <li v-for="queue in room.calledQueues" :key="queue">{{ queue }}</li>
+            </ul>
+            <button @click="callNextQueue(room.roomNumber)" class="btn btn-primary">เรียกคิวถัดไป</button>
+            <button @click="resetRoomQueue(room.roomNumber)" class="btn btn-danger">รีเซ็ตคิวห้องนี้</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ปุ่มล้างคิวทุกห้อง -->
-    <button @click="resetAllQueues" class="reset-all">ล้างคิวทุกห้อง</button>
+    <div class="row justify-content-center">
+      <button @click="resetAllQueues" class="btn btn-warning btn-lg reset-all">ล้างคิวทุกห้อง</button>
+    </div>
     
   </div>
+
+  <!-- AdminLTE/Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
   <script src="queue-management.js"></script>
 </body>
 </html>
