@@ -4,38 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>หน้าจอรอคิว</title>
-  <link rel="stylesheet" href="styles.css">
+  
+  <!-- AdminLTE/Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  
+  <style>
+    body {
+      background-color: #f4f6f9;
+    }
+    .queue-section {
+      margin-bottom: 20px;
+    }
+    .queue-card {
+      font-size: 2em;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .queue-card .queue-current {
+      font-size: 3em;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 10px;
+      background-color: #007bff;
+      border-radius: 8px;
+    }
+    .queue-card .queue-next {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 10px;
+      background-color: #ffc107;
+      border-radius: 8px;
+    }
+    .clock {
+      font-size: 2.5em;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <h1>หน้าจอรอคิว</h1>
-    <div class="clock">{{ new Date().toLocaleTimeString() }}</div>
-    <table>
-      <thead>
-        <tr>
-          <th>ห้อง</th>
-          <th>คิวปัจจุบัน</th>
-          <th>คิวที่เรียกไปแล้ว</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="room in rooms" :key="room.roomNumber">
-          <td>ห้อง {{ room.roomNumber }}</td>
-          <td>
-            <span v-if="room.currentQueue">คิว {{ room.currentQueue }}</span>
-            <span v-else>ไม่มีคิว</span>
-          </td>
-          <td>
-            <ul>
-              <li v-for="(queue, index) in room.calledQueues.slice(-5)" :key="index">
-                คิว {{ queue }}
-              </li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container mt-4" id="app">
+    <!-- นาฬิกา -->
+    <div class="clock">{{ time }}</div>
+
+    <!-- แสดงข้อมูลคิวของแต่ละห้อง -->
+    <div class="row">
+      <div v-for="room in rooms" :key="room.roomNumber" class="col-md-4 queue-section">
+        <div class="queue-card card-primary">
+          <div class="card-body">
+            <h3>{{ room.roomName }}</h3>
+            <p>คิวปัจจุบัน: 
+              <span class="queue-current" v-if="room.currentQueue">{{ room.currentQueue }}</span>
+              <span v-else>ไม่มีคิว</span>
+            </p>
+            <p>คิวถัดไป: 
+              <span class="queue-next" v-if="room.nextQueue">{{ room.nextQueue }}</span>
+              <span v-else>ไม่มีคิวถัดไป</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Vue.js และ AdminLTE -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <script src="queue-display.js"></script>
 </body>
