@@ -22,6 +22,7 @@ new Vue({
     methods: {
         callNextQueue() {
             const room = this.rooms.find(r => r.roomNumber === this.selectedRoom);
+            console.log(room);
             if (room) {
                 room.calledQueues.push(room.currentQueue);
                 this.speakQueue(room.currentQueue, room.roomName);
