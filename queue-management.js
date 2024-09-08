@@ -47,7 +47,7 @@ new Vue({
         }
 
         this.saveQueueData();
-        this.speakQueue(room.currentQueue, room.roomName); // เล่นเสียงเรียกคิว
+        this.speakQueue(room.currentQueue, room.roomNumber, room.roomName); // เล่นเสียงเรียกคิว
       }
     },
     resetRoomQueue(roomNumber) {
@@ -77,8 +77,14 @@ new Vue({
       };
       localStorage.setItem('queueData', JSON.stringify(data));
     },
-    speakQueue(queueNumber, roomName) {
-      const message = `เชิญหมายเลข ${queueNumber} ที่ ${roomName}`;
+    speakQueue(queueNumber, roomNumber, roomName) {
+      
+      if(roomNumber == 1) {
+        const message = `เชิญบัตรคิวสีชมพูหมายเลข ${queueNumber} ที่ ${roomName}`;
+      }
+      else {
+        const message = `เชิญบัตรคิวสีฟ้าหมายเลข ${queueNumber} ที่ ${roomName}`;
+      }
       const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=th-TH&client=tw-ob&q=${encodeURIComponent(message)}`;
       const audio = new Audio(audioUrl);
       audio.play();
