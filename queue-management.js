@@ -11,7 +11,7 @@ new Vue({
       { roomNumber: 6, roomName: 'ห้องตรวจ 8 โต๊ะ 2', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#800080', colorName: 'ม่วง' },
       { roomNumber: 7, roomName: 'ห้องตรวจ 8 โต๊ะ 3', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FF6347', colorName: 'มะเขือเทศ' },
       { roomNumber: 8, roomName: 'ห้องตรวจ 10', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#D3D3D3', colorName: 'เทาอ่อน' },
-      { roomNumber: 9, roomName: 'ห้องตรวจ 11', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFFFF', colorName: 'ขาว' }
+      { roomNumber: 9, roomName: 'ห้องตรวจ 11', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#ADD8E6', colorName: 'ฟ้าสว่าง' } // เปลี่ยนสีขาวเป็นสีฟ้าสว่าง
     ]
   },
   mounted() {
@@ -71,6 +71,23 @@ new Vue({
         alert('คิวทุกห้องถูกล้างเรียบร้อยแล้ว!');
       }
     },
+    reCallLastQueue(roomNumber) {
+      const room = this.rooms.find(r => r.roomNumber === roomNumber);
+      if (room && room.isActive && room.calledQueues.length) {
+        const lastQueue = room.calledQueues[room.calledQueues.length - 1];
+        room.currentQueue = lastQueue;
+        this.speakQueue(lastQueue, room.roomNumber, room.roomName, room.rgbColor); // เล่นเสียงเรียกคิว
+        this.saveQueueData();
+      }
+    },
+    reCallQueue(roomNumber, queueNumber) {
+      const room = this.rooms.find(r => r.roomNumber === roomNumber);
+      if (room && room.isActive) {
+        room.currentQueue = queueNumber;
+        this.speakQueue(queueNumber, room.roomNumber, room.roomName, room.rgbColor); // เล่นเสียงเรียกคิว
+        this.saveQueueData();
+      }
+    },
     saveQueueData() {
       const data = {
         rooms: this.rooms
@@ -78,8 +95,7 @@ new Vue({
       localStorage.setItem('queueData', JSON.stringify(data));
     },
     speakQueue(queueNumber, roomNumber, roomName, rgbColor) {
-      const room = this.rooms.find(r => r.rgbColor === rgbColor);
-      const colorName = room ? room.colorName : 'สีไม่รู้จัก';
+      const colorName = this.rooms.find(r => r.rgbColor === rgbColor).colorName || 'สีไม่รู้จัก';
       let message = `เชิญบัตรคิวสี${colorName} หมายเลข ${queueNumber} ที่ ${roomName}`;
       const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=th-TH&client=tw-ob&q=${encodeURIComponent(message)}`;
       const audio = new Audio(audioUrl);
