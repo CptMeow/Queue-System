@@ -20,6 +20,12 @@ new Vue({
         const storedData = JSON.parse(localStorage.getItem('queueData'));
         if (storedData) {
             this.currentQueue = storedData.currentQueue;
+            // ตรวจสอบว่ามีฟิลด์ roomName หรือไม่ ถ้าไม่มี ให้เพิ่มจากค่าเริ่มต้นใน rooms
+            storedData.rooms.forEach((storedRoom, index) => {
+                if (!storedRoom.roomName) {
+                    storedRoom.roomName = this.rooms[index].roomName;
+                }
+            });
             this.rooms = storedData.rooms;
         }
     },
