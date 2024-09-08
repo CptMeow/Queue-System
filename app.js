@@ -37,6 +37,7 @@ new Vue({
         callNextQueue() {
             const room = this.rooms.find(r => r.roomNumber === this.selectedRoom);
             if (room) {
+                console.log('ROOM',room);
                 room.calledQueues.push(this.currentQueue);
                 room.currentQueue = this.currentQueue; // ตั้งคิวปัจจุบันเป็นหมายเลขคิวถัดไป
                 this.speakQueue(this.currentQueue, room.roomName);
