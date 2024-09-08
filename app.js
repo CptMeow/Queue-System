@@ -87,7 +87,7 @@ new Vue({
             localStorage.setItem('queueData', JSON.stringify(data));
         },
         speakQueue(queueNumber, roomName) {
-            const message = `เชิญหมายเลข ${queueNumber} ที่ ${roomName}`;
+            const message = `เชิญหมายเลข "${queueNumber}" ที่ ${roomName}`;
             const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=th-TH&client=tw-ob&q=${encodeURIComponent(message)}`;
 
             const audio = new Audio(audioUrl);
