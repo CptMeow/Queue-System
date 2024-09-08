@@ -63,4 +63,25 @@ new Vue({
     resetAllQueues() {
       if (confirm('คุณแน่ใจหรือไม่ว่าต้องการล้างคิวทุกห้อง?')) {
         this.rooms.forEach(room => {
-          room
+          room.currentQueue = null;
+          room.nextQueue = 1;
+          room.calledQueues = [];
+        });
+        this.saveQueueData();
+        alert('คิวทุกห้องถูกล้างเรียบร้อยแล้ว!');
+      }
+    },
+    saveQueueData() {
+      const data = {
+        rooms: this.rooms
+      };
+      localStorage.setItem('queueData', JSON.stringify(data));
+    },
+    speakQueue(queueNumber, roomNumber, roomName, colorName) {
+      const message = `เชิญบัตรคิว ${colorName} หมายเลข ${queueNumber} ที่ ${roomName}`;
+      // ใช้ Web Speech API เพื่อพูดข้อความ
+      const utterance = new SpeechSynthesisUtterance(message);
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+});
