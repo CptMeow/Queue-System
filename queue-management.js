@@ -19,11 +19,11 @@ new Vue({
       { roomNumber: 1, roomName: 'ห้องตรวจ 3', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFC0CB', colorName: 'ชมพู' },
       { roomNumber: 2, roomName: 'ห้องตรวจ 4', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#98FB98', colorName: 'เขียวอ่อน' },
       { roomNumber: 3, roomName: 'ห้องตรวจ 5', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#87CEEB', colorName: 'ฟ้าอ่อน' },
-      { roomNumber: 4, roomName: 'ห้องตรวจ 6', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFF00', colorName: 'เหลือง' },
-      { roomNumber: 5, roomName: 'ห้องตรวจ 8 โต๊ะ 1', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFA500', colorName: 'ส้ม' },
+      { roomNumber: 4, roomName: 'ห้องตรวจ 6', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFA500', colorName: 'ส้ม' },
+      { roomNumber: 5, roomName: 'ห้องตรวจ 8 โต๊ะ 1', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFF00', colorName: 'เหลือง' },
       { roomNumber: 6, roomName: 'ห้องตรวจ 8 โต๊ะ 2', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#800080', colorName: 'ม่วง' },
       { roomNumber: 7, roomName: 'ห้องตรวจ 8 โต๊ะ 3', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FF6347', colorName: 'มะเขือเทศ' },
-      { roomNumber: 8, roomName: 'ห้องตรวจ 10', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#D3D3D3', colorName: 'เทาอ่อน' },
+      { roomNumber: 8, roomName: 'ห้องตรวจ 10', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FEFEFE', colorName: 'ขาว' },
       { roomNumber: 9, roomName: 'ห้องตรวจ 11', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#ADD8E6', colorName: 'ฟ้าสว่าง' } // เปลี่ยนสีขาวเป็นสีฟ้าสว่าง
     ],
     rooms: [], // ใช้ rooms เป็นข้อมูลหลัก
