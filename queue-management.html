@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Awesome Notifications CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/awesome-notifications@3.1.3/dist/style.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     .card-text-big {
@@ -80,10 +82,16 @@
               </div>
               
               <div class="mt-1">
-                <button @click="callNextQueue(room.roomNumber)" class="btn btn-block btn-sm btn-success" :disabled="!room.isActive"><i class="fas fa-arrow-right"></i> เรียกคิวถัดไป</button>
-                <button @click="reCallLastQueue(room.roomNumber)" class="btn btn-block btn-sm  btn-info" :disabled="!room.isActive"><i class="fas fa-redo"></i> เรียกคิวล่าสุดอีกครั้ง</button>
-                <button @click="reCallQueue(room.roomNumber, queue)" v-for="queue in room.calledQueues" :key="queue" class="btn btn-block btn-sm btn-secondary d-none" :disabled="!room.isActive">เรียกคิวหมายเลข {{ queue }} อีกครั้ง</button>
+                <button @click="callNextQueue(room.roomNumber)" class="btn btn-block btn-sm btn-success" :disabled="!room.isActive|| audioQueue.length >= maxAudioQueue"><i class="fas fa-arrow-right"></i> เรียกคิวถัดไป</button>
+                <button @click="reCallLastQueue(room.roomNumber)" class="btn btn-block btn-sm  btn-info" :disabled="!room.isActive|| audioQueue.length >= maxAudioQueue"><i class="fas fa-redo"></i> เรียกคิวล่าสุดอีกครั้ง</button>
+                <button @click="reCallQueue(room.roomNumber, queue)" v-for="queue in room.calledQueues" :key="queue" class="btn btn-block btn-sm btn-secondary d-none" :disabled="!room.isActive|| audioQueue.length >= maxAudioQueue">เรียกคิวหมายเลข {{ queue }} อีกครั้ง</button>
               </div>
+              <tbody>
+                <tr v-for="history in room.queueHistory" :key="history.queue">
+                  <td>{{ history.queue }}</td>
+                  <td>{{ history.time }}</td>
+                </tr>
+              </tbody>
               <div class="d-none">
                 <p class="queue-info">คิวที่เรียกไปแล้ว:</p>
                 <ul class="list-inline m-0 d-inline">
@@ -112,9 +120,40 @@
         </div>
       </div>
     </div>
+
+    <!-- แสดงประวัติรวมทุกห้อง -->
+    <div class="row m-2">
+      <div class="col-12">
+        <h3>ประวัติการเรียกคิวรวมทุกห้อง</h3>
+        
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>ห้อง</th>
+              <th>หมายเลขคิว</th>
+              <th>เวลา</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(history, index) in paginatedGlobalHistory" :key="history.roomNumber + '-' + history.queue">
+              <td>{{ history.roomName }}</td>
+              <td>{{ history.queue }}</td>
+              <td>{{ history.time }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <!-- Pagination controls -->
+        <div class="d-flex justify-content-between align-items-center">
+          <button class="btn btn-secondary" @click="prevPage" :disabled="currentPage === 1">ย้อนกลับ</button>
+          <span>หน้า {{ currentPage }} จาก {{ totalPages }}</span>
+          <button class="btn btn-secondary" @click="nextPage" :disabled="currentPage === totalPages">ถัดไป</button>
+        </div>
+      </div>
+    </div>
     <div class="footer-fixed">
       Develop with <i class="fas fa-heartbeat" style="color:rgb(241, 150, 166)"></i> by <a href="https://shibaza.com" class="text-secondary">Soba Miso Nutto</a>
-    </div>   
+    </div> 
     
   </div>
 
@@ -123,6 +162,8 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+  <!-- Awesome Notifications JS -->
+  <script src="https://cdn.jsdelivr.net/npm/awesome-notifications@3.1.3/dist/index.var.js"></script>
   <script src="queue-management.js"></script>
 </body>
 </html>
