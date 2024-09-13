@@ -22,7 +22,7 @@
       <div class="container-fluid">
         <div class="d-flex justify-content-between w-100">
           <span class="navbar-brand text-white">
-            <h1 class="mb-0">ห้องตรวจหัวใจและหลอดเลือด ตึกเพชรรัตน์ ชั้น 2</h1>
+            <h3 class="mb-0">ห้องตรวจหัวใจและหลอดเลือด ตึกเพชรรัตน์ ชั้น 2</h3>
           </span>
           <div class="d-flex align-items-center">
             <!-- นาฬิกา -->
@@ -63,8 +63,8 @@
                     <td class="text-center">
                       <div>
                         <h1>
-                          <span v-if="room.currentQueue" class="btn btn-block text-big-size border border-dark" :style="{ backgroundColor: room.rgbColor }">
-                            <strong>{{ room.currentQueue }}</strong>
+                          <span v-if="room.currentQueue" class="btn btn-block text-big-size border border-dark">
+                            <strong class="text-danger">{{ room.currentQueue }}</strong>
                           </span>
                           <span v-else class="text-danger">ไม่มีคิว</span>
                         </h1>

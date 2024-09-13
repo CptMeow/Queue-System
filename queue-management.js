@@ -145,7 +145,8 @@ new Vue({
     speakQueue(queueNumber, roomNumber, roomName, rgbColor) {
       if (this.audioQueue.length < this.maxAudioQueue) {
         const colorName = this.rooms.find(r => r.rgbColor === rgbColor).colorName || 'สีไม่รู้จัก';
-        let message = `เชิญบัตรคิว สี${colorName} หมายเลข "${queueNumber}" ที่ ${roomName}`;
+        //let message = `เชิญบัตรคิว สี${colorName} หมายเลข "${queueNumber}" ที่ ${roomName}`;
+        let message = `เชิญบัตรคิว ${roomName} หมายเลข "${queueNumber}" ที่ ${roomName}`;
         const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=th-TH&client=tw-ob&q=${encodeURIComponent(message)}`;
         const audio = new Audio(audioUrl);
 
