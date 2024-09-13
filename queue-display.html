@@ -54,13 +54,13 @@
                 </thead>
                 <tbody>
                   <tr v-for="room in rooms" :key="room.roomNumber" v-if="room.isActive">
-                    <td class="align-middle py-1">
+                    <td class="align-middle py-2">
                       <h1 class="d-inline">
                         <span class="block-line d-inline border border-dark" :style="{ backgroundColor: room.rgbColor }">&nbsp;</span> 
                         {{ room.roomName }}
                       </h1>
                     </td>
-                    <td class="text-center py-1">
+                    <td class="text-center py-2">
                       <div>
                         <h1>
                           <span v-if="room.currentQueue" class="btn btn-block text-big-size border border-dark">
@@ -70,7 +70,7 @@
                         </h1>
                       </div>
                     </td>
-                    <td class=" py-1">
+                    <td class=" py-2">
                       <div>
                         <ul class="list-inline m-0 d-inline">
                           <li class="list-inline-item" v-for="queue in room.calledQueues" :key="queue">
