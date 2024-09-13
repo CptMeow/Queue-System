@@ -56,7 +56,7 @@
                   <tr v-for="room in rooms" :key="room.roomNumber" v-if="room.isActive">
                     <td class="align-middle">
                       <h1 class="d-inline">
-                        <span class="block-line d-inline border" :style="{ backgroundColor: room.rgbColor }">&nbsp;</span> 
+                        <span class="block-line d-inline border border-dark" :style="{ backgroundColor: room.rgbColor }">&nbsp;</span> 
                         {{ room.roomName }}
                       </h1>
                     </td>
