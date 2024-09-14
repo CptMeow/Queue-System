@@ -14,6 +14,7 @@ new Vue({
       { roomNumber: 8, roomName: 'ห้องตรวจ 10', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FEFEFE', colorName: 'สีขาว' },
       { roomNumber: 9, roomName: 'ห้องตรวจ 11', currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFFFF', colorName: 'สีขาว' }
     ],
+    newQueueRooms: {}, // เก็บสถานะคิวใหม่ของแต่ละห้อง
     isFullScreen: false,
   },
   mounted() {
@@ -23,6 +24,16 @@ new Vue({
 
     this.loadQueueData(); // โหลดข้อมูลจาก localStorage เมื่อเริ่มต้น
     window.addEventListener('storage', this.loadQueueData); // ฟังการเปลี่ยนแปลงของ LocalStorage
+  },
+  computed: {
+    activeRoomsCount() {
+      // นับจำนวนห้องที่ active อยู่
+      return this.rooms.filter(room => room.isActive).length;
+    },
+    totalRoomsCount() {
+      // นับจำนวนห้องทั้งหมด
+      return this.rooms.length;
+    }
   },
   methods: {
     updateTime() {
@@ -89,6 +100,16 @@ new Vue({
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const currentDate = new Date();
       this.thaiDate = currentDate.toLocaleDateString('th-TH', options);
+    },
+    getTextSizeClass() {
+      if (this.activeRoomsCount <=6) {
+        return 'queue-room-count-6'; 
+      } else if (this.activeRoomsCount === 7) {
+        return 'queue-room-count-7';
+      } else if (this.activeRoomsCount === 8) {
+        return 'queue-room-count-8';
+      }
+      return '';
     }
   }
 });

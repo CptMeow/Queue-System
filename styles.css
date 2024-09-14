@@ -11,117 +11,61 @@ body {
   border-radius: 8px;
 }
 
-.prompt-thin {
-  font-family: "Prompt", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.prompt-extralight {
-  font-family: "Prompt", sans-serif;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.prompt-light {
-  font-family: "Prompt", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.prompt-regular {
-  font-family: "Prompt", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.prompt-medium {
-  font-family: "Prompt", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.prompt-semibold {
-  font-family: "Prompt", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.prompt-bold {
-  font-family: "Prompt", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.prompt-extrabold {
-  font-family: "Prompt", sans-serif;
-  font-weight: 800;
-  font-style: normal;
-}
-
-.prompt-black {
-  font-family: "Prompt", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.prompt-thin-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.prompt-extralight-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 200;
-  font-style: italic;
-}
-
-.prompt-light-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.prompt-regular-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.prompt-medium-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.prompt-semibold-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 600;
-  font-style: italic;
-}
-
-.prompt-bold-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.prompt-extrabold-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 800;
-  font-style: italic;
-}
-
-.prompt-black-italic {
-  font-family: "Prompt", sans-serif;
-  font-weight: 900;
-  font-style: italic;
-}
-.text-big-size {
+.text-big-header {
   font-size: 35px;
   color: #000;
 }
+
+.text-big-size {
+  font-size: 50px;
+  color: #000;
+}
+
+.queue-room {
+  /* border: 1px solid #155724 !important; */
+  border-radius: 5px;
+  font-size: 54px; 
+  font-weight: bolder;
+  color:#FFF;
+  background-color: #557C56;
+  display: inline-block;
+  width: 100%;
+}
+
+.queue-number-current-block {
+  border: 1px solid #222 !important;
+  border-radius: 5px;
+  font-size: 54px; 
+  font-weight: bolder;
+  color:#000;
+  background-color: #155724;
+  display: inline-block;
+  width: 300px;
+}
+
+.queue-number-block {
+  color:#51585e !important;
+  width:120px;
+}
+
+.queue-room-count-6 .queue-room,
+.queue-room-count-6 .queue-number-current-block,
+.queue-room-count-6 .queue-number-block {
+  font-size: 88px;
+}
+
+.queue-room-count-7 .queue-room,
+.queue-room-count-7 .queue-number-current-block,
+.queue-room-count-7 .queue-number-block {
+  font-size: 74px;
+}
+
+.queue-room-count-8 .queue-room,
+.queue-room-count-8 .queue-number-current-block,
+.queue-room-count-8 .queue-number-block {
+  font-size: 63px;
+}
+
 .block-line {
   display: inline-block; /* Ensures the span behaves like an inline block */
   width: 20px; /* Adjust width as needed */
@@ -161,15 +105,26 @@ body {
   width: 100%;
   color: #6c757d; /* สีของข้อความ */
   margin-top: auto;
-  font-size: 9px;
+  font-size: 10px;
+  height: 25px;
 }
 
 .footer-fixed a {
   color: #6c757d; /* สีของลิงค์ */
   text-decoration: none;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .footer-fixed a:hover {
   color: #343a40; /* สีของลิงค์เมื่อชี้ */
+}
+
+.new-queue {
+  background-color: green;
+  transition: background-color 10s ease-out;
+}
+
+/* หลังจาก 10 วินาทีจะกลายเป็นสีขาว */
+.new-queue {
+  background-color: white;
 }

@@ -47,41 +47,35 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th class="text-big-size text-center" width="27%">ห้องตรวจ</th>
-                    <th class="text-big-size text-center" width="20%">คิวปัจจุบัน</th>
-                    <th class="text-big-size text-center" width="53%">คิวที่ผ่านมา</th>
+                    <th class="text-big-header text-center m-0 p-1" width="25%">ห้องตรวจ</th>
+                    <th class="text-big-header text-center m-0 p-1" width="35%">คิวปัจจุบัน</th>
+                    <th class="text-big-header text-center m-0 p-1" width="40%">คิวที่ผ่านมา</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-for="room in rooms" :key="room.roomNumber" v-if="room.isActive">
-                    <td class="align-middle py-2">
-                      <h1 class="d-inline">
-                        <span class="block-line d-inline border border-dark" :style="{ backgroundColor: room.rgbColor }">&nbsp;</span> 
+                <tbody  :class="getTextSizeClass()">
+                  <tr v-for="room in rooms" :key="room.roomNumber" v-if="room.isActive" class="m-0 p-0">
+                    <td class="align-middle my-0 py-2 text-center">
+                      <span class="m-0 p-0 queue-room" :style="{ borderColor: room.rgbColor }">
                         {{ room.roomName }}
-                      </h1>
+                      </span>
                     </td>
-                    <td class="text-center py-2">
-                      <div>
-                        <h1>
-                          <span v-if="room.currentQueue" class="btn btn-block text-big-size border border-dark bg-white">
-                            <strong class="text-danger">{{ room.currentQueue }}</strong>
-                          </span>
-                          <span v-else class="text-danger">ไม่มีคิว</span>
-                        </h1>
-                      </div>
+                    <td class="align-middle text-center my-0 py-2">
+                      <span v-if="room.currentQueue" class="m-0 queue-number-current-block" style="font-weight:bolder;" 
+                      :style="{ backgroundColor: room.rgbColor}" >
+                        {{ room.currentQueue }}
+                      </span>
+                      <span v-else class="m-0 p-0 text-danger text-big-size">ไม่มีคิว</span>
                     </td>
-                    <td class=" py-2">
-                      <div class="pl-5">
+                    <td class="align-middle my-0 py-2">
                         <ul class="list-inline m-0 d-inline">
                           <li class="list-inline-item" v-for="queue in room.calledQueues" :key="queue">
-                            <h1>
-                              <span class="btn text-big-size btn-outline-secondary" style="width:70px;">
-                                <strong>{{ queue }}</strong>
+                            <h1 class=" m-0 p-0">
+                              <span class="btn text-big-size btn-outline-secondary m-0 p-0 queue-number-block">
+                                {{ queue }}
                               </span>
                             </h1>
                           </li>
                         </ul>
-                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -91,7 +85,7 @@
         </div>
       </div>
     </section>
-    <div class="footer-fixed">
+    <div class="p-1 footer-fixed">
       Develop with <i class="fas fa-heartbeat" style="color:rgb(241, 150, 166)"></i> by <a href="https://shibaza.com" class="text-secondary">Soba Miso Nutto</a>
     </div>   
   </div>
