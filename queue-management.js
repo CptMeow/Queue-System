@@ -19,7 +19,7 @@ new Vue({
       { roomNumber: 1, roomName: '3', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFEB00', colorName: 'เหลือง' },
       { roomNumber: 2, roomName: '4', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFC0CB', colorName: 'ชมพู' },
       { roomNumber: 3, roomName: '5', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#98FB98', colorName: 'เขียว' },
-      { roomNumber: 4, roomName: '6', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFFFFF', colorName: 'ขาว' },
+      { roomNumber: 4, roomName: '6', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FFA500', colorName: 'ส้ม' },
       { roomNumber: 5, roomName: '8 โต๊ะ 1', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#87CEEB', colorName: 'ฟ้า' },
       { roomNumber: 6, roomName: '8 โต๊ะ 2', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#8967B3', colorName: 'ม่วง' },
       { roomNumber: 7, roomName: '8 โต๊ะ 3', queueHistory: [], currentQueue: null, nextQueue: 1, calledQueues: [], isActive: true, rgbColor: '#FF6347', colorName: 'แดง' },
